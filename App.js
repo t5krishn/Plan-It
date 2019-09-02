@@ -21,11 +21,11 @@ import { ScrollView } from "react-native-gesture-handler";
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
 import Signup from "./components/Screens/Signup";
-import Dashboard from "./components/Screens/MyDashboard";
+import Dashboard from "./components/Screens/myDashboard/MyDashboard";
 import EventsTab from "./components/Screens/Tabs/EventsTab";
 import ExpensesTab from "./components/Screens/Tabs/ExpensesTab";
 import TodoTab from "./components/Screens/Tabs/TodoTab";
-import MyDashboard from "./components/Screens/MyDashboard";
+import MyDashboard from "./components/Screens/myDashboard/MyDashboard";
 import MyExpenses from "./components/Screens/MyExpenses";
 import MyFriends from "./components/Screens/MyFriends.js";
 import MySettings from "./components/Screens/MySettings";
