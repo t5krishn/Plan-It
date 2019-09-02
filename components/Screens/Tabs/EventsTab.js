@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 
 export default function EventsTab({ navigation }) {
@@ -7,10 +7,12 @@ export default function EventsTab({ navigation }) {
 		<View style={styles.container}>
 			<MenuBtn navigation={navigation} />
 			<View style={styles.upper}>
-				<Text>TabEventsScreen</Text>
+				<Text>San Diego Trip!</Text>
+				<Text>28 Events Total</Text>
+				<Text>Calendar View</Text>
 			</View>
 			<View style={styles.lower}>
-				<Text>Lower</Text>
+				<Text>load components</Text>
 			</View>
 		</View>
 	);
@@ -18,15 +20,18 @@ export default function EventsTab({ navigation }) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 2,
+		flexDirection: "column",
+		width: Dimensions.get("screen").width,
+		height: Dimensions.get("screen").height
+	},
+	upper: {
+		flex: 1,
+		backgroundColor: "purple",
 		justifyContent: "center",
 		alignItems: "center"
 	},
-	upper: {
-		backgroundColor: "#FFF"
-	},
 	lower: {
-		backgroundColor: "#000",
-		color: "#FFF"
+		flex: 2,
+		backgroundColor: "red"
 	}
 });

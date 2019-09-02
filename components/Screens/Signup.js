@@ -18,7 +18,7 @@ export default function RegisterForm({ navigation }) {
 		password: ""
 	});
 
-	handleSubmit = () => {
+	const handleSubmit = () => {
 		const request = new Request("http://localhost:3000/user", {
 			method: "POST",
 			headers: {
@@ -28,6 +28,7 @@ export default function RegisterForm({ navigation }) {
 		});
 
 		fetch(request).then(response => {
+			console.log("response", repsonse);
 			// response.ok is true if User has successfully been INSERTED
 			if (response.ok) {
 				navigation.navigate("Dashboard");
