@@ -9,15 +9,15 @@ import {
 
 export default function RegisterForm({ navigation }) {
 	const [state, setState] = useState({
-		first_name: "",
-		last_name: "",
-		username: "",
-		email: "",
-		password: ""
+		name: "",
+		location: "",
+		starts_on: "",
+		ends_on: "",
+		description: ""
 	});
 
 	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/user", {
+		const request = new Request("http://localhost:3000/trip", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
@@ -27,42 +27,45 @@ export default function RegisterForm({ navigation }) {
 
 		fetch(request).then(response => {
 			// response.ok is true if User has successfully been INSERTED
-			console.log("response", response.ok);
 			if (response.ok) {
-				console.log("it's ok!");
-				navigation.navigate("Dashboard");
+				navigation.navigate("TabNavigator");
 			}
 		});
 	};
 
+	inviteFriends = () => {};
+
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
-			<Text>First Name:</Text>
+			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
 				value={state.firstName}
-				onChangeText={text => setState({ ...state, first_name: text })}
+				onChangeText={text => setState({ ...state, name: text })}
 			/>
-			<Text>Last Name:</Text>
+			<Text>Location:</Text>
 			<TextInput
 				style={styles.textInput}
-				onChangeText={text => setState({ ...state, last_name: text })}
+				onChangeText={text => setState({ ...state, location: text })}
 			/>
-			<Text>Username:</Text>
+			<Text>Starts on:</Text>
 			<TextInput
 				style={styles.textInput}
-				onChangeText={text => setState({ ...state, username: text })}
+				onChangeText={text => setState({ ...state, starts_on: text })}
 			/>
-			<Text>Email:</Text>
+			<Text>Ends on:</Text>
 			<TextInput
 				style={styles.textInput}
-				onChangeText={text => setState({ ...state, email: text })}
+				onChangeText={text => setState({ ...state, ends_on: text })}
 			/>
-			<Text>Password:</Text>
+			<Text>Description:</Text>
 			<TextInput
 				style={styles.textInput}
-				onChangeText={text => setState({ ...state, password: text })}
+				onChangeText={text => setState({ ...state, description: text })}
 			/>
+			<TouchableOpacity style={styles.button} onPress={() => inviteFriends()}>
+				<Text>Invite Friends</Text>
+			</TouchableOpacity>
 			<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 				<Text>Submit</Text>
 			</TouchableOpacity>

@@ -9,6 +9,7 @@ export default function Dashboard({ navigation }) {
 				title="San Diego Trip"
 				onPress={() => navigation.navigate("TabNavigator")}
 			/>
+			<Button title="Add Trip" onPress={() => navigation.navigate("NewTrip")} />
 		</View>
 	);
 }

@@ -29,6 +29,7 @@ import MyDashboard from "./components/Screens/MyDashboard";
 import MyExpenses from "./components/Screens/MyExpenses";
 import MyFriends from "./components/Screens/MyFriends.js";
 import MySettings from "./components/Screens/MySettings";
+import NewTrip from "./components/Screens/NewTrip";
 
 /*
   NAVIGATION:
@@ -70,6 +71,9 @@ const StackNavigator = createStackNavigator(
 		},
 		TabNavigator: {
 			screen: TabNavigator
+		},
+		NewTrip: {
+			screen: NewTrip
 		}
 	},
 	{
