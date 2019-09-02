@@ -16,7 +16,6 @@ export default function EventsTab({ navigation }) {
 
 		fetch(request)
 			.then(response => {
-				// response.ok is true if User has successfully been INSERTED
 				return response.json();
 			})
 			.then(json => {
@@ -25,17 +24,17 @@ export default function EventsTab({ navigation }) {
 	}, []);
 
 	return (
-		<ScrollView>
+		<View style={styles.container}>
 			<MenuBtn navigation={navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
 				<Text>28 Events Total</Text>
 				<Text>Calendar View</Text>
 			</View>
-			<View style={styles.lower}>
+			<ScrollView style={styles.lower}>
 				<EventCards events={events} />
-			</View>
-		</ScrollView>
+			</ScrollView>
+		</View>
 	);
 }
 
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
 		height: Dimensions.get("screen").height
 	},
 	upper: {
-		flex: 1,
+		flex: 0.5,
 		backgroundColor: "purple",
 		justifyContent: "center",
 		alignItems: "center"
