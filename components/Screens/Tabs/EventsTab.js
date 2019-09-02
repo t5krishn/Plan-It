@@ -6,15 +6,27 @@ export default function EventsTab({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={navigation} />
-			<Text>TabEventsScreen</Text>
+			<View style={styles.upper}>
+				<Text>TabEventsScreen</Text>
+			</View>
+			<View style={styles.lower}>
+				<Text>Lower</Text>
+			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flex: 2,
 		justifyContent: "center",
 		alignItems: "center"
+	},
+	upper: {
+		backgroundColor: "#FFF"
+	},
+	lower: {
+		backgroundColor: "#000",
+		color: "#FFF"
 	}
 });
