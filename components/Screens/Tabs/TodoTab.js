@@ -7,7 +7,7 @@ export default function TodoTab({ navigation }) {
 	const [todos, setTodos] = useState([]);
 
 	useEffect(() => {
-		const request = new Request("http://localhost:3000/trip/1/to_do", {
+		const request = new Request("http://localhost:5422/trip/1/to_do", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json"
