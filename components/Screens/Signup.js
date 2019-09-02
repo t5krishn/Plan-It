@@ -7,7 +7,7 @@ import {
 	StyleSheet
 } from "react-native";
 
-export default function RegisterForm() {
+export default function RegisterForm({navigation}) {
 	const [state, setState] = useState({
 		first_name: "",
 		last_name: "",
@@ -16,11 +16,11 @@ export default function RegisterForm() {
 		password: ""
 	});
 
-	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/users", {
+	const handleSubmit = () => {
+		const request = new Request("http://localhost:5422/user", {
 			method: "POST",
 			headers: {
-				"Content-type": "application/json"
+				"Content-type": "application/json",
 			},
 			body: JSON.stringify(state)
 		});
@@ -28,8 +28,10 @@ export default function RegisterForm() {
 		fetch(request).then(response => {
 			// response.ok is true if User has successfully been INSERTED
 			if (response.ok) {
+				navigation.navigate("Dashboard")
 			}
-		});
+		})
+		.catch(err=>console.log(err));
 	};
 
 	return (

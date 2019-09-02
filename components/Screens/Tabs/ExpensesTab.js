@@ -4,7 +4,8 @@ import { View, Text, StyleSheet } from "react-native";
 export default function ExpensesTab({ navigation }) {
 	return (
 		<View style={styles.container}>
-			<Text>TabExpensesScreen</Text>
+			
+			<Text>TabExpensesScreen: {navigation.getParam('trip_id')}</Text>
 		</View>
 	);
 }

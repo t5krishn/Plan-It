@@ -4,7 +4,8 @@ import { View, Text, StyleSheet } from "react-native";
 export default function TodoTab({ navigation }) {
 	return (
 		<View style={styles.container}>
-			<Text>TabTodoScreen</Text>
+		
+			<Text>TabTodoScreen: {navigation.getParam('trip_id')}</Text>
 		</View>
 	);
 }

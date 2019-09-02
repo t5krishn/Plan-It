@@ -18,6 +18,12 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { Provider, connect } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+
+// IMPOORT REDUCER
+import { state, fetchTripData } from "./store/reducers/useTripData";
+
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
 import Signup from "./components/Screens/Signup";
@@ -46,6 +52,9 @@ import MySettings from "./components/Screens/MySettings";
             -Tab 2: Todo
             -Tab 3: Expenses
 */
+
+
+let store = createStore(combineReducers({ trip: tripReducer }));
 
 export default function App() {
 	return <AppContainer />;
