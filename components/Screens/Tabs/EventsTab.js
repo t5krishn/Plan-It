@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import EventCards from "../../Screens/Tabs/EventCards";
+import EventCards from "./Cards";
 
 export default function EventsTab({ navigation }) {
 	const [events, setEvents] = useState([]);
@@ -13,7 +13,6 @@ export default function EventsTab({ navigation }) {
 				"Content-type": "application/json"
 			}
 		});
-
 		fetch(request)
 			.then(response => {
 				return response.json();
