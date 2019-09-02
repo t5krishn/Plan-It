@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import EventCards from "./Cards";
+import EventCards from "./EventCards";
 
 export default function EventsTab({ navigation }) {
 	const [events, setEvents] = useState([]);
@@ -31,7 +31,7 @@ export default function EventsTab({ navigation }) {
 				<Text>Calendar View</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<EventCards events={events} />
+				<EventCards items={events} />
 			</ScrollView>
 		</View>
 	);

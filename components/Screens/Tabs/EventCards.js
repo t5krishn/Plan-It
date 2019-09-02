@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import { Card } from "react-native-elements";
 
-export default function EventCards({ events }) {
+export default function EventCards({ items }) {
 	return (
 		<View containerStyle={{ padding: 0 }}>
-			{events.map((e, i) => {
+			{items.map((e, i) => {
 				return (
 					<Card>
 						<View>

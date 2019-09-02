@@ -1,13 +1,13 @@
-import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import EventCards from "../../Screens/Tabs/Cards";
+import ExpenseCards from "./ExpenseCards";
 
 export default function ExpensesTab({ navigation }) {
 	const [expenses, setExpenses] = useState([]);
 
 	useEffect(() => {
-		const request = new Request("http://localhost:3000/trip/1/event", {
+		const request = new Request("http://localhost:3000/trip/1/expense", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json"
@@ -18,7 +18,7 @@ export default function ExpensesTab({ navigation }) {
 				return response.json();
 			})
 			.then(json => {
-				setEvents(json);
+				setExpenses(json);
 			});
 	}, []);
 
@@ -31,7 +31,7 @@ export default function ExpensesTab({ navigation }) {
 				<Text>You owe $800 total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<EventCards events={events} />
+				<ExpenseCards items={expenses} />
 			</ScrollView>
 		</View>
 	);
