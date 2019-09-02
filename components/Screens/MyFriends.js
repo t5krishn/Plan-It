@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import MenuBtn from "../Buttons/Menubtn";
 
 export default function FriendsScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
+			<MenuBtn navigation={navigation} />
 			<Text>FriendsScreen</Text>
 		</View>
 	);

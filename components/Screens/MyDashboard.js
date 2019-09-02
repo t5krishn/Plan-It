@@ -1,9 +1,11 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
+import MenuBtn from "../Buttons/Menubtn";
 
 export default function Dashboard({ navigation }) {
 	return (
 		<View style={styles.container}>
+			<MenuBtn navigation={navigation} />
 			<Text>DashboardScreen (Trips Overview)</Text>
 			<Button
 				title="San Diego Trip"
