@@ -22,7 +22,7 @@ export default function RegisterForm({ navigation }) {
 		const request = new Request("http://localhost:3000/user", {
 			method: "POST",
 			headers: {
-				"Content-type": "application/json"
+				"Content-type": "application/json",
 			},
 			body: JSON.stringify(state)
 		});
@@ -32,7 +32,8 @@ export default function RegisterForm({ navigation }) {
 			if (response.ok) {
 				navigation.navigate("Dashboard");
 			}
-		});
+		})
+		.catch(err=>console.log(err));
 	};
 
 	return (

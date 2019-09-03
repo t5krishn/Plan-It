@@ -18,14 +18,20 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { Provider, connect } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+
+// IMPOORT REDUCER
+import { fetchTripData } from "./store/reducers/useTripData";
+
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
 import Signup from "./components/Screens/Signup";
-import Dashboard from "./components/Screens/MyDashboard";
+import Dashboard from "./components/Screens/myDashboard/MyDashboard";
 import EventsTab from "./components/Screens/Tabs/EventsTab";
 import ExpensesTab from "./components/Screens/Tabs/ExpensesTab";
 import TodoTab from "./components/Screens/Tabs/TodoTab";
-import MyDashboard from "./components/Screens/MyDashboard";
+// import MyDashboard from "./components/Screens/myDashboard/MyDashboard";
 import MyExpenses from "./components/Screens/MyExpenses";
 import MyFriends from "./components/Screens/MyFriends.js";
 import MySettings from "./components/Screens/MySettings";
@@ -48,8 +54,15 @@ import NewTrip from "./components/Screens/NewTrip";
             -Tab 3: Expenses
 */
 
+
+let store = createStore(combineReducers({ trip: fetchTripData }));
+
 export default function App() {
-	return <AppContainer />;
+	return ( 
+	<Provider store={store} >
+		<AppContainer />
+	</Provider>
+	);
 }
 
 const TabNavigator = createBottomTabNavigator({
@@ -67,7 +80,7 @@ const TabNavigator = createBottomTabNavigator({
 const StackNavigator = createStackNavigator(
 	{
 		Dashboard: {
-			screen: MyDashboard
+			screen: Dashboard
 		},
 		TabNavigator: {
 			screen: TabNavigator
