@@ -35,6 +35,7 @@ import MyExpenses from "./components/Screens/Drawers/MyExpenses";
 import MyFriends from "./components/Screens/Drawers/MyFriends";
 import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
+import FindFriend from "./components/Screens/Drawers/FindFriend";
 
 /*
   NAVIGATION:
@@ -116,6 +117,23 @@ const CustomDrawerComponent = props => (
 	</SafeAreaView>
 );
 
+const FriendsStack = createStackNavigator(
+	{
+		FriendsList: {
+			screen: MyFriends
+		},
+		FindFriend: {
+			screen: FindFriend
+		}
+	},
+	{
+		headerMode: "none",
+		navigationOptions: {
+			headerVisible: false
+		}
+	}
+);
+
 const AppDrawerNavigator = createDrawerNavigator(
 	{
 		Dashboard: {
@@ -125,7 +143,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 			screen: MyExpenses
 		},
 		Friends: {
-			screen: MyFriends
+			screen: FriendsStack
 		},
 		Settings: {
 			screen: MySettings

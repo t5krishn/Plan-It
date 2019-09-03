@@ -7,7 +7,7 @@ export default function EventsTab({ navigation }) {
 	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
-		const request = new Request("http://localhost:3000/trip/1/event", {
+		const request = new Request("http://localhost:3000/user/1/trip/1/event", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json"

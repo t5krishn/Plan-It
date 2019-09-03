@@ -7,7 +7,7 @@ export default function ExpensesTab({ navigation }) {
 	const [expenses, setExpenses] = useState([]);
 
 	useEffect(() => {
-		const request = new Request("http://localhost:3000/trip/1/expense", {
+		const request = new Request("http://localhost:3000/user/1/trip/1/expense", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json"

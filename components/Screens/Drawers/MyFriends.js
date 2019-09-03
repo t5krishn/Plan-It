@@ -1,20 +1,52 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+	View,
+	Text,
+	StyleSheet,
+	TouchableOpacity,
+	ScrollView
+} from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
+import FriendsCards from "../Drawers/FriendsCards";
 
 export default function FriendsScreen({ navigation }) {
+	const [friends, setFriends] = useState([]);
+
+	useEffect(() => {
+		const request = new Request("http://localhost:3000/user/1/friend", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json"
+			}
+		});
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(json => {
+				setFriends(json);
+			});
+	}, []);
+
 	return (
-		<View style={styles.container}>
+		<View>
 			<MenuBtn navigation={navigation} />
-			<Text>FriendsScreen</Text>
+			<View style={styles.container}>
+				<Text>FriendsScreen</Text>
+				<TouchableOpacity onPress={() => navigation.navigate("FindFriend")}>
+					<Text>Find friends</Text>
+				</TouchableOpacity>
+			</View>
+			<ScrollView>
+				<FriendsCards items={friends} />
+			</ScrollView>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: "center",
+		marginTop: 200,
 		alignItems: "center"
 	},
 	TextInput: {

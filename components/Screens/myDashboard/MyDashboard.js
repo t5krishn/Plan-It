@@ -8,7 +8,7 @@ export default function Dashboard({ navigation }) {
 	let [trips, setTrips] = useState([]);
 
 	const getAllTrips = () => {
-		fetch("http://localhost:3000/trip")
+		fetch("http://localhost:3000/user/1/trip")
 			.then(res => res.json())
 			.then(data => {
 				console.log(data);
