@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import MenuBtn from "../Buttons/Menubtn";
+import MenuBtn from "../../Buttons/Menubtn";
 
 export default function MyExpensesScreen({ navigation }) {
 	return (
