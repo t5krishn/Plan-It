@@ -5,7 +5,7 @@ export default function ExpensesTab({ navigation }) {
 	return (
 		<View style={styles.container}>
 			
-			<Text>TabExpensesScreen: {navigation.getParam('trip_id')}</Text>
+			<Text>TabExpensesScreen</Text>
 		</View>
 	);
 }

@@ -1,2 +1,2 @@
-export const COUNTER_ADD = 'COUNTER_ADD';
+export const ADD_TRIP = 'ADD_TRIP';
 export const COUNTER_SUBTRACT = 'COUNTER_SUBTRACT';

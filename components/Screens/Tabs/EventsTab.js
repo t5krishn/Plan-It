@@ -5,7 +5,7 @@ export default function EventsTab({ navigation }) {
 	return (
 		<View style={styles.container}>
 
-			<Text>TabEventsScreen: {navigation.getParam('trip_id')}</Text>
+			<Text>TabEventsScreen</Text>
 		</View>
 	);
 }

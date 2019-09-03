@@ -5,7 +5,7 @@ export default function TodoTab({ navigation }) {
 	return (
 		<View style={styles.container}>
 		
-			<Text>TabTodoScreen: {navigation.getParam('trip_id')}</Text>
+			<Text>TabTodoScreen</Text>
 		</View>
 	);
 }

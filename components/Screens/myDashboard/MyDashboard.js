@@ -1,9 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from  "./TripsList";
 
 export default function Dashboard({ navigation }) {
+
+	let [trips, setTrips] = useState([]);
+
+	const getAllTrips = () => {
+		fetch("http://localhost:5422/trip")
+		.then(res => res.json())
+		.then(data => {
+			console.log(data);
+			setTrips(data);
+		});
+	}
+	
+	useEffect(()=> {getAllTrips()}, [])
+
 	return (
 		<View style={styles.mainScreenContainer}>
 			<View style={styles.topContainer}>
@@ -21,9 +35,9 @@ export default function Dashboard({ navigation }) {
 				<ScrollView
 				style = {styles.tripsScrollContainer}
 				contentContainerStyle={styles.tripsContent}>
-
-					<TripsList navigation={navigation}/>
-
+					<TripsList
+					navigation={navigation}
+					trips={trips}/>
 				</ScrollView>
 			</View>
 		</View>
@@ -71,3 +85,5 @@ const styles = StyleSheet.create({
 		// backgroundColor: "yellow"
 	}
 });
+
+

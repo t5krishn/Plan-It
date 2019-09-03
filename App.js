@@ -22,7 +22,7 @@ import { Provider, connect } from 'react-redux';
 import { createStore, combineReducers } from 'redux';
 
 // IMPOORT REDUCER
-import { state, fetchTripData } from "./store/reducers/useTripData";
+import { fetchTripData } from "./store/reducers/useTripData";
 
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
@@ -54,10 +54,14 @@ import MySettings from "./components/Screens/MySettings";
 */
 
 
-let store = createStore(combineReducers({ trip: tripReducer }));
+let store = createStore(combineReducers({ trip: fetchTripData }));
 
 export default function App() {
-	return <AppContainer />;
+	return ( 
+	<Provider store={store} >
+		<AppContainer />
+	</Provider>
+	);
 }
 
 const TabNavigator = createBottomTabNavigator({
