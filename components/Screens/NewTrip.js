@@ -28,7 +28,7 @@ export default function RegisterForm({ navigation }) {
 		fetch(request).then(response => {
 			// response.ok is true if User has successfully been INSERTED
 			if (response.ok) {
-				navigation.navigate("TabNavigator");
+				navigation.navigate("Dashboard");
 			}
 		});
 	};

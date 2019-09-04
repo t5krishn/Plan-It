@@ -22,18 +22,19 @@ export default function RegisterForm({ navigation }) {
 		const request = new Request("http://localhost:3000/user", {
 			method: "POST",
 			headers: {
-				"Content-type": "application/json",
+				"Content-type": "application/json"
 			},
 			body: JSON.stringify(state)
 		});
 
-		fetch(request).then(response => {
-			// response.ok is true if User has successfully been INSERTED
-			if (response.ok) {
-				navigation.navigate("Dashboard");
-			}
-		})
-		.catch(err=>console.log(err));
+		fetch(request)
+			.then(response => {
+				// response.ok is true if User has successfully been INSERTED
+				if (response.ok) {
+					navigation.navigate("Dashboard");
+				}
+			})
+			.catch(err => console.log(err));
 	};
 
 	return (

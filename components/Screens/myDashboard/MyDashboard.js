@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	ScrollView,
+	TouchableOpacity
+} from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
+import MenuBtn from "../../Buttons/Menubtn";
 
 import { connect } from "react-redux";
 
@@ -30,8 +38,9 @@ function Dashboard(props) {
 
 	return (
 		<View style={styles.mainScreenContainer}>
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
-				<Text style={styles.titleText}>DashboardScreen (Trips Overview):</Text>
+				<Text style={styles.titleText}>DashboardScreen</Text>
 
 				<View style={styles.calendarContainer}>
 					<CalendarMonth />
@@ -44,6 +53,11 @@ function Dashboard(props) {
 					contentContainerStyle={styles.tripsContent}
 				>
 					<TripsList onPress={onPressTripHandler} trips={trips} />
+					<TouchableOpacity
+						onPress={() => props.navigation.navigate("NewTrip")}
+					>
+						<Text>+ Add new trip</Text>
+					</TouchableOpacity>
 				</ScrollView>
 			</View>
 		</View>
