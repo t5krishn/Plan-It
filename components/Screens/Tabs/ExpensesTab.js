@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
+import AddBtn from "../../Buttons/Addbtn";
 
 import { connect } from "react-redux";
 
@@ -33,6 +34,7 @@ function ExpensesTab(props) {
 			<ScrollView style={styles.lower}>
 				<ExpenseCards items={props.expenses} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
+import AddBtn from "../../Buttons/Addbtn";
 
 import { connect } from "react-redux";
 
@@ -20,6 +21,7 @@ function EventsTab(props) {
 			<ScrollView style={styles.lower}>
 				<EventCards items={props.events} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }

@@ -2,24 +2,9 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
+import AddBtn from "../../Buttons/Addbtn";
 
 import { connect } from "react-redux";
-
-// useEffect(() => {
-// 	const request = new Request("http://localhost:3000/user/1/trip/1/to_do", {
-// 		method: "GET",
-// 		headers: {
-// 			"Content-type": "application/json"
-// 		}
-// 	});
-// 	fetch(request)
-// 		.then(response => {
-// 			return response.json();
-// 		})
-// 		.then(json => {
-// 			setTodos(json);
-// 		});
-// }, []);
 
 function TodoTab(props) {
 	return (
@@ -33,6 +18,7 @@ function TodoTab(props) {
 			<ScrollView style={styles.lower}>
 				<TodoCards items={props.toDos} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
