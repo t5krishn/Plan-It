@@ -14,7 +14,8 @@ import {
 	Text,
 	Button,
 	TextInput,
-	SafeAreaView
+	SafeAreaView,
+	AsyncStorage
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -35,6 +36,7 @@ import MyFriends from "./components/Screens/Drawers/MyFriends.js";
 import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
 import FindFriend from "./components/Screens/Drawers/FindFriend";
+import LoadAuth from "./components/Screens/LoadAuth";
 
 /*
   NAVIGATION:
@@ -152,6 +154,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
+	LoadAuth: { screen: LoadAuth },
 	Login: { screen: Login },
 	Dashboard: { screen: AppDrawerNavigator },
 	Signup: { screen: Signup }

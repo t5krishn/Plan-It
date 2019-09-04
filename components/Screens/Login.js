@@ -1,9 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import {
+	View,
+	Text,
+	TextInput,
+	Button,
+	StyleSheet,
+	Alert,
+	AsyncStorage
+} from "react-native";
 import MenuBtn from "../Buttons/Menubtn";
 
 export default function LoginScreen({ navigation }) {
+	const loadData = async () => {
+		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
+		console.log("isloggedin", isLoggedIn);
+		navigation.navigate(isLoggedIn === "1" ? "Dashboard" : "Login");
+	};
+
+	loadData();
+
 	const [state, setState] = useState({ email: "", password: "" });
+
+	const login = async () => {
+		await AsyncStorage.setItem("isLoggedIn", "1");
+		navigation.navigate("Dashboard");
+	};
 
 	const handleSubmit = () => {
 		const request = new Request("http://localhost:3000/login", {
@@ -20,8 +41,7 @@ export default function LoginScreen({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("Your password or username is incorrect");
 				} else {
-					console.log(data);
-					navigation.navigate("Dashboard");
+					login();
 				}
 			})
 			.catch(err => console.log(err));
