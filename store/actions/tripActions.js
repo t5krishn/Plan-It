@@ -1,10 +1,10 @@
 export const SELECT_TRIP = "SELECT_TRIP";
 
 export function selectTrip(trip) {
-  return {
-    type: SELECT_TRIP,
-    current_trip: trip
-  };
+	return {
+		type: SELECT_TRIP,
+		current_trip: trip
+	};
 }
 
 export const REQUEST_TRIP_DATA = "REQUEST_TRIP_DATA";
@@ -31,23 +31,23 @@ function receiveTripData(trip, data) {
 }
 
 export function fetchTripData(trip) {
-  return dispatch => {
-    // return fetch(`http://localhost:5422/user/1/trip/1/event`)
-    //   .then(response => response.json())
-    //   .then(json => dispatch(receiveTripData(trip, json)));
-    
-    dispatch(requestTripData(trip));
-    return Promise.all([
-      fetch(`http://localhost:5422/user/1/trip/1/event`),
-      fetch(`http://localhost:5422/user/1/trip/1/to_do`),
-      fetch(`http://localhost:5422/user/1/trip/1/expense`)
-    ])
-      .then(response => {
-        let data = response.map(res => res.json())
-        return Promise.all(data)
-      })
-      .then(data => {
-        return dispatch(receiveTripData(trip, data))
-      })
-  }
+	return dispatch => {
+		// return fetch(`http://localhost:5422/user/1/trip/1/event`)
+		//   .then(response => response.json())
+		//   .then(json => dispatch(receiveTripData(trip, json)));
+
+		dispatch(requestTripData(trip));
+		return Promise.all([
+			fetch(`http://localhost:3000/user/1/trip/1/event`),
+			fetch(`http://localhost:3000/user/1/trip/1/to_do`),
+			fetch(`http://localhost:3000/user/1/trip/1/expense`)
+		])
+			.then(response => {
+				let data = response.map(res => res.json());
+				return Promise.all(data);
+			})
+			.then(data => {
+				return dispatch(receiveTripData(trip, data));
+			});
+	};
 }

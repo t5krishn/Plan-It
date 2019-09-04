@@ -2,11 +2,27 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
+import AddBtn from "../../Buttons/Addbtn";
 
 import { connect } from "react-redux";
 
-function ExpensesTab(props) {
+// useEffect(() => {
+// 	const request = new Request("http://localhost:3000/user/1/trip/1/expense", {
+// 		method: "GET",
+// 		headers: {
+// 			"Content-type": "application/json"
+// 		}
+// 	});
+// 	fetch(request)
+// 		.then(response => {
+// 			return response.json();
+// 		})
+// 		.then(json => {
+// 			setExpenses(json);
+// 		});
+// }, []);
 
+function ExpensesTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
@@ -18,6 +34,7 @@ function ExpensesTab(props) {
 			<ScrollView style={styles.lower}>
 				<ExpenseCards items={props.expenses} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
@@ -42,15 +59,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	const { selectedTrip, gettingTripData } = state;
-	const { expenses } = gettingTripData[
-	  selectedTrip
-	] || {
-	  expenses: []
-	}
-  
+	const { expenses } = gettingTripData[selectedTrip] || {
+		expenses: []
+	};
+
 	return {
-	  selectedTrip,
-	  expenses
+		selectedTrip,
+		expenses
 	};
 }
 

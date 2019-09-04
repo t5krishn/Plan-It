@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
+import AddBtn from "../../Buttons/Addbtn";
 
 import { connect } from "react-redux";
 
 function TodoTab(props) {
-
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
@@ -18,6 +18,7 @@ function TodoTab(props) {
 			<ScrollView style={styles.lower}>
 				<TodoCards items={props.toDos} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
@@ -42,15 +43,13 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	const { selectedTrip, gettingTripData } = state;
-	const { toDos } = gettingTripData[
-	  selectedTrip
-	] || {
-	  expenses: []
-	}
-  
+	const { toDos } = gettingTripData[selectedTrip] || {
+		expenses: []
+	};
+
 	return {
-	  selectedTrip,
-	  toDos
+		selectedTrip,
+		toDos
 	};
 }
 
