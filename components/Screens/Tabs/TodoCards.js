@@ -7,7 +7,7 @@ export default function EventCards({ items }) {
 		<View containerStyle={{ padding: 0 }}>
 			{items.map((e, i) => {
 				return (
-					<Card>
+					<Card key={e.id}>
 						<View>
 							<Text>Content: {e.content}</Text>
 							<Text>Completed?: {e.completed}</Text>

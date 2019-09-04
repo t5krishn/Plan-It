@@ -3,35 +3,35 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
 
-export default function ExpensesTab({ navigation }) {
-	const [expenses, setExpenses] = useState([]);
+import { connect } from "react-redux";
 
-	useEffect(() => {
-		const request = new Request("http://localhost:3000/user/1/trip/1/expense", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setExpenses(json);
-			});
-	}, []);
+// useEffect(() => {
+// 	const request = new Request("http://localhost:3000/user/1/trip/1/expense", {
+// 		method: "GET",
+// 		headers: {
+// 			"Content-type": "application/json"
+// 		}
+// 	});
+// 	fetch(request)
+// 		.then(response => {
+// 			return response.json();
+// 		})
+// 		.then(json => {
+// 			setExpenses(json);
+// 		});
+// }, []);
 
+function ExpensesTab(props) {
 	return (
 		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
-				<Text>8 Expenses</Text>
+				<Text>{props.expenses.length} Expenses</Text>
 				<Text>You owe $800 total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<ExpenseCards items={expenses} />
+				<ExpenseCards items={props.expenses} />
 			</ScrollView>
 		</View>
 	);
@@ -54,3 +54,17 @@ const styles = StyleSheet.create({
 		backgroundColor: "red"
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedTrip, gettingTripData } = state;
+	const { expenses } = gettingTripData[selectedTrip] || {
+		expenses: []
+	};
+
+	return {
+		selectedTrip,
+		expenses
+	};
+}
+
+export default connect(mapStateToProps)(ExpensesTab);

@@ -7,7 +7,7 @@ export default function EventCards({ items }) {
 		<View containerStyle={{ padding: 0 }}>
 			{items.map((e, i) => {
 				return (
-					<Card>
+					<Card key={e.id}>
 						<View>
 							<Text>Amount in cents: {e.amount_in_cents}</Text>
 							<Text>Date: {e.expense_date}</Text>

@@ -18,11 +18,10 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Provider, connect } from "react-redux";
-import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
 
-// IMPOORT REDUCER
-import { fetchTripData } from "./store/reducers/useTripData";
+const store = configureStore();
 
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
@@ -32,7 +31,7 @@ import EventsTab from "./components/Screens/Tabs/EventsTab";
 import ExpensesTab from "./components/Screens/Tabs/ExpensesTab";
 import TodoTab from "./components/Screens/Tabs/TodoTab";
 import MyExpenses from "./components/Screens/Drawers/MyExpenses";
-import MyFriends from "./components/Screens/Drawers/MyFriends";
+import MyFriends from "./components/Screens/Drawers/MyFriends.js";
 import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
 import FindFriend from "./components/Screens/Drawers/FindFriend";
@@ -53,8 +52,6 @@ import FindFriend from "./components/Screens/Drawers/FindFriend";
             -Tab 2: Todo
             -Tab 3: Expenses
 */
-
-let store = createStore(combineReducers({ trip: fetchTripData }));
 
 export default function App() {
 	return (
