@@ -4,7 +4,10 @@ import {
 	Text,
 	TextInput,
 	TouchableOpacity,
-	StyleSheet
+	StyleSheet,
+	View,
+	Button,
+	Dimensions
 } from "react-native";
 
 export default function RegisterForm({ navigation }) {
@@ -17,7 +20,7 @@ export default function RegisterForm({ navigation }) {
 	});
 
 	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/trip", {
+		const request = new Request("http://localhost:3000/user/1/trip", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
@@ -28,7 +31,7 @@ export default function RegisterForm({ navigation }) {
 		fetch(request).then(response => {
 			// response.ok is true if User has successfully been INSERTED
 			if (response.ok) {
-				navigation.navigate("TabNavigator");
+				navigation.navigate("Dashboard");
 			}
 		});
 	};
@@ -37,6 +40,13 @@ export default function RegisterForm({ navigation }) {
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
+			<View style={styles.buttonView}>
+				<Button
+					title="Cancel"
+					onPress={() => navigation.navigate("Dashboard")}
+				/>
+				<Button title="Save" onPress={() => handleSubmit()} />
+			</View>
 			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
@@ -93,5 +103,13 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontSize: 16,
 		fontWeight: "bold"
+	},
+	buttonView: {
+		position: "absolute",
+		top: 35,
+		justifyContent: "space-between",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		width: 350
 	}
 });

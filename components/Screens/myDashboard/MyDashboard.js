@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Button, StyleSheet, ScrollView } from "react-native";
+import {
+	View,
+	Text,
+	Button,
+	StyleSheet,
+	ScrollView,
+	TouchableOpacity
+} from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
@@ -37,6 +44,12 @@ export default function Dashboard({ navigation }) {
 					contentContainerStyle={styles.tripsContent}
 				>
 					<TripsList navigation={navigation} trips={trips} />
+					<TouchableOpacity
+						style={{ alignItems: "center" }}
+						onPress={() => navigation.navigate("NewTrip")}
+					>
+						<Text style={{ fontSize: 20 }}>+ Add New Trip</Text>
+					</TouchableOpacity>
 				</ScrollView>
 			</View>
 		</View>
