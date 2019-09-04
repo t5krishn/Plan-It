@@ -18,8 +18,13 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+<<<<<<< HEAD
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore'
+=======
+import { Provider, connect } from "react-redux";
+import { createStore, combineReducers } from "redux";
+>>>>>>> 3da7e6737cc0463a0fc8d02ced9187637f7b90a6
 
 const store = configureStore();
 
@@ -54,10 +59,10 @@ import NewTrip from "./components/Screens/NewTrip";
 
 
 export default function App() {
-	return ( 
-	<Provider store={store} >
-		<AppContainer />
-	</Provider>
+	return (
+		<Provider store={store}>
+			<AppContainer />
+		</Provider>
 	);
 }
 
