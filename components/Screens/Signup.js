@@ -7,7 +7,8 @@ import {
 	KeyboardAvoidingView,
 	SafeAreaView,
 	Button,
-	View
+	View,
+	Alert
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -26,13 +27,17 @@ export default function RegisterForm({ navigation }) {
 			headers: {
 				"Content-type": "application/json"
 			},
-			body: JSON.stringify(state)
+			body: JSON.stringify({ user: state })
 		});
 
+		console.log(JSON.stringify(state));
+
 		fetch(request)
-			.then(response => {
-				// response.ok is true if User has successfully been INSERTED
-				if (response.ok) {
+			.then(res => res.json())
+			.then(data => {
+				if (data.status === "error") {
+					console.log("There was an error with creating your account");
+				} else {
 					navigation.navigate("Dashboard");
 				}
 			})
