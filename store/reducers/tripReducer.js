@@ -17,7 +17,7 @@ function selectedTrip(state = {}, action) {
 
 function tripData(
     state = {
-      isFetching: false,
+      isFetchingTrip: false,
       events: [],
       toDos: [],
       expenses: []
@@ -27,11 +27,11 @@ function tripData(
   switch (action.type) {
     case REQUEST_TRIP_DATA:
       return Object.assign({}, state, {
-        isFetching: true
+        isFetchingTrip: true
       });
     case RECEIVE_TRIP_DATA:
       return Object.assign({}, state, {
-        isFetching: false,
+        isFetchingTrip: false,
         events: action.events,
         toDos: action.toDos,
         expenses: action.expenses
@@ -53,9 +53,11 @@ function gettingTripData(state = {}, action) {
   }
 }
 
-const tripReducer = combineReducers({
-  gettingTripData,
-  selectedTrip
-});
+// const tripReducer = combineReducers({
+//   gettingTripData,
+//   selectedTrip
+// });
 
-export default tripReducer;
+// export default tripReducer;
+
+export { gettingTripData, selectedTrip };
