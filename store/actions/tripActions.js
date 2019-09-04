@@ -13,7 +13,7 @@ function requestTripData(trip) {
   return {
     type: REQUEST_TRIP_DATA,
     current_trip: trip,
-    isFetching: true
+    isFetchingTrip: true
   };
 }
 
@@ -22,7 +22,7 @@ export const RECEIVE_TRIP_DATA = "RECEIVE_TRIP_DATA";
 function receiveTripData(trip, data) {
   return {
     type: RECEIVE_TRIP_DATA,
-    isFetching: false,
+    isFetchingTrip: false,
     current_trip: trip,
     events: data[0],
     toDos: data[1],
