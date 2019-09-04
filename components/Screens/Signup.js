@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import {
 	Text,
+	Alert,
 	TextInput,
-	TouchableOpacity,
 	StyleSheet,
 	KeyboardAvoidingView,
-	SafeAreaView,
 	Button,
 	View,
-	Alert
+	AsyncStorage
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 export default function RegisterForm({ navigation }) {
 	const [state, setState] = useState({
@@ -21,6 +19,13 @@ export default function RegisterForm({ navigation }) {
 		password: ""
 	});
 
+	let id;
+
+	const login = async () => {
+		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
+		navigation.navigate("Dashboard");
+	};
+
 	const handleSubmit = () => {
 		const request = new Request("http://localhost:3000/user", {
 			method: "POST",
@@ -30,15 +35,14 @@ export default function RegisterForm({ navigation }) {
 			body: JSON.stringify({ user: state })
 		});
 
-		console.log(JSON.stringify(state));
-
 		fetch(request)
 			.then(res => res.json())
 			.then(data => {
 				if (data.status === "error") {
-					console.log("There was an error with creating your account");
+					Alert.alert("There was an error with creating your account");
 				} else {
-					navigation.navigate("Dashboard");
+					id = data.id;
+					login();
 				}
 			})
 			.catch(err => console.log(err));

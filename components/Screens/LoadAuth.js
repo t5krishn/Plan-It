@@ -11,8 +11,7 @@ import MenuBtn from "../Buttons/Menubtn";
 export default function LoginScreen({ navigation }) {
 	const loadData = async () => {
 		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-		console.log("isloggedin", isLoggedIn);
-		navigation.navigate(isLoggedIn === "1" ? "Dashboard" : "Login");
+		navigation.navigate(isLoggedIn ? "Dashboard" : "Login");
 	};
 
 	loadData();

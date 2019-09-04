@@ -11,18 +11,12 @@ import {
 import MenuBtn from "../Buttons/Menubtn";
 
 export default function LoginScreen({ navigation }) {
-	const loadData = async () => {
-		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-		console.log("isloggedin", isLoggedIn);
-		navigation.navigate(isLoggedIn === "1" ? "Dashboard" : "Login");
-	};
-
-	loadData();
-
 	const [state, setState] = useState({ email: "", password: "" });
 
+	let id;
+
 	const login = async () => {
-		await AsyncStorage.setItem("isLoggedIn", "1");
+		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
 		navigation.navigate("Dashboard");
 	};
 
@@ -41,6 +35,7 @@ export default function LoginScreen({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("Your password or username is incorrect");
 				} else {
+					id = data.id;
 					login();
 				}
 			})
