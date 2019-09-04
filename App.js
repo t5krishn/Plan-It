@@ -30,9 +30,9 @@ import Dashboard from "./components/Screens/myDashboard/MyDashboard";
 import EventsTab from "./components/Screens/Tabs/EventsTab";
 import ExpensesTab from "./components/Screens/Tabs/ExpensesTab";
 import TodoTab from "./components/Screens/Tabs/TodoTab";
-import MyExpenses from "./components/Screens/MyExpenses";
-import MyFriends from "./components/Screens/MyFriends.js";
-import MySettings from "./components/Screens/MySettings";
+import MyExpenses from "./components/Screens/Drawers/MyExpenses";
+import MyFriends from "./components/Screens/Drawers/MyFriends.js";
+import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
 
 /*
