@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
   const { selectedTrip, gettingTripData } = state;
-  const { isFetching, events, toDos, expenses } = gettingTripData[
+  const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
     selectedTrip
   ] || {
-    isFetching: true,
+    isFetchingTrip: true,
 	events: [],
 	toDos: [],
 	expenses: []
@@ -106,7 +106,7 @@ function mapStateToProps(state) {
 
   return {
 	selectedTrip,
-	isFetching,
+	isFetchingTrip,
 	events,
 	toDos,
 	expenses
