@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text} from "react-native";
 
-export default function TripItem({ navigation, trip }) {
+export default function TripItem({ onPress, trip }) {
     return (
         <TouchableOpacity
-        onPress={() => navigation.navigate("TabNavigator", { trip_id: 1 })}
+        onPress={() => {onPress(trip.id)}}
         style={styles.tripContentItem}>
                 <Text style={styles.tripNameText}>
                     {trip.name}
