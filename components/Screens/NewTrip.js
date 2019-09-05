@@ -10,8 +10,10 @@ import {
 	Button,
 	Dimensions
 } from "react-native";
+import { connect } from "react-redux";
+import { addNewUserTrip } from "../../store/actions/userAction";
 
-export default function RegisterForm({ navigation }) {
+function RegisterForm(props) {
 	const [state, setState] = useState({
 		name: "",
 		location: "",
@@ -21,19 +23,24 @@ export default function RegisterForm({ navigation }) {
 	});
 
 	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/user/1/trip", {
-			method: "POST",
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify({ trip: state })
-		});
+		const request = new Request(
+			`http://localhost:3000/user/${props.selectedUser}/trip`,
+			{
+				method: "POST",
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify({ trip: state })
+			}
+		);
 
 		fetch(request)
 			.then(response => response.json())
 			.then(data => {
+				console.log(data.trip);
 				if (data.status === "ok") {
-					navigation.navigate("Dashboard");
+					props.dispatch(addNewUserTrip(data.trip));
+					props.navigation.navigate("Dashboard");
 				} else {
 					Alert.alert("There was an issue with saving your trip");
 				}
@@ -47,7 +54,7 @@ export default function RegisterForm({ navigation }) {
 			<View style={styles.buttonView}>
 				<Button
 					title="Cancel"
-					onPress={() => navigation.navigate("Dashboard")}
+					onPress={() => props.navigation.navigate("Dashboard")}
 				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
 			</View>
@@ -117,3 +124,31 @@ const styles = StyleSheet.create({
 		width: 350
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const {
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	} = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user: {},
+		user_trips: [],
+		user_expenses: [],
+		user_friends: []
+	};
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	};
+}
+
+export default connect(mapStateToProps)(RegisterForm);

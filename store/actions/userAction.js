@@ -37,6 +37,15 @@ function receiveUserData(user, data) {
 	};
 }
 
+export const ADD_USER_TRIP = "ADD_USER_TRIP";
+
+export function addNewUserTrip(trip) {
+	return {
+		type: ADD_USER_TRIP,
+		new_user_trips: trip
+	};
+}
+
 export function fetchUserData(user) {
 	return dispatch => {
 		dispatch(requestUserData(user));

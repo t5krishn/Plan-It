@@ -14,15 +14,7 @@ import { connect } from "react-redux";
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 
 function Dashboard(props) {
-	let [trips, setTrips] = useState([]);
-
-	const getAllTrips = () => {
-		fetch("http://localhost:3000/user/1/trip")
-			.then(res => res.json())
-			.then(data => {
-				setTrips(data);
-			});
-	};
+	// let [trips, setTrips] = useState([]);
 
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
@@ -30,17 +22,13 @@ function Dashboard(props) {
 		props.navigation.navigate("TabNavigator");
 	};
 
-	useEffect(() => {
-		getAllTrips();
-	}, []);
-
 	return (
 		<View style={styles.mainScreenContainer}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
 				<Text style={styles.titleText}>DashboardScreen: </Text>
 				<View style={styles.calendarContainer}>
-					<CalendarMonth trips={trips} />
+					<CalendarMonth trips={props.user_trips} />
 				</View>
 			</View>
 
@@ -49,7 +37,7 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					<TripsList onPress={onPressTripHandler} trips={trips} />
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 					<TouchableOpacity
 						style={{
 							height: 50,
@@ -120,6 +108,8 @@ function mapStateToProps(state) {
 		toDos: [],
 		expenses: []
 	};
+
+	console.log("FROM MAP STATE:", Object.keys(selectedUser)[0]);
 
 	return {
 		selectedUser,
