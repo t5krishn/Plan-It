@@ -63,4 +63,4 @@ function gettingUserData(state = {}, action) {
 
 // export default userReducer;
 
-export {  gettingUserData, selectedUser };
+export { gettingUserData, selectedUser };

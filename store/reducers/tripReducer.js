@@ -16,14 +16,14 @@ function selectedTrip(state = {}, action) {
 }
 
 function tripData(
-    state = {
-      isFetchingTrip: false,
-      events: [],
-      toDos: [],
-      expenses: []
-    },
-    action
-  ) {
+  state = {
+    isFetchingTrip: false,
+    events: [],
+    toDos: [],
+    expenses: []
+  },
+  action
+) {
   switch (action.type) {
     case REQUEST_TRIP_DATA:
       return Object.assign({}, state, {
