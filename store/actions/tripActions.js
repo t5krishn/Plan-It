@@ -38,9 +38,9 @@ export function fetchTripData(trip) {
 
 		dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/1/trip/1/event`),
-			fetch(`http://localhost:3000/user/1/trip/1/to_do`),
-			fetch(`http://localhost:3000/user/1/trip/1/expense`)
+			fetch(`http://localhost:5422/user/1/trip/1/event`),
+			fetch(`http://localhost:5422/user/1/trip/1/to_do`),
+			fetch(`http://localhost:5422/user/1/trip/1/expense`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
