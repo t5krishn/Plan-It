@@ -42,10 +42,10 @@ export function fetchUserData(user) {
 
     dispatch(requestUserData(user));
     return Promise.all([
-      fetch(`http://localhost:5422/user/${user}`),
-      fetch(`http://localhost:5422/user/${user}/trip`),
-      fetch(`http://localhost:5422/user/${user}/transactions`),
-      fetch(`http://localhost:5422/user/${user}/friend`)
+      fetch(` https://plan-it-api-1.herokuapp.com/user/${user}`),
+      fetch(` https://plan-it-api-1.herokuapp.com/user/${user}/trip`),
+      fetch(` https://plan-it-api-1.herokuapp.com/user/${user}/transactions`),
+      fetch(` https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
     ])
       .then(response => {
         let data = response.map(res => res.json())
