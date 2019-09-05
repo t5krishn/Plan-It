@@ -32,7 +32,6 @@ function LoginScreen(props) {
 		fetch(request)
 			.then(res => res.json())
 			.then(data => {
-        console.log(data);
 				if (data.status === "error") {
 					Alert.alert("Your password or username is incorrect");
 				} else {
@@ -82,30 +81,30 @@ const styles = StyleSheet.create({
 	}
 });
 
-function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
-	const {
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	} = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
-		user: {},
-		user_trips: [],
-		user_expenses: [],
-		user_friends: []
-	};
+// function mapStateToProps(state) {
+// 	const { selectedUser, gettingUserData } = state;
+// 	const {
+// 		isFetchingUser,
+// 		user,
+// 		user_trips,
+// 		user_expenses,
+// 		user_friends
+// 	} = gettingUserData[selectedUser] || {
+// 		isFetchingUser: true,
+// 		user: {},
+// 		user_trips: [],
+// 		user_expenses: [],
+// 		user_friends: []
+// 	};
 
-	return {
-		selectedUser,
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	};
-}
+// 	return {
+// 		selectedUser,
+// 		isFetchingUser,
+// 		user,
+// 		user_trips,
+// 		user_expenses,
+// 		user_friends
+// 	};
+// }
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect()(LoginScreen);

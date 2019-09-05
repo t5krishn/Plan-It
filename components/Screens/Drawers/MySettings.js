@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, AsyncStorage } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 
 import { connect } from "react-redux";
-import { resetStore } from "../../../store/actions/storeAction";
+import { resetStore } from "../../../store/actions/resetStoreAction";
 
 function SettingsScreen(props) {
 	const handleSubmit = async () => {

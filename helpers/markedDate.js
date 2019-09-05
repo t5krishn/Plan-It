@@ -31,7 +31,7 @@ const getDates = function(startDate, stopDate, i) {
 	return dateObj;
 };
 
-const markedDate = function(trips) {
+const markedDate = function(trips=[]) {
 	let tripsArr = [];
 	for (let i = 0; i < trips.length; i++) {
 		tripsArr.push({

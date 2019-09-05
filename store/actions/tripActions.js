@@ -30,17 +30,17 @@ function receiveTripData(trip, data) {
 	};
 }
 
-export function fetchTripData(trip) {
+export function fetchTripData(trip, user) {
 	return dispatch => {
-		// return fetch(` https://plan-it-api-1.herokuapp.com/user/1/trip/1/event`)
+		// return fetch(` http://localhost:5422/user/1/trip/1/event`)
 		//   .then(response => response.json())
 		//   .then(json => dispatch(receiveTripData(trip, json)));
 
 		dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(` https://plan-it-api-1.herokuapp.com/user/1/trip/1/event`),
-			fetch(` https://plan-it-api-1.herokuapp.com/user/1/trip/1/to_do`),
-			fetch(` https://plan-it-api-1.herokuapp.com/user/1/trip/1/expense`)
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/event`),
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/to_do`),
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/expense`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());

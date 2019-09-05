@@ -12,27 +12,15 @@ import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
 import { connect } from "react-redux";
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
+import { gettingUserData } from "../../../store/reducers/userReducer";
 
 function Dashboard(props) {
-	let [trips, setTrips] = useState([]);
-
-	const getAllTrips = () => {
-		fetch(" https://plan-it-api-1.herokuapp.com/user/1/trip")
-			.then(res => res.json())
-			.then(data => {
-				setTrips(data);
-			});
-	};
 
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
-		props.dispatch(fetchTripData(trip_id));
+		props.dispatch(fetchTripData(trip_id, selectedUser));
 		props.navigation.navigate("TabNavigator");
 	};
-
-	useEffect(() => {
-		getAllTrips();
-	}, []);
 
 	return (
 		<View style={styles.mainScreenContainer}>
@@ -40,7 +28,7 @@ function Dashboard(props) {
 			<View style={styles.topContainer}>
 				<Text style={styles.titleText}>DashboardScreen: </Text>
 				<View style={styles.calendarContainer}>
-					<CalendarMonth trips={trips} />
+					<CalendarMonth trips={props.user_trips} />
 				</View>
 			</View>
 
@@ -49,7 +37,7 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					<TripsList onPress={onPressTripHandler} trips={trips} />
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 					<TouchableOpacity
 						style={{
 							height: 50,
@@ -111,23 +99,32 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData, selectedUser } = state;
-	const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
-		selectedTrip
+	const { /* selectedTrip, gettingTripData, */ selectedUser, gettingUserData } = state;
+	// const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
+	// 	selectedTrip
+	// ] || {
+	// 	isFetchingTrip: true,
+	// 	events: [],
+	// 	toDos: [],
+	// 	expenses: []
+	// };
+
+	const { isFetchingUser, user_trips } = gettingUserData[
+		selectedUser
 	] || {
-		isFetchingTrip: true,
-		events: [],
-		toDos: [],
-		expenses: []
-	};
+		isFetchingUser: true,
+		user_trips: []
+	}
 
 	return {
+		// selectedTrip,
+		// isFetchingTrip,
+		// events,
+		// toDos,
+		// expenses
 		selectedUser,
-		selectedTrip,
-		isFetchingTrip,
-		events,
-		toDos,
-		expenses
+		isFetchingUser,
+		user_trips
 	};
 }
 
