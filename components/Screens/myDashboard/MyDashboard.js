@@ -18,7 +18,7 @@ function Dashboard(props) {
 	let [trips, setTrips] = useState([]);
 
 	const getAllTrips = () => {
-		fetch("http://localhost:5422/user/1/trip")
+		fetch(" https://plan-it-api-1.herokuapp.com/user/1/trip")
 			.then(res => res.json())
 			.then(data => {
 				setTrips(data);
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 	tripsScrollContainer: {
 		width: "100%"
 	},
-	tripsContent: {
+	tripsContsent: {
 		paddingBottom: 10
 		// backgroundColor: "yellow"
 	}

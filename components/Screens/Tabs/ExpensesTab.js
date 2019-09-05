@@ -7,7 +7,7 @@ import AddBtn from "../../Buttons/Addbtn";
 import { connect } from "react-redux";
 
 // useEffect(() => {
-// 	const request = new Request("http://localhost:5422/user/1/trip/1/expense", {
+// 	const request = new Request(" https://plan-it-api-1.herokuapp.com/user/1/trip/1/expense", {
 // 		method: "GET",
 // 		headers: {
 // 			"Content-type": "application/json"

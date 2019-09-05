@@ -8,10 +8,20 @@ import {
 } from "react-native";
 import MenuBtn from "../Buttons/Menubtn";
 
-export default function LoginScreen({ navigation }) {
+import { connect } from "react-redux";
+import { selectUser, fetchUserData } from "../../store/actions/userAction";
+
+
+function LoadAuthScreen(props) {
 	const loadData = async () => {
 		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-		navigation.navigate(isLoggedIn ? "Dashboard" : "Login");
+		if (isLoggedIn) {
+			props.dispatch(selectUser(isLoggedIn));
+			props.dispatch(fetchUserData(isLoggedIn));
+			props.navigation.navigate("Dashboard");
+		} else {
+			props.navigation.navigate("Login");
+		}
 	};
 
 	loadData();
@@ -31,3 +41,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "gray"
 	}
 });
+
+
+
+  
+  export default connect()(LoadAuthScreen);
+  

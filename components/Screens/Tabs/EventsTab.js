@@ -7,13 +7,13 @@ import AddBtn from "../../Buttons/Addbtn";
 import { connect } from "react-redux";
 
 function EventsTab(props) {
-
+	
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
-				<Text>San Diego Trip!</Text>
-				{/* {console.log(props.isFetchingTrip)} */}
+				<Text>San Diego Trip! </Text>
+				{console.log(props.isFetchingTrip)}
 				<Text>
 					{props.events.length} Events Total
 				</Text>

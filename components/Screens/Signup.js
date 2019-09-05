@@ -19,15 +19,14 @@ export default function RegisterForm({ navigation }) {
 		password: ""
 	});
 
-	let id;
 
-	const login = async () => {
+	const login = async function (id) {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
 		navigation.navigate("Dashboard");
 	};
 
 	const handleSubmit = () => {
-		const request = new Request("http://localhost:5422/user", {
+		const request = new Request(" https://plan-it-api-1.herokuapp.com/user", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
@@ -41,8 +40,8 @@ export default function RegisterForm({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("There was an error with creating your account");
 				} else {
-					id = data.id;
-					login();
+					console.log(data)
+					login(data.id);
 				}
 			})
 			.catch(err => console.log(err));
