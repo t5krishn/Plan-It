@@ -15,6 +15,7 @@ import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 import { gettingUserData } from "../../../store/reducers/userReducer";
 
 function Dashboard(props) {
+
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
 		props.dispatch(fetchTripData(trip_id, selectedUser));
@@ -98,10 +99,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const {
-		/* selectedTrip, gettingTripData, */ selectedUser,
-		gettingUserData
-	} = state;
+	const { /* selectedTrip, gettingTripData, */ selectedUser, gettingUserData } = state;
 	// const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
 	// 	selectedTrip
 	// ] || {
@@ -111,12 +109,12 @@ function mapStateToProps(state) {
 	// 	expenses: []
 	// };
 
-	const { isFetchingUser, user_trips } = gettingUserData[selectedUser] || {
+	const { isFetchingUser, user_trips } = gettingUserData[
+		selectedUser
+	] || {
 		isFetchingUser: true,
 		user_trips: []
-	};
-
-	console.log("FROM MAP STATE:", Object.keys(selectedUser)[0]);
+	}
 
 	return {
 		// selectedTrip,

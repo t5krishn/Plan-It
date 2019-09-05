@@ -39,10 +39,11 @@ function receiveUserData(user, data) {
 
 export const ADD_USER_TRIP = "ADD_USER_TRIP";
 
-export function addNewUserTrip(trip) {
+export function addNewUserTrip(trip, user_id) {
 	return {
 		type: ADD_USER_TRIP,
-		trip
+		trip,
+		user_id
 	};
 }
 

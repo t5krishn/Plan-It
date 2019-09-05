@@ -16,25 +16,16 @@ function selectedUser(state = {}, action) {
 	}
 }
 
-function updateTripsArr(
-	state = {
-		isFetchingUser: false,
-		user: {},
-		user_trips: [],
-		user_expenses: [],
-		user_friends: []
-	},
-	action
-) {
-	switch (action.type) {
-		case ADD_USER_TRIP:
-			return Object.assign({}, state, {
-				user_trips: []
-			});
-		default:
-			return state;
-	}
-}
+// function updateTripsArr(state, action) {
+// 	switch (action.type) {
+// 		case ADD_USER_TRIP:
+// 			return Object.assign({}, state, {
+// 				user_trips: [action.trip, ...state.user_trips]
+// 			});
+// 		default:
+// 			return state;
+// 	}
+// }
 
 function userData(
 	state = {
@@ -47,6 +38,10 @@ function userData(
 	action
 ) {
 	switch (action.type) {
+		case ADD_USER_TRIP:
+			return Object.assign({}, state, {
+				user_trips: [action.trip, ...state.user_trips]
+			});
 		case REQUEST_USER_DATA:
 			return Object.assign({}, state, {
 				isFetchingUser: true
@@ -69,6 +64,7 @@ function gettingUserData(state = {}, action) {
 	switch (action.type) {
 		case RECEIVE_USER_DATA:
 		case REQUEST_USER_DATA:
+		case ADD_USER_TRIP:
 			return Object.assign({}, state, {
 				[action.user_id]: userData(state[action.user_id], action)
 			});
@@ -84,4 +80,4 @@ function gettingUserData(state = {}, action) {
 
 // export default userReducer;
 
-export { gettingUserData, selectedUser, updateTripsArr };
+export { gettingUserData, selectedUser };
