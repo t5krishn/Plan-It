@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
+import AddBtn from "../../Buttons/Addbtn";
 
 export default function MyExpensesScreen({ navigation }) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={navigation} />
 			<Text>ExpensesScreen</Text>
+			<AddBtn />
 		</View>
 	);
 }
