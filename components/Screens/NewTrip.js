@@ -22,9 +22,9 @@ function RegisterForm(props) {
 		description: ""
 	});
 
-	handleSubmit = () => {
+	const handleSubmit = () => {
 		const request = new Request(
-			`http://localhost:3000/user/${props.selectedUser}/trip`,
+			`http://localhost:5422/user/${props.selectedUser}/trip`,
 			{
 				method: "POST",
 				headers: {
@@ -38,7 +38,7 @@ function RegisterForm(props) {
 			.then(response => response.json())
 			.then(data => {
 				if (data.status === "ok") {
-					props.dispatch(addNewUserTrip(data.trip));
+					props.dispatch(addNewUserTrip(data.trip, props.selectedUser));
 					props.navigation.navigate("Dashboard");
 				} else {
 					Alert.alert("There was an issue with saving your trip");
@@ -46,7 +46,7 @@ function RegisterForm(props) {
 			});
 	};
 
-	inviteFriends = () => {};
+	const inviteFriends = () => {};
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>

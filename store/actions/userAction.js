@@ -39,10 +39,11 @@ function receiveUserData(user, data) {
 
 export const ADD_USER_TRIP = "ADD_USER_TRIP";
 
-export function addNewUserTrip(trip) {
+export function addNewUserTrip(trip, user_id) {
 	return {
 		type: ADD_USER_TRIP,
-		trip
+		trip,
+		user_id
 	};
 }
 
@@ -50,10 +51,10 @@ export function fetchUserData(user) {
 	return dispatch => {
 		dispatch(requestUserData(user));
 		return Promise.all([
-			fetch(` http://localhost:3000/user/${user}`),
-			fetch(` http://localhost:3000/user/${user}/trip`),
-			fetch(` http://localhost:3000/user/${user}/transactions`),
-			fetch(` http://localhost:3000/user/${user}/friend`)
+			fetch(` http://localhost:5422/user/${user}`),
+			fetch(` http://localhost:5422/user/${user}/trip`),
+			fetch(` http://localhost:5422/user/${user}/transactions`),
+			fetch(` http://localhost:5422/user/${user}/friend`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
