@@ -22,7 +22,7 @@ function RegisterForm(props) {
 		description: ""
 	});
 
-	handleSubmit = () => {
+	const handleSubmit = () => {
 		const request = new Request(
 			`http://localhost:3000/user/${props.selectedUser}/trip`,
 			{
@@ -37,6 +37,7 @@ function RegisterForm(props) {
 		fetch(request)
 			.then(response => response.json())
 			.then(data => {
+				console.log(data.trip);
 				if (data.status === "ok") {
 					props.dispatch(addNewUserTrip(data.trip));
 					props.navigation.navigate("Dashboard");
@@ -46,7 +47,7 @@ function RegisterForm(props) {
 			});
 	};
 
-	inviteFriends = () => {};
+	const inviteFriends = () => {};
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>

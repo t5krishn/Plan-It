@@ -29,7 +29,7 @@ function updateTripsArr(
 	switch (action.type) {
 		case ADD_USER_TRIP:
 			return Object.assign({}, state, {
-				user_trips: [action.trip, ...state.user_trips]
+				user_trips: []
 			});
 		default:
 			return state;
