@@ -21,7 +21,7 @@ function LoginScreen(props) {
 	};
 
 	const handleSubmit = () => {
-		const request = new Request("http://localhost:3000/login", {
+		const request = new Request(" http://localhost:3000/login", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
@@ -81,30 +81,30 @@ const styles = StyleSheet.create({
 	}
 });
 
-function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
-	const {
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	} = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
-		user: {},
-		user_trips: [],
-		user_expenses: [],
-		user_friends: []
-	};
+// function mapStateToProps(state) {
+// 	const { selectedUser, gettingUserData } = state;
+// 	const {
+// 		isFetchingUser,
+// 		user,
+// 		user_trips,
+// 		user_expenses,
+// 		user_friends
+// 	} = gettingUserData[selectedUser] || {
+// 		isFetchingUser: true,
+// 		user: {},
+// 		user_trips: [],
+// 		user_expenses: [],
+// 		user_friends: []
+// 	};
 
-	return {
-		selectedUser,
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	};
-}
+// 	return {
+// 		selectedUser,
+// 		isFetchingUser,
+// 		user,
+// 		user_trips,
+// 		user_expenses,
+// 		user_friends
+// 	};
+// }
 
-export default connect(mapStateToProps)(LoginScreen);
+export default connect()(LoginScreen);

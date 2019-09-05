@@ -37,7 +37,6 @@ function RegisterForm(props) {
 		fetch(request)
 			.then(response => response.json())
 			.then(data => {
-				console.log(data.trip);
 				if (data.status === "ok") {
 					props.dispatch(addNewUserTrip(data.trip));
 					props.navigation.navigate("Dashboard");

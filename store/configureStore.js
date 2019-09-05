@@ -1,18 +1,11 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
-import tripReducer from "./reducers/tripReducer";
 
-import { gettingTripData, selectedTrip } from "./reducers/tripReducer";
-import { gettingUserData, selectedUser } from "./reducers/userReducer";
+import { rootReducer } from "../store/reducers/rootReducer";
+
 const loggerMiddleware = createLogger();
 
-const rootReducer = combineReducers({
-	gettingTripData,
-	selectedTrip,
-	gettingUserData,
-	selectedUser
-});
 
 export default function configureStore(preloadedState) {
 	return createStore(

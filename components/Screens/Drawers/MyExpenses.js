@@ -2,13 +2,21 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import AddBtn from "../../Buttons/Addbtn";
+import ExpensesCards from "./ExpensesCards";
 
-export default function MyExpensesScreen({ navigation }) {
+import { connect } from "react-redux";
+
+function MyExpensesScreen(props) {
 	return (
-		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
-			<Text>ExpensesScreen</Text>
-			<AddBtn />
+		<View>
+			<MenuBtn navigation={props.navigation} />
+			<View style={styles.container}>
+				<Text>ExpensesScreen</Text>
+				<AddBtn />
+			</View>
+			<ScrollView>
+				<ExpensesCards items={props.user_expenses} />
+			</ScrollView>
 		</View>
 	);
 }
@@ -25,3 +33,20 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const { isFetchingUser, user_expenses } = gettingUserData[
+		selectedUser
+	] || {
+		isFetchingUser: true,
+		user_expenses: []
+	}
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user_expenses
+	}
+}
+
+export default connect(mapStateToProps)(MyExpensesScreen);

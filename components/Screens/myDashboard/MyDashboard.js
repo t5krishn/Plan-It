@@ -12,13 +12,12 @@ import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
 import { connect } from "react-redux";
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
+import { gettingUserData } from "../../../store/reducers/userReducer";
 
 function Dashboard(props) {
-	// let [trips, setTrips] = useState([]);
-
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
-		props.dispatch(fetchTripData(trip_id));
+		props.dispatch(fetchTripData(trip_id, selectedUser));
 		props.navigation.navigate("TabNavigator");
 	};
 
@@ -92,32 +91,42 @@ const styles = StyleSheet.create({
 	tripsScrollContainer: {
 		width: "100%"
 	},
-	tripsContent: {
+	tripsContsent: {
 		paddingBottom: 10
 		// backgroundColor: "yellow"
 	}
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData, selectedUser } = state;
-	const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
-		selectedTrip
-	] || {
-		isFetchingTrip: true,
-		events: [],
-		toDos: [],
-		expenses: []
+	const {
+		/* selectedTrip, gettingTripData, */ selectedUser,
+		gettingUserData
+	} = state;
+	// const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
+	// 	selectedTrip
+	// ] || {
+	// 	isFetchingTrip: true,
+	// 	events: [],
+	// 	toDos: [],
+	// 	expenses: []
+	// };
+
+	const { isFetchingUser, user_trips } = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user_trips: []
 	};
 
 	console.log("FROM MAP STATE:", Object.keys(selectedUser)[0]);
 
 	return {
+		// selectedTrip,
+		// isFetchingTrip,
+		// events,
+		// toDos,
+		// expenses
 		selectedUser,
-		selectedTrip,
-		isFetchingTrip,
-		events,
-		toDos,
-		expenses
+		isFetchingUser,
+		user_trips
 	};
 }
 

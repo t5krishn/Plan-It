@@ -2,15 +2,19 @@ import React from "react";
 import { View, Text, StyleSheet, Button, AsyncStorage } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 
-export default function SettingsScreen({ navigation }) {
+import { connect } from "react-redux";
+import { resetStore } from "../../../store/actions/resetStoreAction";
+
+function SettingsScreen(props) {
 	const handleSubmit = async () => {
 		await AsyncStorage.clear();
-		navigation.navigate("Login");
+		props.dispatch(resetStore());
+		props.navigation.navigate("Login");
 	};
 
 	return (
 		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<Text>SettingsScreen</Text>
 			<Button title="Logout" onPress={() => handleSubmit()} />
 		</View>
@@ -29,3 +33,6 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+
+
+export default connect()(SettingsScreen)

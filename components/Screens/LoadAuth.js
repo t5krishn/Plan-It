@@ -9,7 +9,7 @@ import {
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
-function LoginScreen(props) {
+function LoadAuthScreen(props) {
 	const loadData = async () => {
 		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
 		if (isLoggedIn) {
@@ -39,30 +39,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
-	const {
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	} = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
-		user: {},
-		user_trips: [],
-		user_expenses: [],
-		user_friends: []
-	};
-
-	return {
-		selectedUser,
-		isFetchingUser,
-		user,
-		user_trips,
-		user_expenses,
-		user_friends
-	};
-}
-
-export default connect(mapStateToProps)(LoginScreen);
+export default connect()(LoadAuthScreen);

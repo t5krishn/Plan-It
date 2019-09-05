@@ -10,7 +10,10 @@ import {
 	AsyncStorage
 } from "react-native";
 
-export default function RegisterForm({ navigation }) {
+import { connect } from "react-redux";
+import { selectUser, fetchUserData } from "../../store/actions/userAction";
+
+function RegisterForm(props) {
 	const [state, setState] = useState({
 		first_name: "",
 		last_name: "",
@@ -19,15 +22,13 @@ export default function RegisterForm({ navigation }) {
 		password: ""
 	});
 
-	// let id;
-
-	const login = async id => {
+	const login = async function(id) {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
-		navigation.navigate("Dashboard");
+		props.navigation.navigate("Dashboard");
 	};
 
 	const handleSubmit = () => {
-		const request = new Request("http://localhost:3000/user", {
+		const request = new Request(" http://localhost:3000/user", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
@@ -38,10 +39,12 @@ export default function RegisterForm({ navigation }) {
 		fetch(request)
 			.then(res => res.json())
 			.then(data => {
-				console.log(data);
 				if (data.status === "error") {
 					Alert.alert("There was an error with creating your account");
 				} else {
+					props.dispatch(selectUser(data.id));
+					props.dispatch(fetchUserData(data.id));
+
 					login(data.id);
 				}
 			})
@@ -51,7 +54,10 @@ export default function RegisterForm({ navigation }) {
 	return (
 		<KeyboardAvoidingView bahaviour="padding" style={styles.container}>
 			<View style={styles.btnView}>
-				<Button title="Cancel" onPress={() => navigation.navigate("Login")} />
+				<Button
+					title="Cancel"
+					onPress={() => props.navigation.navigate("Login")}
+				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
 			</View>
 			<View>
@@ -116,3 +122,5 @@ const styles = StyleSheet.create({
 		width: 350
 	}
 });
+
+export default connect()(RegisterForm);
