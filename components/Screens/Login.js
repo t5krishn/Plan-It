@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  Alert,
-  AsyncStorage
+	View,
+	Text,
+	TextInput,
+	Button,
+	StyleSheet,
+	Alert,
+	AsyncStorage
 } from "react-native";
-import MenuBtn from "../Buttons/Menubtn";
 
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
@@ -46,67 +45,67 @@ function LoginScreen(props) {
 			.catch(err => console.log(err));
 	};
 
-  return (
-    <View style={styles.container}>
-      <Text>Email</Text>
-      <TextInput
-        autoCapitalize="none"
-        style={styles.TextInput}
-        onChangeText={text => setState({ ...state, email: text })}
-      />
-      <Text>Password</Text>
-      <TextInput
-        autoCapitalize="none"
-        style={styles.TextInput}
-        onChangeText={text => setState({ ...state, password: text })}
-      />
-      <Button title="Login" onPress={() => handleSubmit()} />
-      <Text>Don't have an account? Sign up:</Text>
-      <Button
-        title="Sign Up"
-        onPress={() => props.navigation.navigate("Signup")}
-      />
-    </View>
-  );
+	return (
+		<View style={styles.container}>
+			<Text>Email</Text>
+			<TextInput
+				autoCapitalize="none"
+				style={styles.TextInput}
+				onChangeText={text => setState({ ...state, email: text })}
+			/>
+			<Text>Password</Text>
+			<TextInput
+				autoCapitalize="none"
+				style={styles.TextInput}
+				onChangeText={text => setState({ ...state, password: text })}
+			/>
+			<Button title="Login" onPress={() => handleSubmit()} />
+			<Text>Don't have an account? Sign up:</Text>
+			<Button
+				title="Sign Up"
+				onPress={() => props.navigation.navigate("Signup")}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  TextInput: {
-    borderColor: "black",
-    borderWidth: 1,
-    width: 100
-  }
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	TextInput: {
+		borderColor: "black",
+		borderWidth: 1,
+		width: 100
+	}
 });
 
 function mapStateToProps(state) {
-  const { selectedUser, gettingUserData } = state;
-  const {
-    isFetchingUser,
-    user,
-    user_trips,
-    user_expenses,
-    user_friends
-  } = gettingUserData[selectedUser] || {
-    isFetchingUser: true,
-    user: {},
-    user_trips: [],
-    user_expenses: [],
-    user_friends: []
-  };
+	const { selectedUser, gettingUserData } = state;
+	const {
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	} = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user: {},
+		user_trips: [],
+		user_expenses: [],
+		user_friends: []
+	};
 
-  return {
-    selectedUser,
-    isFetchingUser,
-    user,
-    user_trips,
-    user_expenses,
-    user_friends
-  };
+	return {
+		selectedUser,
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	};
 }
 
 export default connect(mapStateToProps)(LoginScreen);

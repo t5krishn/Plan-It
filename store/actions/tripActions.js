@@ -10,24 +10,24 @@ export function selectTrip(trip) {
 export const REQUEST_TRIP_DATA = "REQUEST_TRIP_DATA";
 
 function requestTripData(trip) {
-  return {
-    type: REQUEST_TRIP_DATA,
-    current_trip: trip,
-    isFetchingTrip: true
-  };
+	return {
+		type: REQUEST_TRIP_DATA,
+		current_trip: trip,
+		isFetchingTrip: true
+	};
 }
 
 export const RECEIVE_TRIP_DATA = "RECEIVE_TRIP_DATA";
 
 function receiveTripData(trip, data) {
-  return {
-    type: RECEIVE_TRIP_DATA,
-    isFetchingTrip: false,
-    current_trip: trip,
-    events: data[0],
-    toDos: data[1],
-    expenses: data[2]
-  };
+	return {
+		type: RECEIVE_TRIP_DATA,
+		isFetchingTrip: false,
+		current_trip: trip,
+		events: data[0],
+		toDos: data[1],
+		expenses: data[2]
+	};
 }
 
 export function fetchTripData(trip) {

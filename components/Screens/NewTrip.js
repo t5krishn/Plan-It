@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+	Alert,
 	KeyboardAvoidingView,
 	Text,
 	TextInput,
@@ -25,15 +26,18 @@ export default function RegisterForm({ navigation }) {
 			headers: {
 				"Content-type": "application/json"
 			},
-			body: JSON.stringify(state)
+			body: JSON.stringify({ trip: state })
 		});
 
-		fetch(request).then(response => {
-			// response.ok is true if User has successfully been INSERTED
-			if (response.ok) {
-				navigation.navigate("Dashboard");
-			}
-		});
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === "ok") {
+					navigation.navigate("Dashboard");
+				} else {
+					Alert.alert("There was an issue with saving your trip");
+				}
+			});
 	};
 
 	inviteFriends = () => {};

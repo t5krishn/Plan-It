@@ -111,22 +111,24 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  const { selectedTrip, gettingTripData, selectedUser } = state;
-  const { isFetchingTrip, events, toDos, expenses } = gettingTripData[selectedTrip] || {
-    isFetchingTrip: true,
-	events: [],
-	toDos: [],
-	expenses: []
-  }
-  
-  return {
-	selectedUser,
-	selectedTrip,
-	isFetchingTrip,
-	events,
-	toDos,
-	expenses
-  };
+	const { selectedTrip, gettingTripData, selectedUser } = state;
+	const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
+		selectedTrip
+	] || {
+		isFetchingTrip: true,
+		events: [],
+		toDos: [],
+		expenses: []
+	};
+
+	return {
+		selectedUser,
+		selectedTrip,
+		isFetchingTrip,
+		events,
+		toDos,
+		expenses
+	};
 }
 
 export default connect(mapStateToProps)(Dashboard);

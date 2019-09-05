@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
 import AddBtn from "../../Buttons/Addbtn";
+import CalendarMonth from "../myDashboard/CalendarMonth";
 
 import { connect } from "react-redux";
 
@@ -21,11 +22,11 @@ function EventsTab(props) {
 				<Text>Calendar View</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				{(props.isFetchingTrip)? 
+				{props.isFetchingTrip ? (
 					<Text>Loading!</Text>
-					:
+				) : (
 					<EventCards items={props.events} />
-					}
+				)}
 			</ScrollView>
 			<AddBtn />
 		</View>

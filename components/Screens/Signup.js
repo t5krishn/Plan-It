@@ -37,6 +37,7 @@ export default function RegisterForm({ navigation }) {
 		fetch(request)
 			.then(res => res.json())
 			.then(data => {
+				console.log(data);
 				if (data.status === "error") {
 					Alert.alert("There was an error with creating your account");
 				} else {
