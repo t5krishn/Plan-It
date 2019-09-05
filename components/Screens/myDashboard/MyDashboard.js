@@ -10,9 +10,7 @@ import {
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
-
 import { connect } from "react-redux";
-
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 
 function Dashboard(props) {
@@ -43,7 +41,7 @@ function Dashboard(props) {
 				<Text style={styles.titleText}>DashboardScreen</Text>
 
 				<View style={styles.calendarContainer}>
-					<CalendarMonth />
+					<CalendarMonth trips={trips} />
 				</View>
 			</View>
 
@@ -54,9 +52,16 @@ function Dashboard(props) {
 				>
 					<TripsList onPress={onPressTripHandler} trips={trips} />
 					<TouchableOpacity
+						style={{
+							height: 50,
+							flex: 1,
+							alignItems: "center",
+							justifyContent: "center",
+							backgroundColor: "blue"
+						}}
 						onPress={() => props.navigation.navigate("NewTrip")}
 					>
-						<Text>+ Add new trip</Text>
+						<Text style={{ color: "lightgreen" }}>+ Add new trip</Text>
 					</TouchableOpacity>
 				</ScrollView>
 			</View>

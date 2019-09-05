@@ -19,9 +19,9 @@ export default function RegisterForm({ navigation }) {
 		password: ""
 	});
 
-	let id;
+	// let id;
 
-	const login = async () => {
+	const login = async id => {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
 		navigation.navigate("Dashboard");
 	};
@@ -41,8 +41,7 @@ export default function RegisterForm({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("There was an error with creating your account");
 				} else {
-					id = data.id;
-					login();
+					login(data.id);
 				}
 			})
 			.catch(err => console.log(err));

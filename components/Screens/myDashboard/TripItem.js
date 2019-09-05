@@ -2,13 +2,14 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
 export default function TripItem({ onPress, trip }) {
-    return (
-        <TouchableOpacity
-        onPress={() => {onPress(trip.id)}}
-        style={styles.tripContentItem}>
-                <Text style={styles.tripNameText}>
-                    {trip.name}
-                </Text>
+	return (
+		<TouchableOpacity
+			onPress={() => {
+				onPress(trip.id);
+			}}
+			style={styles.tripContentItem}
+		>
+			<Text style={styles.tripNameText}>{trip.name}</Text>
 
 			<Text style={styles.tripLocationText}>{trip.location}</Text>
 

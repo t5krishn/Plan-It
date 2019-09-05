@@ -13,9 +13,9 @@ import MenuBtn from "../Buttons/Menubtn";
 export default function LoginScreen({ navigation }) {
 	const [state, setState] = useState({ email: "", password: "" });
 
-	let id;
+	// let id;
 
-	const login = async () => {
+	const login = async id => {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
 		navigation.navigate("Dashboard");
 	};
@@ -35,8 +35,7 @@ export default function LoginScreen({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("Your password or username is incorrect");
 				} else {
-					id = data.id;
-					login();
+					login(data.id);
 				}
 			})
 			.catch(err => console.log(err));
