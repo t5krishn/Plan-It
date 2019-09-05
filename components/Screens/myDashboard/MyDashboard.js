@@ -38,8 +38,7 @@ function Dashboard(props) {
 		<View style={styles.mainScreenContainer}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
-				<Text style={styles.titleText}>DashboardScreen</Text>
-
+				<Text style={styles.titleText}>DashboardScreen: </Text>
 				<View style={styles.calendarContainer}>
 					<CalendarMonth trips={trips} />
 				</View>
@@ -112,19 +111,20 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData } = state;
-	const { isFetching, events, toDos, expenses } = gettingTripData[
+	const { selectedTrip, gettingTripData, selectedUser } = state;
+	const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
 		selectedTrip
 	] || {
-		isFetching: true,
+		isFetchingTrip: true,
 		events: [],
 		toDos: [],
 		expenses: []
 	};
 
 	return {
+		selectedUser,
 		selectedTrip,
-		isFetching,
+		isFetchingTrip,
 		events,
 		toDos,
 		expenses

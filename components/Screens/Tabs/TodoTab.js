@@ -11,7 +11,8 @@ function TodoTab(props) {
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
-				<Text>TodoTab</Text>
+				<Text>TodoTab: </Text>
+				{console.log(props.user)}
 				<Text>{props.toDos.length} To do items</Text>
 				<Text>8 Completed</Text>
 			</View>
@@ -42,14 +43,20 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData } = state;
-	const { toDos } = gettingTripData[selectedTrip] || {
-		expenses: []
+	const { selectedTrip, gettingTripData, selectedUser, gettingUserData } = state;
+	const { toDos, isFetchingTrip } = gettingTripData[selectedTrip] || {
+		toDos: []
+	};
+	const { user } = gettingUserData[selectedUser] || {
+		user: {first_name: "default"}
 	};
 
 	return {
+		selectedUser,
 		selectedTrip,
-		toDos
+		toDos,
+		isFetchingTrip,
+		user
 	};
 }
 

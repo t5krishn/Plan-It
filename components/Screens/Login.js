@@ -8,16 +8,16 @@ import {
 	Alert,
 	AsyncStorage
 } from "react-native";
-import MenuBtn from "../Buttons/Menubtn";
 
-export default function LoginScreen({ navigation }) {
+import { connect } from "react-redux";
+import { selectUser, fetchUserData } from "../../store/actions/userAction";
+
+function LoginScreen(props) {
 	const [state, setState] = useState({ email: "", password: "" });
-
-	// let id;
 
 	const login = async id => {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
-		navigation.navigate("Dashboard");
+		props.navigation.navigate("Dashboard");
 	};
 
 	const handleSubmit = () => {
@@ -35,6 +35,9 @@ export default function LoginScreen({ navigation }) {
 				if (data.status === "error") {
 					Alert.alert("Your password or username is incorrect");
 				} else {
+					props.dispatch(selectUser(data.id));
+					props.dispatch(fetchUserData(data.id));
+
 					login(data.id);
 				}
 			})
@@ -57,7 +60,10 @@ export default function LoginScreen({ navigation }) {
 			/>
 			<Button title="Login" onPress={() => handleSubmit()} />
 			<Text>Don't have an account? Sign up:</Text>
-			<Button title="Sign Up" onPress={() => navigation.navigate("Signup")} />
+			<Button
+				title="Sign Up"
+				onPress={() => props.navigation.navigate("Signup")}
+			/>
 		</View>
 	);
 }
@@ -74,3 +80,31 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const {
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	} = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user: {},
+		user_trips: [],
+		user_expenses: [],
+		user_friends: []
+	};
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	};
+}
+
+export default connect(mapStateToProps)(LoginScreen);

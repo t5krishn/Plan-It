@@ -6,6 +6,7 @@ export default function AddBtn({ navigation }) {
 	return (
 		<View
 			style={{
+				position: "absolute",
 				width: Dimensions.get("screen").width,
 				height: Dimensions.get("screen").height + 20
 			}}

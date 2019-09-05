@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
 import AddBtn from "../../Buttons/Addbtn";
+import CalendarMonth from "../myDashboard/CalendarMonth";
 
 import { connect } from "react-redux";
 
@@ -12,14 +13,17 @@ function EventsTab(props) {
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
-				<Text>
-					{props.events.length} Events Total {console.log(props)}
-				</Text>
+				{console.log("from events tab", props.isFetchingTrip)}
+				<Text>{props.events.length} Events Total</Text>
 
 				<Text>Calendar View</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<EventCards items={props.events} />
+				{props.isFetchingTrip ? (
+					<Text>Loading!</Text>
+				) : (
+					<EventCards items={props.events} />
+				)}
 			</ScrollView>
 			<AddBtn />
 		</View>
@@ -46,12 +50,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	const { selectedTrip, gettingTripData } = state;
-	const { events } = gettingTripData[selectedTrip] || {
+	const { events, isFetchingTrip } = gettingTripData[selectedTrip] || {
+		isFetchingTrip: true,
 		events: []
 	};
 
 	return {
 		selectedTrip,
+		isFetchingTrip,
 		events
 	};
 }
