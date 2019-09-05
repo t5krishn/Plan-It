@@ -7,19 +7,25 @@ import AddBtn from "../../Buttons/Addbtn";
 import { connect } from "react-redux";
 
 function EventsTab(props) {
+
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
+				{/* {console.log(props.isFetchingTrip)} */}
 				<Text>
-					{props.events.length} Events Total {console.log(props)}
+					{props.events.length} Events Total
 				</Text>
 
 				<Text>Calendar View</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<EventCards items={props.events} />
+				{(props.isFetchingTrip)? 
+					<Text>Loading!</Text>
+					:
+					<EventCards items={props.events} />
+					}
 			</ScrollView>
 			<AddBtn />
 		</View>
@@ -46,12 +52,14 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
 	const { selectedTrip, gettingTripData } = state;
-	const { events } = gettingTripData[selectedTrip] || {
+	const { events, isFetchingTrip } = gettingTripData[selectedTrip] || {
+		isFetchingTrip: true,
 		events: []
 	};
 
 	return {
 		selectedTrip,
+		isFetchingTrip,
 		events
 	};
 }

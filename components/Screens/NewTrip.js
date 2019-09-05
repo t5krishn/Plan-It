@@ -20,7 +20,7 @@ export default function RegisterForm({ navigation }) {
 	});
 
 	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/user/1/trip", {
+		const request = new Request("http://localhost:5422/user/1/trip", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"

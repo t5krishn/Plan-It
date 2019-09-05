@@ -12,14 +12,13 @@ import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
 
 import { connect } from "react-redux";
-
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 
 function Dashboard(props) {
 	let [trips, setTrips] = useState([]);
 
 	const getAllTrips = () => {
-		fetch("http://localhost:3000/user/1/trip")
+		fetch("http://localhost:5422/user/1/trip")
 			.then(res => res.json())
 			.then(data => {
 				setTrips(data);
@@ -40,8 +39,7 @@ function Dashboard(props) {
 		<View style={styles.mainScreenContainer}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
-				<Text style={styles.titleText}>DashboardScreen</Text>
-
+				<Text style={styles.titleText}>DashboardScreen: </Text>
 				<View style={styles.calendarContainer}>
 					<CalendarMonth />
 				</View>
@@ -107,17 +105,16 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  const { selectedTrip, gettingTripData } = state;
-  const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
-    selectedTrip
-  ] || {
+  const { selectedTrip, gettingTripData, selectedUser } = state;
+  const { isFetchingTrip, events, toDos, expenses } = gettingTripData[selectedTrip] || {
     isFetchingTrip: true,
 	events: [],
 	toDos: [],
 	expenses: []
   }
-
+  
   return {
+	selectedUser,
 	selectedTrip,
 	isFetchingTrip,
 	events,

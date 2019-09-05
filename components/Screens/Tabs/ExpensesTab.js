@@ -7,7 +7,7 @@ import AddBtn from "../../Buttons/Addbtn";
 import { connect } from "react-redux";
 
 // useEffect(() => {
-// 	const request = new Request("http://localhost:3000/user/1/trip/1/expense", {
+// 	const request = new Request("http://localhost:5422/user/1/trip/1/expense", {
 // 		method: "GET",
 // 		headers: {
 // 			"Content-type": "application/json"
@@ -28,6 +28,7 @@ function ExpensesTab(props) {
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
+				{console.log(props.isFetchingTrip)}
 				<Text>{props.expenses.length} Expenses</Text>
 				<Text>You owe $800 total</Text>
 			</View>
