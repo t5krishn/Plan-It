@@ -22,7 +22,7 @@ function LoginScreen(props) {
   };
 
   const handleSubmit = () => {
-    const request = new Request(" https://plan-it-api-1.herokuapp.com/login", {
+    const request = new Request(" http://localhost:5422/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json"
@@ -30,20 +30,21 @@ function LoginScreen(props) {
       body: JSON.stringify(state)
     });
 
-    fetch(request)
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === "error") {
-          Alert.alert("Your password or username is incorrect");
-        } else {
+		fetch(request)
+			.then(res => res.json())
+			.then(data => {
+        console.log(data);
+				if (data.status === "error") {
+					Alert.alert("Your password or username is incorrect");
+				} else {
           props.dispatch(selectUser(data.id));
           props.dispatch(fetchUserData(data.id));
 
-          login(data.id);
-        }
-      })
-      .catch(err => console.log(err));
-  };
+					login(data.id);
+				}
+			})
+			.catch(err => console.log(err));
+	};
 
   return (
     <View style={styles.container}>
