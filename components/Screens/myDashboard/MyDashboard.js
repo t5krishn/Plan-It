@@ -18,7 +18,7 @@ function Dashboard(props) {
 
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
-		props.dispatch(fetchTripData(trip_id, selectedUser));
+		props.dispatch(fetchTripData(trip_id, props.selectedUser));
 		props.navigation.navigate("TabNavigator");
 	};
 

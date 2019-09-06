@@ -64,7 +64,7 @@ function gettingUserData(state = {}, action) {
 	switch (action.type) {
 		case RECEIVE_USER_DATA:
 		case REQUEST_USER_DATA:
-    case ADD_USER_TRIP:
+		case ADD_USER_TRIP:
 			return Object.assign({}, state, {
 				[action.user_id]: userData(state[action.user_id], action)
 			});

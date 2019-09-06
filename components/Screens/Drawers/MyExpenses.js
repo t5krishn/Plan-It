@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import AddBtn from "../../Buttons/Addbtn";
 import ExpensesCards from "./ExpensesCards";
@@ -7,15 +7,30 @@ import ExpensesCards from "./ExpensesCards";
 import { connect } from "react-redux";
 
 function MyExpensesScreen(props) {
+	let test = [
+		{
+			transaction_id: 1,
+			amount_owed_in_cents: 1231,
+			paid_off: false,
+			lender_id: 1,
+			borrower_id: 2,
+			expense_id: 1,
+			lender_first_name: "John",
+			lender_last_name: "Doe",
+			borrower_first_name: "Josh",
+			borrower_last_name: "Colen",
+			trip_name: "6ix turnup"
+		}
+	]
 	return (
 		<View>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.container}>
 				<Text>ExpensesScreen</Text>
-				<AddBtn />
 			</View>
+			{console.log(props.user_expenses)}
 			<ScrollView>
-				<ExpensesCards items={props.user_expenses} />
+				<ExpensesCards items={test} />
 			</ScrollView>
 		</View>
 	);
@@ -23,8 +38,7 @@ function MyExpensesScreen(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: "center",
+		marginTop: 200,
 		alignItems: "center"
 	},
 	TextInput: {

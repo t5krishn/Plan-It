@@ -13,7 +13,7 @@ export default function FriendsScreen({ navigation }) {
 	const [friends, setFriends] = useState([]);
 
 	useEffect(() => {
-		const request = new Request(" http://localhost:5422/user/1/friend", {
+		const request = new Request("http://localhost:5422/user/1/friend", {
 			method: "GET",
 			headers: {
 				"Content-type": "application/json"
@@ -55,3 +55,21 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const { isFetchingUser, user_friends } = gettingUserData[
+		selectedUser
+	] || {
+		isFetchingUser: true,
+		user_friends: []
+	}
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user_friends
+	}
+}
+
+export default connect(mapStateToProps)(MyExpensesScreen);
