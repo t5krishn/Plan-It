@@ -23,7 +23,7 @@ function EventsTab(props) {
 					<EventCards items={props.events} />
 				)}
 			</ScrollView>
-			<AddBtn />
+			<AddBtn tripId={props.selectedTrip} />
 		</View>
 	);
 }

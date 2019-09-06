@@ -5,20 +5,7 @@ import AddModal from "../Screens/Tabs/addModal";
 
 export default function AddBtn(props) {
 	const [isVisible, setVisibility] = useState(false);
-
-	const handleForm = name => {
-		switch (name) {
-			case "event":
-				setVisibility(true);
-				break;
-			case "todo":
-				setVisibility(true);
-				break;
-			case "expense":
-				setVisibility(true);
-				break;
-		}
-	};
+	const [mode, setMode] = useState("");
 
 	return (
 		<View
@@ -29,14 +16,20 @@ export default function AddBtn(props) {
 			}}
 		>
 			{isVisible && (
-				<AddModal setVisibility={setVisibility} isVisible={isVisible} />
+				<AddModal
+					setVisibility={setVisibility}
+					isVisible={isVisible}
+					tripId={props.tripId}
+					mode={mode}
+				/>
 			)}
 			<FloatingAction
 				distanceToEdge={{ vertical: 120, horizontal: 20 }}
 				actions={actions}
 				showBackground={true}
 				onPressItem={name => {
-					handleForm(name);
+					setMode(name);
+					setVisibility(true);
 				}}
 			/>
 		</View>
@@ -55,7 +48,7 @@ const actions = [
 	{
 		text: "Add To do",
 		icon: require("../../assets/check.png"),
-		name: "todo",
+		name: "to_do",
 		position: 2,
 		textBackground: "none",
 		textColor: "white"

@@ -18,7 +18,7 @@ function ExpensesTab(props) {
 			<ScrollView style={styles.lower}>
 				<ExpenseCards items={props.expenses} />
 			</ScrollView>
-			<AddBtn />
+			<AddBtn tripId={props.selectedTrip} />
 		</View>
 	);
 }
