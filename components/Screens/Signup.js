@@ -48,7 +48,7 @@ function RegisterForm(props) {
 					login(data.id);
 				}
 			})
-			.catch(err => console.log(err));
+			.catch(err => Alert.alert("There was an error with your signup: ", err));
 	};
 
 	return (

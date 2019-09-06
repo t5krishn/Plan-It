@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, Modal, Button } from "react-native";
 import { FloatingAction } from "react-native-floating-action";
 
-export default function AddBtn({ navigation }) {
+export default function AddBtn(props) {
 	return (
 		<View
 			style={{
@@ -15,9 +15,10 @@ export default function AddBtn({ navigation }) {
 				distanceToEdge={{ vertical: 120, horizontal: 20 }}
 				actions={actions}
 				showBackground={true}
-				onPressItem={name => {
-					console.log(`selected button: ${name}`);
-				}}
+				// onPressItem={name => {
+				// 	console.log(`selected button: ${name}`);
+				// }}
+				onPressItem={() => props.onPress()}
 			/>
 		</View>
 	);

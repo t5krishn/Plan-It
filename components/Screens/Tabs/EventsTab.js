@@ -4,20 +4,15 @@ import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
 import AddBtn from "../../Buttons/Addbtn";
 import CalendarMonth from "../myDashboard/CalendarMonth";
-
 import { connect } from "react-redux";
 
 function EventsTab(props) {
-	
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip! </Text>
-				{console.log(props.isFetchingTrip)}
-				<Text>
-					{props.events.length} Events Total
-				</Text>
+				<Text>{props.events.length} Events Total</Text>
 
 				<Text>Calendar View</Text>
 			</View>

@@ -15,9 +15,7 @@ export default function CalendarMonth(props) {
 		<CalendarList
 			markedDates={dates(markedDates(props.trips))}
 			markingType={"period"}
-			onVisibleMonthsChange={months => {
-				console.log("now these months are visible", months);
-			}}
+			onVisibleMonthsChange={months => {}}
 			pastScrollRange={50}
 			futureScrollRange={50}
 			scrollEnabled={true}

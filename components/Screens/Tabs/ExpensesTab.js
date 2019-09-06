@@ -12,7 +12,6 @@ function ExpensesTab(props) {
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
-				{console.log(props.isFetchingTrip)}
 				<Text>{props.expenses.length} Expenses</Text>
 				<Text>You owe $800 total</Text>
 			</View>

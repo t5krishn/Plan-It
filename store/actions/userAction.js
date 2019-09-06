@@ -51,10 +51,10 @@ export function fetchUserData(user) {
 	return dispatch => {
 		dispatch(requestUserData(user));
 		return Promise.all([
-			fetch(` http://localhost:3000/user/${user}`),
-			fetch(` http://localhost:3000/user/${user}/trip`),
-			fetch(` http://localhost:3000/user/${user}/transactions`),
-			fetch(` http://localhost:3000/user/${user}/friend`)
+			fetch(`http://localhost:3000/user/${user}`),
+			fetch(`http://localhost:3000/user/${user}/trip`),
+			fetch(`http://localhost:3000/user/${user}/transactions`),
+			fetch(`http://localhost:3000/user/${user}/friend`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());

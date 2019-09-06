@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Button, AsyncStorage } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
+import AddModal from "../Tabs/addModal";
 
 import { connect } from "react-redux";
 import { resetStore } from "../../../store/actions/resetStoreAction";
@@ -13,10 +14,13 @@ function SettingsScreen(props) {
 	};
 
 	return (
+		// <View style={styles.container}>
+		// 	<MenuBtn navigation={props.navigation} />
+		// 	<Text>SettingsScreen</Text>
+		// 	<Button title="Logout" onPress={() => handleSubmit()} />
+		// </View>
 		<View style={styles.container}>
-			<MenuBtn navigation={props.navigation} />
-			<Text>SettingsScreen</Text>
-			<Button title="Logout" onPress={() => handleSubmit()} />
+			<AddModal />
 		</View>
 	);
 }
@@ -34,5 +38,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-
-export default connect()(SettingsScreen)
+export default connect()(SettingsScreen);

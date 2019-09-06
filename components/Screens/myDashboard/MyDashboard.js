@@ -15,10 +15,9 @@ import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 import { gettingUserData } from "../../../store/reducers/userReducer";
 
 function Dashboard(props) {
-
 	const onPressTripHandler = trip_id => {
 		props.dispatch(selectTrip(trip_id));
-		props.dispatch(fetchTripData(trip_id, selectedUser));
+		props.dispatch(fetchTripData(trip_id, props.selectedUser));
 		props.navigation.navigate("TabNavigator");
 	};
 
@@ -99,7 +98,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { /* selectedTrip, gettingTripData, */ selectedUser, gettingUserData } = state;
+	const {
+		/* selectedTrip, gettingTripData, */ selectedUser,
+		gettingUserData
+	} = state;
 	// const { isFetchingTrip, events, toDos, expenses } = gettingTripData[
 	// 	selectedTrip
 	// ] || {
@@ -109,12 +111,10 @@ function mapStateToProps(state) {
 	// 	expenses: []
 	// };
 
-	const { isFetchingUser, user_trips } = gettingUserData[
-		selectedUser
-	] || {
+	const { isFetchingUser, user_trips } = gettingUserData[selectedUser] || {
 		isFetchingUser: true,
 		user_trips: []
-	}
+	};
 
 	return {
 		// selectedTrip,

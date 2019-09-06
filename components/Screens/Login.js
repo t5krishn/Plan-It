@@ -41,7 +41,9 @@ function LoginScreen(props) {
 					login(data.id);
 				}
 			})
-			.catch(err => console.log(err));
+			.catch(err =>
+				Alert.alert("There was an error in your login request: ", err)
+			);
 	};
 
 	return (

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import AddBtn from "../../Buttons/Addbtn";
 import ExpensesCards from "./ExpensesCards";
@@ -35,18 +35,16 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state) {
 	const { selectedUser, gettingUserData } = state;
-	const { isFetchingUser, user_expenses } = gettingUserData[
-		selectedUser
-	] || {
+	const { isFetchingUser, user_expenses } = gettingUserData[selectedUser] || {
 		isFetchingUser: true,
 		user_expenses: []
-	}
+	};
 
 	return {
 		selectedUser,
 		isFetchingUser,
 		user_expenses
-	}
+	};
 }
 
 export default connect(mapStateToProps)(MyExpensesScreen);
