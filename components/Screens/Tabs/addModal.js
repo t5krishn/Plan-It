@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { addNewTripEvent } from "../../../store/actions/tripActions";
+import { connect } from "react-redux";
 
 /*
   Depending on the mode (event/ to_do/ expense) the form is different:
@@ -37,7 +38,7 @@ import { addNewTripEvent } from "../../../store/actions/tripActions";
           }
 */
 
-export default function AddModal(props) {
+export function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
@@ -64,6 +65,7 @@ export default function AddModal(props) {
 			.then(data => {
 				console.log(data);
 				console.log(data.status);
+				console.log(data.event);
 				if (data.status === "ok") {
 					console.log("IT WORKED");
 					props.setVisibility(false);
@@ -223,3 +225,5 @@ const styles = StyleSheet.create({
 		borderColor: "black"
 	}
 });
+
+export default connect()(AddModal);
