@@ -38,19 +38,24 @@ import { setRecoveryProps } from "expo/build/ErrorRecovery/ErrorRecovery";
 */
 
 export default function AddModal(props) {
-	const [form, setForm] = useState({});
+	const [form, setForm] = useState({
+		trip_id: props.tripId
+	});
+
+	const body = {};
+	body[props.mode] = form;
 
 	const handleSubmit = () => {
 		const request = new Request(
-			`http://localhost:3000/user/${props.selectedUser}/trip/${
-				props.tripId
-			}/${mode}`,
+			`http://localhost:3000/user/${props.selectedUser}/trip/${props.tripId}/${
+				props.mode
+			}`,
 			{
 				method: "POST",
 				headers: {
 					"Content-type": "application/json"
 				},
-				body: JSON.stringify({ form })
+				body: JSON.stringify(body)
 			}
 		);
 
@@ -149,6 +154,9 @@ export default function AddModal(props) {
 								value={form.description}
 								onChangeText={text => setForm({ ...form, description: text })}
 							/>
+							<TouchableHighlight style={styles.submit}>
+								<Text onPress={() => handleSubmit()}>Submit</Text>
+							</TouchableHighlight>
 						</View>
 					)}
 					{props.mode === "to_do" && (
@@ -159,6 +167,9 @@ export default function AddModal(props) {
 								value={form.content}
 								onChangeText={text => setForm({ ...form, content: text })}
 							/>
+							<TouchableHighlight style={styles.submit}>
+								<Text onPress={() => handleSubmit()}>Submit</Text>
+							</TouchableHighlight>
 						</View>
 					)}
 					{props.mode === "expense" && (
@@ -178,6 +189,9 @@ export default function AddModal(props) {
 									setForm({ ...form, amount_in_cents: text })
 								}
 							/>
+							<TouchableHighlight style={styles.submit}>
+								<Text onPress={() => handleSubmit()}>Submit</Text>
+							</TouchableHighlight>
 						</View>
 					)}
 				</View>
@@ -200,5 +214,10 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 20
+	},
+	submit: {
+		marginTop: 10,
+		borderWidth: 2,
+		borderColor: "black"
 	}
 });
