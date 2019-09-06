@@ -3,7 +3,8 @@ import { combineReducers } from "redux";
 import {
 	SELECT_TRIP,
 	REQUEST_TRIP_DATA,
-	RECEIVE_TRIP_DATA
+	RECEIVE_TRIP_DATA,
+	ADD_TRIP_EVENT
 } from "../actions/tripActions";
 
 function selectedTrip(state = {}, action) {
@@ -25,6 +26,10 @@ function tripData(
 	action
 ) {
 	switch (action.type) {
+		case ADD_TRIP_EVENT:
+			return Object.assign({}, state, {
+				events: [action.event, ...state.events]
+			});
 		case REQUEST_TRIP_DATA:
 			return Object.assign({}, state, {
 				isFetchingTrip: true

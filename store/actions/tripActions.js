@@ -7,6 +7,15 @@ export function selectTrip(trip) {
 	};
 }
 
+export const ADD_TRIP_EVENT = "ADD_TRIP_EVENT";
+
+export function addNewTripEvent(event) {
+	return {
+		type: ADD_TRIP_EVENT,
+		event
+	};
+}
+
 export const REQUEST_TRIP_DATA = "REQUEST_TRIP_DATA";
 
 function requestTripData(trip) {
@@ -32,10 +41,6 @@ function receiveTripData(trip, data) {
 
 export function fetchTripData(trip, user) {
 	return dispatch => {
-		// return fetch(` http://localhost:3000/user/1/trip/1/event`)
-		//   .then(response => response.json())
-		//   .then(json => dispatch(receiveTripData(trip, json)));
-
 		dispatch(requestTripData(trip));
 		return Promise.all([
 			fetch(`http://localhost:3000/user/${user}/trip/${trip}/event`),

@@ -8,13 +8,7 @@ export default function AddBtn(props) {
 	const [mode, setMode] = useState("");
 
 	return (
-		<View
-			style={{
-				position: "absolute",
-				width: Dimensions.get("screen").width,
-				height: Dimensions.get("screen").height + 20
-			}}
-		>
+		<View>
 			{isVisible && (
 				<AddModal
 					setVisibility={setVisibility}
@@ -24,7 +18,7 @@ export default function AddBtn(props) {
 				/>
 			)}
 			<FloatingAction
-				distanceToEdge={{ vertical: 120, horizontal: 20 }}
+				distanceToEdge={{ vertical: 100, horizontal: 20 }}
 				actions={actions}
 				showBackground={true}
 				onPressItem={name => {

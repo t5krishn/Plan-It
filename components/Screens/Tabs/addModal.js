@@ -9,7 +9,7 @@ import {
 	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { setRecoveryProps } from "expo/build/ErrorRecovery/ErrorRecovery";
+import { addNewTripEvent } from "../../../store/actions/tripActions";
 
 /*
   Depending on the mode (event/ to_do/ expense) the form is different:
@@ -63,12 +63,14 @@ export default function AddModal(props) {
 			.then(response => response.json())
 			.then(data => {
 				console.log(data);
-				// if (data.status === "ok") {
-				// 	props.dispatch(addNewUserTrip(data.trip, props.selectedUser));
-				// 	props.navigation.navigate("Dashboard");
-				// } else {
-				// 	Alert.alert("There was an issue with saving your trip");
-				// }
+				console.log(data.status);
+				if (data.status === "ok") {
+					console.log("IT WORKED");
+					props.setVisibility(false);
+					props.dispatch(addNewTripEvent(data.event));
+				} else {
+					Alert.alert("There was an issue with saving your trip");
+				}
 			});
 	};
 
