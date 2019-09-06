@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Modal,
 	View,
@@ -9,9 +9,48 @@ import {
 	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { setRecoveryProps } from "expo/build/ErrorRecovery/ErrorRecovery";
 
-export default function AddModal() {
-	const [modalState, setModalState] = useState({ modalVisible: false });
+/*
+  Depending on the mode (EVENT/ TODO/ EXPENSE) the form is different:
+    - Event form : 
+    { 
+      name, 
+      address, 
+      starts_on, 
+      ends_on, 
+      description, 
+      trip_id  
+          }
+*/
+
+export default function AddModal(props) {
+	const mode = props.mode;
+	const [form, setFrom] = useState({});
+
+	const handleSubmit = () => {
+		const request = new Request(
+			`http://localhost:3000/user/${props.selectedUser}/trip`,
+			{
+				method: "POST",
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify({ trip: state })
+			}
+		);
+
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === "ok") {
+					props.dispatch(addNewUserTrip(data.trip, props.selectedUser));
+					props.navigation.navigate("Dashboard");
+				} else {
+					Alert.alert("There was an issue with saving your trip");
+				}
+			});
+	};
 
 	return (
 		<View
@@ -21,14 +60,7 @@ export default function AddModal() {
 				justifyContent: "center"
 			}}
 		>
-			<Modal
-				animationType="fade"
-				transparent={true}
-				visible={modalState.modalVisible}
-				onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-				}}
-			>
+			<Modal animationType="fade" transparent={true} visible={props.isVisible}>
 				<View
 					style={{
 						position: "absolute",
@@ -64,21 +96,40 @@ export default function AddModal() {
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
-							setModalState({ modalVisible: false });
+							props.setVisibility(false);
 						}}
 					>
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
+
+					{mode === "EVENT" && (
+						<View style={styles.event}>
+							<TextInput
+								value={form.firstName}
+								onChangeText={text => setForm({ ...form, name: text })}
+							/>
+						</View>
+					)}
+
+					{mode === "TODO" && (
+						<View style={styles.event}>
+							<TextInput
+								value={form.firstName}
+								onChangeText={text => setForm({ ...form, name: text })}
+							/>
+						</View>
+					)}
+
+					{mode === "EXPENSE" && (
+						<View style={styles.event}>
+							<TextInput
+								value={form.firstName}
+								onChangeText={text => setForm({ ...form, name: text })}
+							/>
+						</View>
+					)}
 				</View>
 			</Modal>
-
-			<TouchableHighlight
-				onPress={() => {
-					setModalState({ modalVisible: true });
-				}}
-			>
-				<Text>Show Modal</Text>
-			</TouchableHighlight>
 		</View>
 	);
 }

@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Dimensions, Modal, Button } from "react-native";
 import { FloatingAction } from "react-native-floating-action";
+import AddModal from "../Screens/Tabs/addModal";
 
 export default function AddBtn(props) {
+	const [isVisible, setVisibility] = useState(false);
+
+	const handleForm = name => {
+		switch (name) {
+			case "event":
+				setVisibility(true);
+				break;
+			case "todo":
+				setVisibility(true);
+				break;
+			case "expense":
+				setVisibility(true);
+				break;
+		}
+	};
+
 	return (
 		<View
 			style={{
@@ -11,14 +28,16 @@ export default function AddBtn(props) {
 				height: Dimensions.get("screen").height + 20
 			}}
 		>
+			{isVisible && (
+				<AddModal setVisibility={setVisibility} isVisible={isVisible} />
+			)}
 			<FloatingAction
 				distanceToEdge={{ vertical: 120, horizontal: 20 }}
 				actions={actions}
 				showBackground={true}
-				// onPressItem={name => {
-				// 	console.log(`selected button: ${name}`);
-				// }}
-				onPressItem={() => props.onPress()}
+				onPressItem={name => {
+					handleForm(name);
+				}}
 			/>
 		</View>
 	);
@@ -28,7 +47,7 @@ const actions = [
 	{
 		text: "Add Event",
 		icon: require("../../assets/calendar.png"),
-		name: "bt_event",
+		name: "event",
 		position: 1,
 		textBackground: "none",
 		textColor: "white"
@@ -36,7 +55,7 @@ const actions = [
 	{
 		text: "Add To do",
 		icon: require("../../assets/check.png"),
-		name: "bt_todo",
+		name: "todo",
 		position: 2,
 		textBackground: "none",
 		textColor: "white"
@@ -44,7 +63,7 @@ const actions = [
 	{
 		text: "Add Expense",
 		icon: require("../../assets/dollar-symbol.png"),
-		name: "bt_expense",
+		name: "expense",
 		position: 3,
 		textBackground: "none",
 		textColor: "white"
