@@ -56,7 +56,7 @@ function RegisterForm(props) {
 			<View style={styles.btnView}>
 				<Button
 					title="Cancel"
-					onPress={() => props.navigation.navigate("Login")}
+					onPress={() => props.navigation.navigate("Welcome")}
 				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
 			</View>

@@ -8,7 +8,7 @@ import {
 	Alert,
 	AsyncStorage
 } from "react-native";
-
+import Backbtn from "../Buttons/Backbtn";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
@@ -48,20 +48,22 @@ function LoginScreen(props) {
 
 	return (
 		<View style={styles.container}>
-			<Text>Email</Text>
+			<Backbtn navigation={props.navigation} />
+			<Text style={styles.title}>Sign In</Text>
+			<Text style={styles.text}>Email</Text>
 			<TextInput
 				autoCapitalize="none"
 				style={styles.TextInput}
 				onChangeText={text => setState({ ...state, email: text })}
 			/>
-			<Text>Password</Text>
+			<Text style={styles.text}>Password</Text>
 			<TextInput
 				autoCapitalize="none"
 				style={styles.TextInput}
 				onChangeText={text => setState({ ...state, password: text })}
 			/>
 			<Button title="Login" onPress={() => handleSubmit()} />
-			<Text>Don't have an account? Sign up:</Text>
+			<Text style={styles.text}>Don't have an account? Sign up:</Text>
 			<Button
 				title="Sign Up"
 				onPress={() => props.navigation.navigate("Signup")}
@@ -73,13 +75,23 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: "center",
 		alignItems: "center"
 	},
+	title: {
+		fontFamily: "Avenir",
+		fontSize: 40,
+		marginTop: 110,
+		marginRight: 200
+	},
 	TextInput: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 100
+		borderColor: "#594D4F",
+		borderBottomWidth: 1,
+		width: "80%"
+	},
+	text: {
+		fontFamily: "Avenir",
+		color: "#594D4F",
+		fontSize: 20
 	}
 });
 

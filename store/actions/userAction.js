@@ -37,13 +37,47 @@ function receiveUserData(user, data) {
 	};
 }
 
-export const ADD_USER_TRIP = "ADD_USER_TRIP";
+export const REQUEST_NEW_USER_TRIP = "REQUEST_NEW_USER_TRIP";
 
-export function addNewUserTrip(trip, user_id) {
+function requestNewUserTrip(user_id, trip) {
 	return {
-		type: ADD_USER_TRIP,
+		type: REQUEST_NEW_USER_TRIP,
+		isUserUpdated: false,
+		user_id
+	};
+}
+
+export const RECEIVED_NEW_USER_TRIP = "RECEIVED_NEW_USER_TRIP";
+
+function receivedNewUserTrip(user_id, trip) {
+	return {
+		type: RECEIVED_NEW_USER_TRIP,
 		trip,
 		user_id
+	};
+}
+
+export const ADD_NEW_USER_TRIP = "ADD_NEW_USER_TRIP";
+
+export function addNewUserTrip(userId, trip) {
+	const request = new Request(`http://localhost:3000/user/${userId}/trip`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify({ trip: trip })
+	});
+	return dispatch => {
+		dispatch(requestNewUserTrip(userId, trip));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.status === "ok") {
+					return dispatch(receivedNewUserTrip(userId, data.trip));
+				}
+			});
 	};
 }
 
@@ -101,7 +135,7 @@ function errorUpdateUsername(user, data) {
 }
 
 export function changeUsername(user, newUsername) {
-	const request = new Request(`http://localhost:5422/user/${user}/username`, {
+	const request = new Request(`http://localhost:3000/user/${user}/username`, {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json"
@@ -159,7 +193,7 @@ function errorUpdateEmail(user, data) {
 }
 
 export function changeEmail(user, newEmail) {
-	const request = new Request(`http://localhost:5422/user/${user}/email`, {
+	const request = new Request(`http://localhost:3000/user/${user}/email`, {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json"
@@ -219,7 +253,7 @@ function errorUpdatePassword(user, data) {
 }
 // password = { currentPassword, newPassword }
 export function changePassword(user, password) {
-	const request = new Request(`http://localhost:5422/user/${user}/password`, {
+	const request = new Request(`http://localhost:3000/user/${user}/password`, {
 		method: "POST",
 		headers: {
 			"Content-type": "application/json"

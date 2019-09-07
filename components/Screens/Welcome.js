@@ -17,11 +17,24 @@ export default function Welcome(props) {
 					source={require("../../assets/logo.png")}
 					style={{ width: 210, height: 200 }}
 				/>
-				<Text style={{ marginTop: 60, fontFamily: "Avenir", fontSize: 20 }}>
+				<Text
+					style={{
+						marginTop: 60,
+						fontFamily: "Avenir",
+						fontSize: 20
+					}}
+				>
 					Welcome to
 				</Text>
 				<Text style={{ fontFamily: "Avenir-Light", fontSize: 60 }}>PlanIt</Text>
-				<Text style={{ fontFamily: "Avenir", fontSize: 15, marginTop: 40 }}>
+				<Text
+					style={{
+						fontFamily: "Avenir",
+						fontSize: 15,
+						marginTop: 40,
+						color: "#594D4F"
+					}}
+				>
 					Got a trip to plan? We can help!
 				</Text>
 			</View>
@@ -33,7 +46,9 @@ export default function Welcome(props) {
 					<Text style={styles.buttonText}>Sign In</Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => props.navigation.navigate("Signup")}>
-					<Text>Create Account</Text>
+					<Text style={{ fontFamily: "Avenir", color: "#594D4F" }}>
+						Create Account
+					</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
 		width: "100%"
 	},
 	button: {
-		backgroundColor: "black",
+		backgroundColor: "#000",
 		width: "80%",
 		height: 40,
 		alignItems: "center",
@@ -63,6 +78,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		color: "#FFFFFF",
-		fontFamily: "Avenir"
+		fontFamily: "Avenir",
+		fontSize: 15
 	}
 });

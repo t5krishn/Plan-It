@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 
 export default function UsernameForm(props) {
-	const [usernameInput, onChangeUsername] = useState(props.currentUsername);
+	const [usernameInput, onChangeUsername] = useState(
+		props.currentUsername || "Enter a new username"
+	);
 
 	return (
 		<View style={styles.formContainer}>

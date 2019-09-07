@@ -23,27 +23,27 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		const request = new Request(
-			`http://localhost:3000/user/${props.selectedUser}/trip`,
-			{
-				method: "POST",
-				headers: {
-					"Content-type": "application/json"
-				},
-				body: JSON.stringify({ trip: state })
-			}
-		);
+		// const request = new Request(
+		// 	`http://localhost:3000/user/${props.selectedUser}/trip`,
+		// 	{
+		// 		method: "POST",
+		// 		headers: {
+		// 			"Content-type": "application/json"
+		// 		},
+		// 		body: JSON.stringify({ trip: state })
+		// 	}
+		// );
 
-		fetch(request)
-			.then(response => response.json())
-			.then(data => {
-				if (data.status === "ok") {
-					props.dispatch(addNewUserTrip(data.trip, props.selectedUser));
-					props.navigation.navigate("Dashboard");
-				} else {
-					Alert.alert("There was an issue with saving your trip");
-				}
-			});
+		// fetch(request)
+		// 	.then(response => response.json())
+		// 	.then(data => {
+		// 		if (data.status === "ok") {
+		props.dispatch(addNewUserTrip(props.selectedUser, state));
+		props.navigation.navigate("Dashboard");
+		// 	} else {
+		// 		Alert.alert("There was an issue with saving your trip");
+		// 	}
+		// });
 	};
 
 	const inviteFriends = () => {};
