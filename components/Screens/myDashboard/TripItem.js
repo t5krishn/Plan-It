@@ -13,17 +13,28 @@ export default function TripItem(props) {
 				style={styles.tripContentItem}
 			>
 				<View
-					style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+					style={{
+						flex: 1,
+						alignItems: "center",
+						justifyContent: "center",
+						marginLeft: 10
+					}}
 				>
 					<Text style={styles.tripTimeText}>
 						{dateConvertFormat(props.trip.starts_on)}
 					</Text>
-					<Text style={{ fontSize: 20 }}>-</Text>
+					{/* <Text style={{ fontSize: 20 }}>-</Text> */}
+					<Icon
+						name="ellipsis-h"
+						size={20}
+						style={{ paddingTop: 2, paddingBottom: 2 }}
+						color={props.color}
+					/>
 					<Text style={styles.tripTimeText}>
 						{dateConvertFormat(props.trip.ends_on)}
 					</Text>
 				</View>
-				<View style={{ flex: 3 }}>
+				<View style={{ flex: 3, marginTop: 10, marginLeft: 20 }}>
 					<Text style={styles.tripNameText}>{props.trip.name}</Text>
 
 					<Text style={styles.tripLocationText}>{props.trip.location}</Text>
