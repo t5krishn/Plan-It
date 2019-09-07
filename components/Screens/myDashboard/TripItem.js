@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import dateConvertFormat from "../../../helpers/dateCovertFormat";
 
 export default function TripItem({ onPress, trip }) {
 	return (
@@ -15,7 +16,8 @@ export default function TripItem({ onPress, trip }) {
 				<Text style={styles.tripLocationText}>{trip.location}</Text>
 
 				<Text style={styles.tripLocationText}>
-					{trip.starts_on} - {trip.ends_on}
+					{dateConvertFormat(trip.starts_on)} -{" "}
+					{dateConvertFormat(trip.ends_on)}
 				</Text>
 
 				<Text style={styles.tripDescText}>{trip.description}</Text>
@@ -34,7 +36,6 @@ const styles = StyleSheet.create({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 5,
 		width: "95%",
 		marginLeft: "2.5%",
 		shadowColor: "#000",
