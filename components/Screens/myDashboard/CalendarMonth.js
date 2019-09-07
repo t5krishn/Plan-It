@@ -20,6 +20,11 @@ export default function CalendarMonth(props) {
 			futureScrollRange={50}
 			scrollEnabled={true}
 			showScrollIndicator={true}
+			theme={{
+				textDayFontFamily: "Avenir",
+				textMonthFontFamily: "Avenir",
+				textDayHeaderFontFamily: "Avenir"
+			}}
 		/>
 	);
 }

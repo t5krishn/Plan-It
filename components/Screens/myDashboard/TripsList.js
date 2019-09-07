@@ -5,7 +5,7 @@ import TripItem from "./TripItem";
 export default function TripsList({ onPress, trips = [] }) {
 	return (
 		<View>
-			{trips.map((trip, index) => (
+			{trips.map(trip => (
 				<TripItem onPress={onPress} trip={trip} key={trip.id} />
 			))}
 		</View>

@@ -10,6 +10,7 @@ import {
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
 import { gettingUserData } from "../../../store/reducers/userReducer";
@@ -40,25 +41,32 @@ function Dashboard(props) {
 			</View>
 
 			<View style={styles.bottomContainer}>
+				<TouchableOpacity
+					style={{
+						height: 50,
+						backgroundColor: "black",
+						alignItems: "center",
+						justifyContent: "center",
+						width: "95%",
+						marginLeft: "2.5%"
+					}}
+					onPress={() => props.navigation.navigate("NewTrip")}
+				>
+					<Text
+						style={{
+							color: "white",
+							fontFamily: "Avenir",
+							fontSize: 15
+						}}
+					>
+						+ Add new trip
+					</Text>
+				</TouchableOpacity>
 				<ScrollView
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
 					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
-					<TouchableOpacity
-						style={{
-							height: 50,
-							flex: 1,
-							alignItems: "center",
-							justifyContent: "center",
-							backgroundColor: "black"
-						}}
-						onPress={() => props.navigation.navigate("NewTrip")}
-					>
-						<Text style={{ color: "white", fontFamily: "Avenir" }}>
-							+ Add new trip
-						</Text>
-					</TouchableOpacity>
 				</ScrollView>
 			</View>
 		</View>
@@ -81,8 +89,7 @@ const styles = StyleSheet.create({
 		flex: 1.3,
 		flexDirection: "column",
 		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "lightgray",
+		backgroundColor: "#FFFFFF",
 		width: "100%"
 	},
 	titleText: {
