@@ -36,19 +36,21 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 					<TouchableOpacity
 						style={{
 							height: 50,
 							flex: 1,
 							alignItems: "center",
 							justifyContent: "center",
-							backgroundColor: "blue"
+							backgroundColor: "blue",
+							marginBottom: 4,
+							marginTop: 4
 						}}
 						onPress={() => props.navigation.navigate("NewTrip")}
 					>
 						<Text style={{ color: "lightgreen" }}>+ Add new trip</Text>
 					</TouchableOpacity>
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 				</ScrollView>
 			</View>
 		</View>

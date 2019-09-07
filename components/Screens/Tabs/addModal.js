@@ -38,7 +38,7 @@ import { connect } from "react-redux";
           }
 */
 
-export function AddModal(props) {
+function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
@@ -63,9 +63,6 @@ export function AddModal(props) {
 		fetch(request)
 			.then(response => response.json())
 			.then(data => {
-				console.log(data);
-				console.log(data.status);
-				console.log(data.event);
 				if (data.status === "ok") {
 					console.log("IT WORKED");
 					props.setVisibility(false);
