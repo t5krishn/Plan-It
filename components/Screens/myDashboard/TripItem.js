@@ -14,9 +14,9 @@ export default function TripItem({ onPress, trip }) {
 
 				<Text style={styles.tripLocationText}>{trip.location}</Text>
 
-				<Text style={styles.dateText}>{trip.starts_on}</Text>
-
-				<Text style={styles.dateText}>{trip.ends_on}</Text>
+				<Text style={styles.tripLocationText}>
+					{trip.starts_on} - {trip.ends_on}
+				</Text>
 
 				<Text style={styles.tripDescText}>{trip.description}</Text>
 			</TouchableOpacity>
@@ -29,19 +29,28 @@ const styles = StyleSheet.create({
 		padding: 10
 	},
 	tripContentItem: {
-		backgroundColor: "#D3D3D3",
-		height: 150,
+		backgroundColor: "#FFFFFF",
+		height: 100,
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		marginBottom: 5
+		marginBottom: 5,
+		width: "95%",
+		marginLeft: "2.5%",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84
 	},
 	tripNameText: {
 		fontSize: 20,
-		color: "yellow"
+		color: "black"
 	},
 	tripLocationText: {
-		fontSize: 12,
-		color: "lightgreen"
+		fontSize: 10,
+		color: "black"
 	}
 });

@@ -47,14 +47,14 @@ function Dashboard(props) {
 						backgroundColor: "black",
 						alignItems: "center",
 						justifyContent: "center",
-						width: "95%",
-						marginLeft: "2.5%"
+						width: "90%",
+						marginLeft: "5%"
 					}}
 					onPress={() => props.navigation.navigate("NewTrip")}
 				>
 					<Text
 						style={{
-							color: "white",
+							color: "#FFFFFF",
 							fontFamily: "Avenir",
 							fontSize: 15
 						}}
