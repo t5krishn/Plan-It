@@ -34,7 +34,6 @@ function Dashboard(props) {
 			/>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
-				{/* <Text style={styles.titleText}>DashboardScreen: </Text> */}
 				<View style={styles.calendarContainer}>
 					<CalendarMonth trips={props.user_trips} />
 				</View>

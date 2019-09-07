@@ -28,6 +28,7 @@ const getDates = function(startDate, stopDate, i) {
 		endingDay: true,
 		color: colors[i]
 	};
+	dateObj.color = colors[i];
 	return dateObj;
 };
 

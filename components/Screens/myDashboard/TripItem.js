@@ -1,26 +1,35 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import dateConvertFormat from "../../../helpers/dateCovertFormat";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function TripItem({ onPress, trip }) {
+export default function TripItem(props) {
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity
 				onPress={() => {
-					onPress(trip.id);
+					props.onPress(props.trip.id);
 				}}
 				style={styles.tripContentItem}
 			>
-				<Text style={styles.tripNameText}>{trip.name}</Text>
+				<View
+					style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+				>
+					<Text style={styles.tripTimeText}>
+						{dateConvertFormat(props.trip.starts_on)}
+					</Text>
+					<Text style={{ fontSize: 20 }}>-</Text>
+					<Text style={styles.tripTimeText}>
+						{dateConvertFormat(props.trip.ends_on)}
+					</Text>
+				</View>
+				<View style={{ flex: 3 }}>
+					<Text style={styles.tripNameText}>{props.trip.name}</Text>
 
-				<Text style={styles.tripLocationText}>{trip.location}</Text>
+					<Text style={styles.tripLocationText}>{props.trip.location}</Text>
 
-				<Text style={styles.tripLocationText}>
-					{dateConvertFormat(trip.starts_on)} -{" "}
-					{dateConvertFormat(trip.ends_on)}
-				</Text>
-
-				<Text style={styles.tripDescText}>{trip.description}</Text>
+					<Text style={styles.tripDescText}>{props.trip.description}</Text>
+				</View>
 			</TouchableOpacity>
 		</View>
 	);
@@ -33,9 +42,8 @@ const styles = StyleSheet.create({
 	tripContentItem: {
 		backgroundColor: "#FFFFFF",
 		height: 100,
-		flexDirection: "column",
+		flexDirection: "row",
 		justifyContent: "center",
-		alignItems: "center",
 		width: "95%",
 		marginLeft: "2.5%",
 		shadowColor: "#000",
@@ -47,10 +55,17 @@ const styles = StyleSheet.create({
 		shadowRadius: 3.84
 	},
 	tripNameText: {
+		fontFamily: "Avenir",
+		fontSize: 20,
+		color: "black"
+	},
+	tripTimeText: {
+		fontFamily: "Avenir",
 		fontSize: 20,
 		color: "black"
 	},
 	tripLocationText: {
+		fontFamily: "Avenir",
 		fontSize: 10,
 		color: "black"
 	}
