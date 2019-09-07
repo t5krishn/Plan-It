@@ -20,10 +20,6 @@ export default function CalendarMonth(props) {
 			futureScrollRange={50}
 			scrollEnabled={true}
 			showScrollIndicator={true}
-			style={{
-				borderWidth: 1,
-				borderColor: "gray"
-			}}
 		/>
 	);
 }

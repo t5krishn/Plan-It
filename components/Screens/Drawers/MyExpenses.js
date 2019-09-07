@@ -12,7 +12,6 @@ function MyExpensesScreen(props) {
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.container}>
 				<Text>ExpensesScreen</Text>
-				<AddBtn />
 			</View>
 			<ScrollView>
 				<ExpensesCards items={props.user_expenses} />
@@ -23,8 +22,7 @@ function MyExpensesScreen(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		justifyContent: "center",
+		marginTop: 200,
 		alignItems: "center"
 	},
 	TextInput: {
@@ -33,6 +31,7 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+
 function mapStateToProps(state) {
 	const { selectedUser, gettingUserData } = state;
 	const { isFetchingUser, user_expenses } = gettingUserData[selectedUser] || {

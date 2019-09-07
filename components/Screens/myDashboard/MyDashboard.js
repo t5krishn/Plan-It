@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
 	View,
 	Text,
-	Button,
 	StyleSheet,
 	ScrollView,
-	TouchableOpacity
+	TouchableOpacity,
+	Dimensions
 } from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
@@ -23,9 +23,17 @@ function Dashboard(props) {
 
 	return (
 		<View style={styles.mainScreenContainer}>
+			<View
+				style={{
+					zIndex: 100,
+					backgroundColor: "black",
+					position: "absolute",
+					top: 100
+				}}
+			/>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
-				<Text style={styles.titleText}>DashboardScreen: </Text>
+				{/* <Text style={styles.titleText}>DashboardScreen: </Text> */}
 				<View style={styles.calendarContainer}>
 					<CalendarMonth trips={props.user_trips} />
 				</View>
@@ -36,21 +44,21 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 					<TouchableOpacity
 						style={{
 							height: 50,
 							flex: 1,
 							alignItems: "center",
 							justifyContent: "center",
-							backgroundColor: "blue",
-							marginBottom: 4,
-							marginTop: 4
+							backgroundColor: "black"
 						}}
 						onPress={() => props.navigation.navigate("NewTrip")}
 					>
-						<Text style={{ color: "lightgreen" }}>+ Add new trip</Text>
+						<Text style={{ color: "white", fontFamily: "Avenir" }}>
+							+ Add new trip
+						</Text>
 					</TouchableOpacity>
-					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
 				</ScrollView>
 			</View>
 		</View>
@@ -60,25 +68,21 @@ function Dashboard(props) {
 const styles = StyleSheet.create({
 	mainScreenContainer: {
 		flex: 1,
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "skyblue"
+		height: Dimensions.get("screen").width
 	},
 	topContainer: {
 		flex: 1,
+		marginTop: 35,
 		flexDirection: "column",
 		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "lightgreen",
-		width: "100%"
+		alignItems: "center"
 	},
 	bottomContainer: {
-		flex: 1,
+		flex: 1.3,
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "lightblue",
+		backgroundColor: "lightgray",
 		width: "100%"
 	},
 	titleText: {
@@ -87,15 +91,14 @@ const styles = StyleSheet.create({
 	},
 	calendarContainer: {
 		flex: 1,
-		backgroundColor: "lightgrey",
 		marginTop: "2%"
 	},
 	tripsScrollContainer: {
 		width: "100%"
 	},
 	tripsContsent: {
-		paddingBottom: 10
-		// backgroundColor: "yellow"
+		paddingBottom: 10,
+		backgroundColor: "yellow"
 	}
 });
 

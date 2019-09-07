@@ -9,36 +9,22 @@ import {
 import MenuBtn from "../../Buttons/Menubtn";
 import FriendsCards from "../Drawers/FriendsCards";
 
-export default function FriendsScreen({ navigation }) {
-	const [friends, setFriends] = useState([]);
+import { connect } from "react-redux";
 
-	useEffect(() => {
-		const request = new Request(" http://localhost:3000/user/1/friend", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setFriends(json);
-			});
-	}, []);
-
+function FriendsScreen(props) {
 	return (
 		<View>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.container}>
 				<Text>FriendsScreen</Text>
-				<TouchableOpacity onPress={() => navigation.navigate("FindFriend")}>
+				<TouchableOpacity
+					onPress={() => props.navigation.navigate("FindFriend")}
+				>
 					<Text>Find friends</Text>
 				</TouchableOpacity>
 			</View>
 			<ScrollView>
-				<FriendsCards items={friends} />
+				<FriendsCards items={props.user_friends} />
 			</ScrollView>
 		</View>
 	);
@@ -55,3 +41,19 @@ const styles = StyleSheet.create({
 		width: 100
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const { isFetchingUser, user_friends } = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user_friends: []
+	};
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user_friends
+	};
+}
+
+export default connect(mapStateToProps)(FriendsScreen);

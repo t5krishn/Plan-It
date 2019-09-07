@@ -65,3 +65,179 @@ export function fetchUserData(user) {
 			});
 	};
 }
+
+export const REQUEST_UPDATE_USERNAME = "REQUEST_UPDATE_USERNAME";
+
+function requestUpdateUsername(user) {
+	return {
+		type: REQUEST_UPDATE_USERNAME,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+
+export const RECEIVE_UPDATE_USERNAME = "RECEIVE_UPDATE_USERNAME";
+
+function receiveUpdateUsername(user, data) {
+	return {
+		type: RECEIVE_UPDATE_USERNAME,
+		user_id: user,
+		newUsername: data.newUsername,
+		isUserUpdated: true
+	};
+}
+
+export const ERROR_UPDATE_USERNAME = "ERROR_UPDATE_USERNAME";
+
+function errorUpdateUsername(user, data) {
+	return {
+		type: ERROR_UPDATE_USERNAME,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+
+export function changeUsername(user, newUsername) {
+	const request = new Request(`http://localhost:5422/user/${user}/username`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify({ user, newUsername })
+	});
+	return dispatch => {
+		dispatch(requestUpdateUsername(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorUpdateUsername(user, data));
+				} else {
+					return dispatch(receiveUpdateUsername(user, data));
+				}
+			});
+	};
+}
+
+export const REQUEST_UPDATE_EMAIL = "REQUEST_UPDATE_EMAIL";
+
+function requestUpdateEmail(user) {
+	return {
+		type: REQUEST_UPDATE_EMAIL,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+
+export const RECEIVE_UPDATE_EMAIL = "RECEIVE_UPDATE_EMAIL";
+
+function receiveUpdateEmail(user, data) {
+	return {
+		type: RECEIVE_UPDATE_EMAIL,
+		user_id: user,
+		newEmail: data.newEmail,
+		isUserUpdated: true
+	};
+}
+
+export const ERROR_UPDATE_EMAIL = "ERROR_UPDATE_EMAIL";
+
+function errorUpdateEmail(user, data) {
+	return {
+		type: ERROR_UPDATE_EMAIL,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+
+export function changeEmail(user, newEmail) {
+	const request = new Request(`http://localhost:5422/user/${user}/email`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify({ user, newEmail })
+	});
+	return dispatch => {
+		dispatch(requestUpdateEmail(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorUpdateEmail(user, data));
+				} else {
+					return dispatch(receiveUpdateEmail(user, data));
+				}
+			});
+	};
+}
+
+export const REQUEST_UPDATE_PASSWORD = "REQUEST_UPDATE_PASSWORD";
+
+function requestUpdatePassword(user) {
+	return {
+		type: REQUEST_UPDATE_PASSWORD,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+
+export const RECEIVE_UPDATE_PASSWORD = "RECEIVE_UPDATE_PASSWORD";
+
+function receiveUpdatePassword(user, data) {
+	return {
+		type: RECEIVE_UPDATE_PASSWORD,
+		user_id: user,
+		isUserUpdated: {
+			success: data.success
+		}
+	};
+}
+
+export const ERROR_UPDATE_PASSWORD = "ERROR_UPDATE_PASSWORD";
+
+function errorUpdatePassword(user, data) {
+	return {
+		type: ERROR_UPDATE_PASSWORD,
+		user_id: user,
+		isUserUpdated: {
+			success: data.success,
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+// password = { currentPassword, newPassword }
+export function changePassword(user, password) {
+	const request = new Request(`http://localhost:5422/user/${user}/password`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify({ password })
+	});
+	return dispatch => {
+		dispatch(requestUpdatePassword(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorUpdatePassword(user, data));
+				} else {
+					return dispatch(receiveUpdatePassword(user, data));
+				}
+			});
+	};
+}

@@ -7,11 +7,12 @@ export default function EventCards({ items }) {
 		<View containerStyle={{ padding: 0 }}>
 			{items.map((e, i) => {
 				return (
-					<Card>
+					<Card key={i}>
 						<View>
 							<Text>{e.first_name}</Text>
 							<Text>{e.last_name}</Text>
 							<Text>{e.username}</Text>
+							<Text>{e.email}</Text>
 						</View>
 					</Card>
 				);
