@@ -9,7 +9,11 @@ import {
 	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { postNewEvent } from "../../../store/actions/tripActions";
+import {
+	postNewEvent,
+	postNewTodo,
+	postNewExpense
+} from "../../../store/actions/tripActions";
 import { connect } from "react-redux";
 
 /*
@@ -50,8 +54,12 @@ function AddModal(props) {
 				props.dispatch(postNewEvent(form, props.userId, props.tripId));
 				break;
 			case "to_do":
+				props.dispatch(
+					postNewTodo({ ...form, completed: false }, props.userId, props.tripId)
+				);
 				break;
 			case "expense":
+				props.dispatch(postNewExpense(form, props.userId, props.tripId));
 				break;
 		}
 	};

@@ -101,7 +101,7 @@ function receivedNewTodo(current_trip, todo) {
 
 export function postNewTodo(todo, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/todo`,
+		`http://localhost:3000/user/${userId}/trip/${tripId}/to_do`,
 		{
 			method: "POST",
 			headers: {
@@ -119,6 +119,53 @@ export function postNewTodo(todo, userId, tripId) {
 			.then(data => {
 				if (data.status === "ok") {
 					return dispatch(receivedNewTodo(tripId, data.todo));
+				}
+			});
+	};
+}
+
+// For updating store when new expense is created
+
+export const REQUEST_NEW_EXPENSE = "REQUEST_NEW_EXPENSE";
+
+function requestNewExpense(current_trip, expense) {
+	return {
+		type: REQUEST_NEW_EXPENSE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_NEW_EXPENSE = "RECEIVE_NEW_EXPENSE";
+
+function receivedNewExpense(current_trip, expense) {
+	return {
+		type: RECEIVE_NEW_EXPENSE,
+		expense,
+		current_trip
+	};
+}
+
+export function postNewExpense(expense, userId, tripId) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}/expense`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ expense: expense })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewExpense(tripId, expense));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.status === "ok") {
+					return dispatch(receivedNewExpense(tripId, data.expense));
 				}
 			});
 	};
