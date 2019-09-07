@@ -103,8 +103,7 @@ const styles = StyleSheet.create({
 		width: "100%"
 	},
 	tripsContsent: {
-		paddingBottom: 10,
-		backgroundColor: "yellow"
+		paddingBottom: 10
 	}
 });
 

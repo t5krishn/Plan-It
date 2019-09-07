@@ -17,7 +17,7 @@ function LoadAuthScreen(props) {
 			props.dispatch(fetchUserData(isLoggedIn));
 			props.navigation.navigate("Dashboard");
 		} else {
-			props.navigation.navigate("Login");
+			props.navigation.navigate("Welcome");
 		}
 	};
 

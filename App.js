@@ -37,6 +37,7 @@ import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
 import FindFriend from "./components/Screens/Drawers/FindFriend";
 import LoadAuth from "./components/Screens/LoadAuth";
+import Welcome from "./components/Screens/Welcome";
 
 /*
   NAVIGATION:
@@ -155,6 +156,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 
 const AppSwitchNavigator = createSwitchNavigator({
 	LoadAuth: { screen: LoadAuth },
+	Welcome: { screen: Welcome },
 	Login: { screen: Login },
 	Dashboard: { screen: AppDrawerNavigator },
 	Signup: { screen: Signup }
