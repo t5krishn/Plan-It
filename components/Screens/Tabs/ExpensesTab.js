@@ -2,37 +2,24 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
+import AddBtn from "../../Buttons/Addbtn";
 
-export default function ExpensesTab({ navigation }) {
-	const [expenses, setExpenses] = useState([]);
+import { connect } from "react-redux";
 
-	useEffect(() => {
-		const request = new Request("http://localhost:5422/trip/1/expense", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setExpenses(json);
-			});
-	}, []);
-
+function ExpensesTab(props) {
 	return (
 		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
-				<Text>8 Expenses</Text>
+				{console.log(props.isFetchingTrip)}
+				<Text>{props.expenses.length} Expenses</Text>
 				<Text>You owe $800 total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<ExpenseCards items={expenses} />
+				<ExpenseCards items={props.expenses} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
@@ -54,3 +41,17 @@ const styles = StyleSheet.create({
 		backgroundColor: "red"
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedTrip, gettingTripData } = state;
+	const { expenses } = gettingTripData[selectedTrip] || {
+		expenses: []
+	};
+
+	return {
+		selectedTrip,
+		expenses
+	};
+}
+
+export default connect(mapStateToProps)(ExpensesTab);

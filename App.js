@@ -14,22 +14,29 @@ import {
 	Text,
 	Button,
 	TextInput,
-	SafeAreaView
+	SafeAreaView,
+	AsyncStorage
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
+
+const store = configureStore();
 
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
 import Signup from "./components/Screens/Signup";
-import Dashboard from "./components/Screens/MyDashboard";
+import Dashboard from "./components/Screens/myDashboard/MyDashboard";
 import EventsTab from "./components/Screens/Tabs/EventsTab";
 import ExpensesTab from "./components/Screens/Tabs/ExpensesTab";
 import TodoTab from "./components/Screens/Tabs/TodoTab";
-import MyDashboard from "./components/Screens/MyDashboard";
-import MyExpenses from "./components/Screens/MyExpenses";
-import MyFriends from "./components/Screens/MyFriends.js";
-import MySettings from "./components/Screens/MySettings";
+import MyExpenses from "./components/Screens/Drawers/MyExpenses";
+import MyFriends from "./components/Screens/Drawers/MyFriends.js";
+import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
+import FindFriend from "./components/Screens/Drawers/FindFriend";
+import LoadAuth from "./components/Screens/LoadAuth";
 
 /*
   NAVIGATION:
@@ -49,7 +56,11 @@ import NewTrip from "./components/Screens/NewTrip";
 */
 
 export default function App() {
-	return <AppContainer />;
+	return (
+		<Provider store={store}>
+			<AppContainer />
+		</Provider>
+	);
 }
 
 const TabNavigator = createBottomTabNavigator({
@@ -67,7 +78,7 @@ const TabNavigator = createBottomTabNavigator({
 const StackNavigator = createStackNavigator(
 	{
 		Dashboard: {
-			screen: MyDashboard
+			screen: Dashboard
 		},
 		TabNavigator: {
 			screen: TabNavigator
@@ -105,6 +116,23 @@ const CustomDrawerComponent = props => (
 	</SafeAreaView>
 );
 
+const FriendsStack = createStackNavigator(
+	{
+		FriendsList: {
+			screen: MyFriends
+		},
+		FindFriend: {
+			screen: FindFriend
+		}
+	},
+	{
+		headerMode: "none",
+		navigationOptions: {
+			headerVisible: false
+		}
+	}
+);
+
 const AppDrawerNavigator = createDrawerNavigator(
 	{
 		Dashboard: {
@@ -114,7 +142,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 			screen: MyExpenses
 		},
 		Friends: {
-			screen: MyFriends
+			screen: FriendsStack
 		},
 		Settings: {
 			screen: MySettings
@@ -126,6 +154,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
+	LoadAuth: { screen: LoadAuth },
 	Login: { screen: Login },
 	Dashboard: { screen: AppDrawerNavigator },
 	Signup: { screen: Signup }

@@ -2,37 +2,33 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
+import AddBtn from "../../Buttons/Addbtn";
+import CalendarMonth from "../myDashboard/CalendarMonth";
 
-export default function EventsTab({ navigation }) {
-	const [events, setEvents] = useState([]);
+import { connect } from "react-redux";
 
-	useEffect(() => {
-		const request = new Request("http://localhost:5422/trip/1/event", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setEvents(json);
-			});
-	}, []);
-
+function EventsTab(props) {
+	
 	return (
 		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
-				<Text>San Diego Trip!</Text>
-				<Text>28 Events Total</Text>
+				<Text>San Diego Trip! </Text>
+				{console.log(props.isFetchingTrip)}
+				<Text>
+					{props.events.length} Events Total
+				</Text>
+
 				<Text>Calendar View</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<EventCards items={events} />
+				{props.isFetchingTrip ? (
+					<Text>Loading!</Text>
+				) : (
+					<EventCards items={props.events} />
+				)}
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
@@ -54,3 +50,19 @@ const styles = StyleSheet.create({
 		backgroundColor: "red"
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedTrip, gettingTripData } = state;
+	const { events, isFetchingTrip } = gettingTripData[selectedTrip] || {
+		isFetchingTrip: true,
+		events: []
+	};
+
+	return {
+		selectedTrip,
+		isFetchingTrip,
+		events
+	};
+}
+
+export default connect(mapStateToProps)(EventsTab);

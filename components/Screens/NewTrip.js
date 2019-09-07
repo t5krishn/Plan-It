@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import {
+	Alert,
 	KeyboardAvoidingView,
 	Text,
 	TextInput,
 	TouchableOpacity,
-	StyleSheet
+	StyleSheet,
+	View,
+	Button,
+	Dimensions
 } from "react-native";
+import { connect } from "react-redux";
+import { addNewUserTrip } from "../../store/actions/userAction";
 
-export default function RegisterForm({ navigation }) {
+function RegisterForm(props) {
 	const [state, setState] = useState({
 		name: "",
 		location: "",
@@ -16,27 +22,41 @@ export default function RegisterForm({ navigation }) {
 		description: ""
 	});
 
-	handleSubmit = () => {
-		const request = new Request("http://localhost:3000/trip", {
-			method: "POST",
-			headers: {
-				"Content-type": "application/json"
-			},
-			body: JSON.stringify(state)
-		});
-
-		fetch(request).then(response => {
-			// response.ok is true if User has successfully been INSERTED
-			if (response.ok) {
-				navigation.navigate("TabNavigator");
+	const handleSubmit = () => {
+		const request = new Request(
+			`http://localhost:5422/user/${props.selectedUser}/trip`,
+			{
+				method: "POST",
+				headers: {
+					"Content-type": "application/json"
+				},
+				body: JSON.stringify({ trip: state })
 			}
-		});
+		);
+
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				if (data.status === "ok") {
+					props.dispatch(addNewUserTrip(data.trip, props.selectedUser));
+					props.navigation.navigate("Dashboard");
+				} else {
+					Alert.alert("There was an issue with saving your trip");
+				}
+			});
 	};
 
-	inviteFriends = () => {};
+	const inviteFriends = () => {};
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
+			<View style={styles.buttonView}>
+				<Button
+					title="Cancel"
+					onPress={() => props.navigation.navigate("Dashboard")}
+				/>
+				<Button title="Save" onPress={() => handleSubmit()} />
+			</View>
 			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
@@ -93,5 +113,41 @@ const styles = StyleSheet.create({
 	buttonText: {
 		fontSize: 16,
 		fontWeight: "bold"
+	},
+	buttonView: {
+		position: "absolute",
+		top: 35,
+		justifyContent: "space-between",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		width: 350
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const {
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	} = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user: {},
+		user_trips: [],
+		user_expenses: [],
+		user_friends: []
+	};
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user,
+		user_trips,
+		user_expenses,
+		user_friends
+	};
+}
+
+export default connect(mapStateToProps)(RegisterForm);

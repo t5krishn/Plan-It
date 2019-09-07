@@ -2,37 +2,24 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
+import AddBtn from "../../Buttons/Addbtn";
 
-export default function TodoTab({ navigation }) {
-	const [todos, setTodos] = useState([]);
+import { connect } from "react-redux";
 
-	useEffect(() => {
-		const request = new Request("http://localhost:5422/trip/1/to_do", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setTodos(json);
-			});
-	}, []);
-
+function TodoTab(props) {
 	return (
 		<View style={styles.container}>
-			<MenuBtn navigation={navigation} />
+			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
-				<Text>TodoTab</Text>
-				<Text>4 To do items</Text>
+				<Text>TodoTab: </Text>
+				{console.log(props.user)}
+				<Text>{props.toDos.length} To do items</Text>
 				<Text>8 Completed</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<TodoCards items={todos} />
+				<TodoCards items={props.toDos} />
 			</ScrollView>
+			<AddBtn />
 		</View>
 	);
 }
@@ -54,3 +41,23 @@ const styles = StyleSheet.create({
 		backgroundColor: "red"
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedTrip, gettingTripData, selectedUser, gettingUserData } = state;
+	const { toDos, isFetchingTrip } = gettingTripData[selectedTrip] || {
+		toDos: []
+	};
+	const { user } = gettingUserData[selectedUser] || {
+		user: {first_name: "default"}
+	};
+
+	return {
+		selectedUser,
+		selectedTrip,
+		toDos,
+		isFetchingTrip,
+		user
+	};
+}
+
+export default connect(mapStateToProps)(TodoTab);
