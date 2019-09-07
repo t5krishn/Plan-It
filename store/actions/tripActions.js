@@ -164,6 +164,7 @@ export function postNewExpense(expense, userId, tripId) {
 				return response.json();
 			})
 			.then(data => {
+				console.log("FROM TRIPACTIONS:", data);
 				if (data.status === "ok") {
 					return dispatch(receivedNewExpense(tripId, data.expense));
 				}

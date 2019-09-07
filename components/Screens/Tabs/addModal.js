@@ -173,6 +173,12 @@ function AddModal(props) {
 								value={form.name}
 								onChangeText={text => setForm({ ...form, name: text })}
 							/>
+							<Text>Expense date:</Text>
+							<TextInput
+								style={styles.textInput}
+								value={form.expense_date}
+								onChangeText={text => setForm({ ...form, expense_date: text })}
+							/>
 							<Text>Amount:</Text>
 							<TextInput
 								style={styles.textInput}

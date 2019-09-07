@@ -44,7 +44,7 @@ function tripData(
 		case RECEIVE_NEW_EXPENSE:
 			return Object.assign({}, state, {
 				isFetchingTrip: false,
-				toDos: [action.expense, ...state.expenses]
+				expenses: [action.expense, ...state.expenses]
 			});
 		case REQUEST_NEW_EVENT:
 		case REQUEST_NEW_TODO:
