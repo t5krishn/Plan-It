@@ -9,7 +9,7 @@ import {
 	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { addNewTripEvent } from "../../../store/actions/tripActions";
+import { postNewEvent } from "../../../store/actions/tripActions";
 import { connect } from "react-redux";
 
 /*
@@ -43,34 +43,17 @@ function AddModal(props) {
 		trip_id: props.tripId
 	});
 
-	const body = {};
-	body[props.mode] = form;
-
 	const handleSubmit = () => {
-		const request = new Request(
-			`http://localhost:3000/user/${props.selectedUser}/trip/${props.tripId}/${
-				props.mode
-			}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-type": "application/json"
-				},
-				body: JSON.stringify(body)
-			}
-		);
-
-		fetch(request)
-			.then(response => response.json())
-			.then(data => {
-				if (data.status === "ok") {
-					console.log("IT WORKED");
-					props.setVisibility(false);
-					props.dispatch(addNewTripEvent(data.event));
-				} else {
-					Alert.alert("There was an issue with saving your trip");
-				}
-			});
+		props.setVisibility(false);
+		switch (props.mode) {
+			case "event":
+				props.dispatch(postNewEvent(form, props.userId, props.tripId));
+				break;
+			case "to_do":
+				break;
+			case "expense":
+				break;
+		}
 	};
 
 	return (

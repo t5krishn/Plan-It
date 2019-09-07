@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { StyleSheet } from "react-native";
 
-export default function MenuBtn({ navigation }) {
+export default function MenuBtn(props) {
 	return (
 		<Icon
 			name="angle-left"
@@ -10,7 +10,7 @@ export default function MenuBtn({ navigation }) {
 			color="#000"
 			size={40}
 			onPress={() => {
-				navigation.navigate("Welcome");
+				props.navigation.navigate("Welcome");
 			}}
 		/>
 	);

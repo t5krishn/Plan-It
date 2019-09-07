@@ -34,7 +34,7 @@ export default function TripItem(props) {
 						{dateConvertFormat(props.trip.ends_on)}
 					</Text>
 				</View>
-				<View style={{ flex: 3, marginTop: 10, marginLeft: 20 }}>
+				<View style={{ flex: 4, marginTop: 10, marginLeft: 20 }}>
 					<Text style={styles.tripNameText}>{props.trip.name}</Text>
 
 					<Text style={styles.tripLocationText}>{props.trip.location}</Text>
@@ -67,12 +67,12 @@ const styles = StyleSheet.create({
 	},
 	tripNameText: {
 		fontFamily: "Avenir",
-		fontSize: 20,
+		fontSize: 18,
 		color: "black"
 	},
 	tripTimeText: {
 		fontFamily: "Avenir",
-		fontSize: 20,
+		fontSize: 18,
 		color: "black"
 	},
 	tripLocationText: {
