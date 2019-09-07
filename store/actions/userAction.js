@@ -239,6 +239,120 @@ export function changePassword(user, password) {
 		} else {
 			return dispatch(receiveUpdatePassword(user, data))
 		}
+	}); 
+  };
+}
+
+export const REQUEST_UPDATE_PROFILEPIC = "REQUEST_UPDATE_PROFILEPIC";
+
+function requestUpdateProfilePic(user) {
+  return {
+    type: REQUEST_UPDATE_PROFILEPIC,
+    user_id: user,
+    isUserUpdated: false
+  };
+}
+
+export const RECEIVE_UPDATE_PROFILEPIC = "RECEIVE_UPDATE_PROFILEPIC";
+
+function receiveUpdateProfilePic(user, data) {
+  return {
+    type: RECEIVE_UPDATE_PROFILEPIC,
+    user_id: user,
+    newProfilePic: data.newProfilePicture,
+    isUserUpdated: true
+  };
+}
+
+export const ERROR_UPDATE_PROFILEPIC = "ERROR_UPDATE_PROFILEPIC";
+
+function errorUpdateProfilePic(user, data) {
+  return {
+    type: ERROR_UPDATE_PROFILEPIC,
+    user_id: user,
+    isUserUpdated: {
+		error: data.error,
+		error_message: data.error_message
+	}
+  };
+}
+
+export function changeProfilePic(user, newProfilePicture) {
+  const request = new Request(`http://localhost:5422/user/${user}/profile_picture`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({ newProfilePicture })
+  });
+  return dispatch => {
+    dispatch(requestUpdateProfilePic(user));
+    fetch(request)
+    .then(response => {
+        return response.json();
+	})
+	.then(data => {
+		if (data.error) {
+			return dispatch(errorUpdateProfilePic(user, data))
+		} else {
+			return dispatch(receiveUpdateProfilePic(user, data))
+		}
+	});
+  };
+}
+
+export const REQUEST_DELETE_ACCOUNT = "REQUEST_DELETE_ACCOUNT";
+
+function requestDeleteAccount(user) {
+  return {
+    type: REQUEST_DELETE_ACCOUNT,
+    user_id: user,
+    isUserUpdated: false
+  };
+}
+
+export const CONFIRM_DELETE_ACCOUNT = "CONFIRM_DELETE_ACCOUNT";
+
+function confirmDeleteAccount(user, data) {
+  return {
+    type: CONFIRM_DELETE_ACCOUNT,
+    user_id: user,
+    isUserUpdated: true
+  };
+}
+
+export const ERROR_DELETE_ACCOUNT = "ERROR_DELETE_ACCOUNT";
+
+function errorDeleteAccount(user, data) {
+  return {
+    type: ERROR_DELETE_ACCOUNT,
+    user_id: user,
+    isUserUpdated: {
+      error: data.error,
+      error_message: data.error_message
+    }
+  };
+}
+
+export function deleteAccount(user) {
+  const request = new Request(`http://localhost:5422/user/${user}/delete`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json"
+    }
+  });
+  return dispatch => {
+    dispatch(requestDeleteAccount(user));
+    fetch(request)
+    .then(response => {
+        return response.json();
+	})
+	.then(data => {
+		if (data.error) {
+			return dispatch(errorDeleteAccount(user, data))
+		} else {
+			return dispatch(confirmDeleteAccount(user, data))
+		}
 	});
   };
 }

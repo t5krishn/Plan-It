@@ -11,7 +11,13 @@ import {
 	ERROR_UPDATE_EMAIL,
 	REQUEST_UPDATE_PASSWORD,
 	RECEIVE_UPDATE_PASSWORD,
-	ERROR_UPDATE_PASSWORD
+	ERROR_UPDATE_PASSWORD,
+	REQUEST_UPDATE_PROFILEPIC,
+	RECEIVE_UPDATE_PROFILEPIC,
+	ERROR_UPDATE_PROFILEPIC,
+	REQUEST_DELETE_ACCOUNT,
+	CONFIRM_DELETE_ACCOUNT,
+	ERROR_DELETE_ACCOUNT
 } from "../actions/userAction";
 
 function selectedUser(state = {}, action) {
@@ -39,9 +45,9 @@ function userData(
         user_trips: [action.trip, ...state.user_trips]
       });
     case REQUEST_USER_DATA:
-			return Object.assign({}, state, {
-				isFetchingUser: true
-			});
+		return Object.assign({}, state, {
+			isFetchingUser: true
+		});
 	case RECEIVE_USER_DATA:
 		return Object.assign({}, state, {
 			isFetchingUser: false,
@@ -68,9 +74,6 @@ function usernameUpdate(
 	) {
 	switch (action.type) {
 		case REQUEST_UPDATE_USERNAME:
-			return Object.assign({}, state, {
-				isUserUpdated : action.isUserUpdated				
-			});
 		case ERROR_UPDATE_USERNAME:
 			return Object.assign({}, state, {
 				isUserUpdated : action.isUserUpdated				
@@ -94,9 +97,6 @@ function emailUpdate(
 	) {
 	switch (action.type) {
 		case REQUEST_UPDATE_EMAIL:
-			return Object.assign({}, state, {
-				isUserUpdated : action.isUserUpdated				
-			});
 		case ERROR_UPDATE_EMAIL:
 			return Object.assign({}, state, {
 				isUserUpdated : action.isUserUpdated				
@@ -111,29 +111,49 @@ function emailUpdate(
 	}
 }
 
-function passwordUpdate(
-	state = {
-		isUserUpdated: false	
-	},
-	action
-	) {
+function passwordUpdate(state = { isUserUpdated: false }, action) {
 	switch (action.type) {
-		case REQUEST_UPDATE_EMAIL:
+		case REQUEST_UPDATE_PASSWORD:
+		case ERROR_UPDATE_PASSWORD:
+		case RECEIVE_UPDATE_PASSWORD:
+			return Object.assign({}, state, {
+				isUserUpdated : action.isUserUpdated
+			});
+	}
+}
+
+function profilePicUpdate(state = {
+	isUserUpdated: false,
+	user: {},	
+}, action ){
+	switch (action.type) {
+		case REQUEST_UPDATE_PROFILEPIC:
+		case ERROR_UPDATE_PROFILEPIC:
 			return Object.assign({}, state, {
 				isUserUpdated : action.isUserUpdated				
 			});
-		case ERROR_UPDATE_EMAIL:
-			return Object.assign({}, state, {
-				isUserUpdated : action.isUserUpdated				
-			});
-		case RECEIVE_UPDATE_EMAIL:
+		case RECEIVE_UPDATE_PROFILEPIC:
 			return Object.assign({}, state, {
 				user: Object.assign({}, state.user, {
-					email: action.newEmail
+					profile_picture: action.newProfilePic
 				}),
 				isUserUpdated : action.isUserUpdated
 			});
 	}
+}
+
+function deleteAccount(state = {
+		isUserUpdated: false,
+		user: {},	
+	}, action ){
+	switch (action.type) {
+		case REQUEST_DELETE_ACCOUNT:
+		case CONFIRM_DELETE_ACCOUNT:
+		case ERROR_DELETE_ACCOUNT:
+			return Object.assign({}, state, {
+				isUserUpdated : action.isUserUpdated
+			});
+		}
 }
 
 function gettingUserData(state = {}, action) {
@@ -155,6 +175,24 @@ function gettingUserData(state = {}, action) {
 		case ERROR_UPDATE_EMAIL:
 			return Object.assign({}, state, {
 				[action.user_id]: emailUpdate(state[action.user_id], action)
+			});
+		case REQUEST_UPDATE_PASSWORD:
+		case RECEIVE_UPDATE_PASSWORD:
+		case ERROR_UPDATE_PASSWORD:
+			return Object.assign({}, state, {
+				[action.user_id]: passwordUpdate(state[action.user_id], action)
+			});
+		case REQUEST_UPDATE_PROFILEPIC:
+		case RECEIVE_UPDATE_PROFILEPIC:
+		case ERROR_UPDATE_PROFILEPIC:
+			return Object.assign({}, state, {
+				[action.user_id]: profilePicUpdate(state[action.user_id], action)
+			});
+		case REQUEST_DELETE_ACCOUNT:
+		case CONFIRM_DELETE_ACCOUNT:
+		case ERROR_DELETE_ACCOUNT:
+			return Object.assign({}, state, {
+				[action.user_id]: deleteAccount(state[action.user_id], action)
 			});
 		default:
 			return state;
