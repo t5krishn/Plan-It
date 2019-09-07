@@ -12,6 +12,7 @@ export default function EventCards({ items }) {
 							<Text>{e.first_name}</Text>
 							<Text>{e.last_name}</Text>
 							<Text>{e.username}</Text>
+							<Text>{e.email}</Text>
 						</View>
 					</Card>
 				);

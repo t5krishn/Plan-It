@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
 	tripsScrollContainer: {
 		width: "100%"
 	},
-	tripsContsent: {
+	tripsContent: {
 		paddingBottom: 10
 		// backgroundColor: "yellow"
 	}
