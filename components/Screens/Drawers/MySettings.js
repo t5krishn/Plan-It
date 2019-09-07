@@ -13,10 +13,18 @@ import MenuBtn from "../../Buttons/Menubtn";
 import UsernameForm from "./SettingForms/UsernameForm";
 import EmailForm from "./SettingForms/EmailForm";
 import PasswordForm from "./SettingForms/PasswordForm";
+import ProfilePicForm from "./SettingForms/ProfilePicForm";
+import DeleteForm from "./SettingForms/DeleteForm";
 
 import { connect } from "react-redux";
 import { resetStore } from "../../../store/actions/resetStoreAction";
-import { changeUsername, changeEmail } from "../../../store/actions/userAction";
+import { 
+	changeUsername,
+	changeEmail,
+	changePassword,
+	changeProfilePic,
+	deleteAccount
+ } from "../../../store/actions/userAction";
 
 function SettingsScreen(props) {
 	const handleLogout = async () => {
@@ -34,6 +42,21 @@ function SettingsScreen(props) {
 		props.dispatch(changeEmail(user, newEmail));
 		// Initiate the modal response or error
 	};
+
+	const onUpdatePassword = (user, password) => {
+		props.dispatch(changePassword(user, password));
+		// Initiate the modal response or error
+	};
+
+	const onUpdateProfilePicture = (user, profilePicture) => {
+		props.dispatch(changeProfilePic(user, profilePicture));
+		// Initiate the modal response or error
+	};
+
+	const onDeleteAccount = user => {
+		props.dispatch(deleteAccount(user));
+		// handleLogout();
+	}
 
 	return (
 		<View style={styles.container}>
@@ -60,7 +83,15 @@ function SettingsScreen(props) {
 						onSubmit={ onUpdateEmail }
 						currentEmail={props.user.email}
 						user_id={props.selectedUser}/>
-					<PasswordForm />
+					<PasswordForm 
+						onSubmit={ onUpdatePassword }
+						user_id={props.selectedUser}/>
+					<ProfilePicForm
+						onSubmit={ onUpdateProfilePicture }
+						user_id={props.selectedUser}/>
+					<DeleteForm 
+						onSubmit={ onDeleteAccount }
+						user_id={props.selectedUser}/>
 					{/* update username */}
 					{/* update profile picture */}
 					{/* update email */}

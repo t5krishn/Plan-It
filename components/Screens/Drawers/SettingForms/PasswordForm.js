@@ -4,7 +4,8 @@ import {
 	Text,
 	Button,
 	StyleSheet,
-	TextInput
+    TextInput,
+    Alert
 } from "react-native";
 
 export default function PasswordForm(props) {
@@ -13,10 +14,21 @@ export default function PasswordForm(props) {
     const [newPWInput, onNewPWChange] = useState('**************');
     const [confirmPWInput, onConfirmPWChange] = useState('**************');
 
+    const handleSubmit = () => {
+        if(newPWInput === confirmPWInput) {
+            props.onSubmit(props.user_id, {
+                currentPassword: curPWInput,
+                newPassword: newPWInput
+            });
+        } else {
+            Alert.alert("New passwords don't match!")
+        }
+    }
+
     return (
     <View style={styles.formContainer}>
         <Text style={styles.userNameFormTitle}> Update Password </Text>
-		<Text style={{alignItem: "left"}}>Current Password</Text>
+		<Text>Current Password</Text>
         <TextInput
 			secureTextEntry={true}
             autoCapitalize="none"
@@ -25,6 +37,7 @@ export default function PasswordForm(props) {
             value={curPWInput}
             clearTextOnFocus = {true}
         />
+		<Text>New Password</Text>
 		<TextInput
 			secureTextEntry={true}
             autoCapitalize="none"
@@ -33,6 +46,7 @@ export default function PasswordForm(props) {
             value={newPWInput}
             clearTextOnFocus = {true}
         />
+		<Text>Confirm New Password</Text>
 		<TextInput
 			secureTextEntry={true}
             autoCapitalize="none"
@@ -41,7 +55,9 @@ export default function PasswordForm(props) {
             value={confirmPWInput}
             clearTextOnFocus = {true}
         />
-        <Button title="Update" onPress={() => props.onSubmit()} />
+        <Button 
+            title="Update"
+            onPress={handleSubmit}/>
     </View>
     );
 }

@@ -9,7 +9,7 @@ import {
 
 export default function UsernameForm(props) {
 
-    const [usernameInput, onChangeUsername] = useState(props.currentUsername);
+    const [usernameInput, onChangeUsername] = useState(props.currentUsername || "Enter a new username");
 
     return (
     <View style={styles.formContainer}>

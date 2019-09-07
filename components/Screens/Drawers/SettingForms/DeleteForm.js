@@ -4,24 +4,28 @@ import {
 	Text,
 	Button,
 	StyleSheet,
-	TextInput
+	Alert
 } from "react-native";
 
-export default function UsernameForm(props) {
+export default function DeleteForm(props) {
 
-    const [usernameInput, onChangeUsername] = useState('Enter new username');
+	const handleSubmit = () => {
+		Alert.alert(
+			"Confirm",
+			"Are you sure you want to delete your account?",
+			[{text: 'Cancel', onPress: () => {}, style: 'cancel'},
+			{text: 'OK', onPress: () => {
+				props.onSubmit(props.user_id)}}], 
+			{cancelable: false }
+		)
+
+	};
 
     return (
     <View style={styles.formContainer}>
-        <Text style={styles.userNameFormTitle}> Update username </Text>
-        <TextInput
-            autoCapitalize="none"
-            onChangeText={text => onChangeUsername(text)}
-            style={styles.TextInput}
-            value={usernameInput}
-            clearTextOnFocus = {true}
-        />
-        <Button title="Update" onPress={() => props.onSubmit()} />
+        <Text style={styles.userNameFormTitle}> Delete account </Text>
+       
+        <Button title="Delete" onPress={handleSubmit} />
     </View>
     );
 }

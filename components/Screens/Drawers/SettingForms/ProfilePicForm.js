@@ -7,21 +7,21 @@ import {
 	TextInput
 } from "react-native";
 
-export default function UsernameForm(props) {
+export default function ProfilePicForm(props) {
 
-    const [usernameInput, onChangeUsername] = useState('Enter new username');
+    const [profilePicInput, onChangeProfilePic] = useState('Enter a new profile picture url');
 
     return (
     <View style={styles.formContainer}>
-        <Text style={styles.userNameFormTitle}> Update username </Text>
+        <Text style={styles.userNameFormTitle}> Update Profile Picture </Text>
         <TextInput
             autoCapitalize="none"
-            onChangeText={text => onChangeUsername(text)}
+            onChangeText={text => onChangeProfilePic(text)}
             style={styles.TextInput}
-            value={usernameInput}
+            value={profilePicInput}
             clearTextOnFocus = {true}
         />
-        <Button title="Update" onPress={() => props.onSubmit()} />
+        <Button title="Update" onPress={() => props.onSubmit(props.user_id, profilePicInput)} />
     </View>
     );
 }
