@@ -153,7 +153,7 @@ function deleteAccount(state = {
 			return Object.assign({}, state, {
 				isUserUpdated : action.isUserUpdated
 			});
-		}
+	}
 }
 
 function gettingUserData(state = {}, action) {
