@@ -43,7 +43,7 @@ export function postNewEvent(event, userId, tripId) {
 	return dispatch => {
 		dispatch(addNewTripEvent(user));
 		return Promise(
-			fetch(`http://localhost:3000/user/${userId}/trip/${tripId}/event`)
+			fetch(`http://localhost:5422/user/${userId}/trip/${tripId}/event`)
 		)
 			.then(response => {
 				let data = response.map(res => res.json());
@@ -59,9 +59,9 @@ export function fetchTripData(trip, user) {
 	return dispatch => {
 		dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/event`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/to_do`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/expense`)
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/event`),
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/to_do`),
+			fetch(`http://localhost:5422/user/${user}/trip/${trip}/expense`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
