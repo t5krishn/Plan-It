@@ -18,7 +18,16 @@ import {
 	ERROR_UPDATE_PROFILEPIC,
 	REQUEST_DELETE_ACCOUNT,
 	CONFIRM_DELETE_ACCOUNT,
-	ERROR_DELETE_ACCOUNT
+	ERROR_DELETE_ACCOUNT,
+	REQUEST_ACCEPT_INVITE,
+	CONFIRM_ACCEPT_INVITE,
+	ERROR_ACCEPT_INVITE,
+	REQUEST_DECLINE_INVITE,
+	CONFIRM_DECLINE_INVITE,
+	ERROR_DECLINE_INVITE,
+	REQUEST_FRIEND_INVITE,
+	CONFIRM_FRIEND_INVITE,
+	ERROR_FRIEND_INVITE
 } from "../actions/userAction";
 
 function selectedUser(state = {}, action) {
@@ -161,6 +170,32 @@ function deleteAccount(
 	}
 }
 
+function friendInvite(
+  state = {
+    isUserUpdated: false,
+    user_friends: []
+  },
+  action
+) {
+  switch (action.type) {
+	case REQUEST_ACCEPT_INVITE:
+	case ERROR_ACCEPT_INVITE:	
+	case REQUEST_DECLINE_INVITE:
+	case ERROR_DECLINE_INVITE:
+	case REQUEST_FRIEND_INVITE:
+	case ERROR_FRIEND_INVITE:
+		return Object.assign({}, state, {
+			isUserUpdated: action.isUserUpdated
+		});
+	case CONFIRM_DECLINE_INVITE:
+	case CONFIRM_ACCEPT_INVITE:
+	case CONFIRM_FRIEND_INVITE:
+		return Object.assign({}, state, {
+			user_friends: [...action.friends]
+		});
+  }
+}
+
 function gettingUserData(state = {}, action) {
 	switch (action.type) {
 		case RECEIVE_USER_DATA:
@@ -199,6 +234,18 @@ function gettingUserData(state = {}, action) {
 		case ERROR_DELETE_ACCOUNT:
 			return Object.assign({}, state, {
 				[action.user_id]: deleteAccount(state[action.user_id], action)
+			});
+		case REQUEST_ACCEPT_INVITE:
+		case CONFIRM_ACCEPT_INVITE:
+		case ERROR_ACCEPT_INVITE:
+		case REQUEST_DECLINE_INVITE:
+		case CONFIRM_DECLINE_INVITE:
+		case ERROR_DECLINE_INVITE:
+		case REQUEST_FRIEND_INVITE:
+		case CONFIRM_FRIEND_INVITE:
+		case ERROR_FRIEND_INVITE:
+			return Object.assign({}, state, {
+				[action.user_id]: friendInvite(state[action.user_id], action)
 			});
 		default:
 			return state;
