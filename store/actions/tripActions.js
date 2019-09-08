@@ -26,7 +26,8 @@ function receiveTripData(trip, data) {
 		current_trip: trip,
 		events: data[0],
 		toDos: data[1],
-		expenses: data[2]
+		expenses: data[2],
+		tripUsers: data[3]
 	};
 }
 
@@ -178,7 +179,8 @@ export function fetchTripData(trip, user) {
 		return Promise.all([
 			fetch(`http://localhost:3000/user/${user}/trip/${trip}/event`),
 			fetch(`http://localhost:3000/user/${user}/trip/${trip}/to_do`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/expense`)
+			fetch(`http://localhost:3000/user/${user}/trip/${trip}/expense`),
+			fetch(`http://localhost:3000/user/${user}/trip/${trip}/users`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());

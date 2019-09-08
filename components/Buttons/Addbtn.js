@@ -5,6 +5,7 @@ import AddModal from "../Screens/Tabs/addModal";
 
 export default function AddBtn(props) {
 	const [isVisible, setVisibility] = useState(false);
+	const [addFriendsVisible, setFriendVisibility] = useState(false);
 	const [mode, setMode] = useState("");
 
 	return (
@@ -16,6 +17,8 @@ export default function AddBtn(props) {
 					tripId={props.tripId}
 					userId={props.userId}
 					mode={mode}
+					setFriendVisibility={setFriendVisibility}
+					addFriendsVisible={addFriendsVisible}
 				/>
 			)}
 			<FloatingAction

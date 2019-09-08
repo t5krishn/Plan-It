@@ -11,10 +11,8 @@ function EventsTab(props) {
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.upper}>
-				<Text>San Diego Trip! </Text>
-				<Text>{props.events.length} Events Total</Text>
-
-				<Text>Calendar View</Text>
+				<Text style={styles.upperText}>San Diego Trip! </Text>
+				<Text style={styles.upperText}>{props.events.length} Events Total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
 				{props.isFetchingTrip ? (
@@ -37,13 +35,19 @@ const styles = StyleSheet.create({
 	},
 	upper: {
 		flex: 0.5,
-		backgroundColor: "purple",
-		justifyContent: "center",
-		alignItems: "center"
+		backgroundColor: "#FFFFFF",
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	upperText: {
+		fontFamily: "Avenir"
 	},
 	lower: {
 		flex: 2,
-		backgroundColor: "red"
+		marginLeft: "2.5%",
+		width: "95%",
+		backgroundColor: "#FFFFFF",
+		alignItems: "center"
 	}
 });
 

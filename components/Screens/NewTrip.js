@@ -12,8 +12,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { addNewUserTrip } from "../../store/actions/userAction";
+import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
 
 function RegisterForm(props) {
+	const [addFriendsVisible, setFriendVisibility] = useState(false);
+
 	const [state, setState] = useState({
 		name: "",
 		location: "",
@@ -23,30 +26,9 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		// const request = new Request(
-		// 	`http://localhost:3000/user/${props.selectedUser}/trip`,
-		// 	{
-		// 		method: "POST",
-		// 		headers: {
-		// 			"Content-type": "application/json"
-		// 		},
-		// 		body: JSON.stringify({ trip: state })
-		// 	}
-		// );
-
-		// fetch(request)
-		// 	.then(response => response.json())
-		// 	.then(data => {
-		// 		if (data.status === "ok") {
 		props.dispatch(addNewUserTrip(props.selectedUser, state));
 		props.navigation.navigate("Dashboard");
-		// 	} else {
-		// 		Alert.alert("There was an issue with saving your trip");
-		// 	}
-		// });
 	};
-
-	const inviteFriends = () => {};
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
@@ -83,12 +65,17 @@ function RegisterForm(props) {
 				style={styles.textInput}
 				onChangeText={text => setState({ ...state, description: text })}
 			/>
-			<TouchableOpacity style={styles.button} onPress={() => inviteFriends()}>
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => setFriendVisibility(true)}
+			>
 				<Text>Invite Friends</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-				<Text>Submit</Text>
-			</TouchableOpacity>
+			<AddFriendsModal
+				setFriendVisibility={setFriendVisibility}
+				addFriendsVisible={addFriendsVisible}
+				friends={props.user_friends}
+			/>
 		</KeyboardAvoidingView>
 	);
 }

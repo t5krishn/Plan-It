@@ -26,7 +26,8 @@ function tripData(
 		isFetchingTrip: false,
 		events: [],
 		toDos: [],
-		expenses: []
+		expenses: [],
+		tripUsers: []
 	},
 	action
 ) {
@@ -58,7 +59,8 @@ function tripData(
 				isFetchingTrip: false,
 				events: action.events,
 				toDos: action.toDos,
-				expenses: action.expenses
+				expenses: action.expenses,
+				tripUsers: action.tripUsers
 			});
 		default:
 			return state;
