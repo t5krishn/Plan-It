@@ -20,7 +20,7 @@ function FindFriend({ navigation, selectedUser, dispatch }) {
   useEffect(() => {
     let query = searchQuery.trim();
     if (query) {
-      fetch(`http://localhost:5422/user/search/${query}`)
+      fetch(`http://localhost:5422/user/${selectedUser}/search/${query}`)
         .then(res => res.json())
         .then(data => {
           changeQueryResult(data);

@@ -58,11 +58,6 @@ function gettingTripData(state = {}, action) {
 	}
 }
 
-// const tripReducer = combineReducers({
-//   gettingTripData,
-//   selectedTrip
-// });
 
-// export default tripReducer;
 
 export { gettingTripData, selectedTrip };

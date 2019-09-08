@@ -234,10 +234,11 @@ function FriendsScreen(props) {
 			</View>
       <ScrollView>
         <FriendsCards 
-          items={/* props.user_friends */ test}
+          items={props.user_friends /* test */}
           user_id={props.selectedUser}
           onAccept={onAccept}
-          onDecline={onDecline}/>
+          onDecline={onDecline}
+          isFetching={props.isFetchingUser}/>
       </ScrollView>
 		</View>
 	);

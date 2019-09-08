@@ -389,17 +389,13 @@ function requestAcceptInvite(user) {
   };
 }
 export const CONFIRM_ACCEPT_INVITE = "CONFIRM_ACCEPT_INVITE";
-function confirmAcceptInvite(user) {
-  fetch(`http://localhost:5422/user/${user}/friend`)
-    .then(res => res.json())
-    .then(data => {
+function confirmAcceptInvite(user, data) {
       return {
         type: CONFIRM_ACCEPT_INVITE,
         user_id: user,
         friends: data,
         isUserUpdated: true
       };
-    });
 }
 export const ERROR_ACCEPT_INVITE = "ERROR_ACCEPT_INVITE";
 function errorAcceptInvite(user, data) {
@@ -420,7 +416,8 @@ export function acceptInvite(user, friendId) {
       method: "POST",
       headers: {
         "Content-type": "application/json"
-      }
+	  }
+	//   body: JSON.stringify({})
     }
   );
   return dispatch => {
@@ -433,7 +430,11 @@ export function acceptInvite(user, friendId) {
         if (data.error) {
           return dispatch(errorAcceptInvite(user, data));
         } else {
-          return dispatch(confirmAcceptInvite(user));
+			fetch(`http://localhost:5422/user/${user}/friend`)
+			.then(res => res.json())
+			.then(data => {
+			return dispatch(confirmAcceptInvite(user, data));
+			});
         }
       });
   };
@@ -448,17 +449,13 @@ function requestDeclineInvite(user) {
   };
 }
 export const CONFIRM_DECLINE_INVITE = "CONFIRM_DECLINE_INVITE";
-function confirmDeclineInvite(user) {
-  fetch(`http://localhost:5422/user/${user}/friend`)
-    .then(res => res.json())
-    .then(data => {
+function confirmDeclineInvite(user, data) {
       return {
         type: CONFIRM_DECLINE_INVITE,
         user_id: user,
         friends: data,
         isUserUpdated: true
       };
-    });
 }
 export const ERROR_DECLINE_INVITE = "ERROR_DECLINE_INVITE";
 function errorDeclineInvite(user, data) {
@@ -492,7 +489,11 @@ export function declineInvite(user, friendId) {
         if (data.error) {
           return dispatch(errorDeclineInvite(user, data));
         } else {
-          return dispatch(confirmDeclineInvite(user));
+			fetch(`http://localhost:5422/user/${user}/friend`)
+			.then(res => res.json())
+			.then(data => {
+				return dispatch(confirmDeclineInvite(user, data));
+			});
         }
       });
   };
