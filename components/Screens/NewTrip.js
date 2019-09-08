@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Alert,
 	KeyboardAvoidingView,
@@ -17,6 +17,9 @@ import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
 function RegisterForm(props) {
 	const [addFriendsVisible, setFriendVisibility] = useState(false);
 
+	// invited is an array of userIds of friends whom the user checks off from the addModal
+	const [invited, setInvited] = useState([]);
+
 	const [state, setState] = useState({
 		name: "",
 		location: "",
@@ -26,7 +29,12 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		props.dispatch(addNewUserTrip(props.selectedUser, state));
+		props.dispatch(
+			addNewUserTrip(props.selectedUser, {
+				...state,
+				trip_users: [...invited, props.selectedUser]
+			})
+		);
 		props.navigation.navigate("Dashboard");
 	};
 
@@ -39,6 +47,7 @@ function RegisterForm(props) {
 				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
 			</View>
+			<Text>Create a new trip</Text>
 			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
@@ -65,13 +74,20 @@ function RegisterForm(props) {
 				style={styles.textInput}
 				onChangeText={text => setState({ ...state, description: text })}
 			/>
+
 			<TouchableOpacity
 				style={styles.button}
 				onPress={() => setFriendVisibility(true)}
 			>
-				<Text>Invite Friends</Text>
+				{invited.length ? (
+					<Text>Edit Friends</Text>
+				) : (
+					<Text>Invite Friends</Text>
+				)}
 			</TouchableOpacity>
+
 			<AddFriendsModal
+				setInvited={setInvited}
 				setFriendVisibility={setFriendVisibility}
 				addFriendsVisible={addFriendsVisible}
 				friends={props.user_friends}
@@ -98,8 +114,7 @@ const styles = StyleSheet.create({
 		height: 40
 	},
 	buttonText: {
-		fontSize: 16,
-		fontWeight: "bold"
+		fontSize: 16
 	},
 	buttonView: {
 		position: "absolute",
@@ -112,7 +127,13 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
+	const {
+		selectedUser,
+		gettingUserData,
+		selectedTrip,
+		gettingTripData
+	} = state;
+
 	const {
 		isFetchingUser,
 		user,
@@ -127,13 +148,20 @@ function mapStateToProps(state) {
 		user_friends: []
 	};
 
+	const { tripUsers } = gettingTripData[selectedTrip] || {
+		isFetchingTrip: true,
+		tripUsers: []
+	};
+
 	return {
 		selectedUser,
 		isFetchingUser,
 		user,
 		user_trips,
 		user_expenses,
-		user_friends
+		user_friends,
+		selectedTrip,
+		tripUsers
 	};
 }
 

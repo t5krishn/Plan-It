@@ -44,9 +44,8 @@ const styles = StyleSheet.create({
 	},
 	lower: {
 		flex: 2,
-		marginLeft: "2.5%",
-		width: "95%",
-		backgroundColor: "#FFFFFF",
+		width: "100%",
+		backgroundColor: "#FFF",
 		alignItems: "center"
 	}
 });
