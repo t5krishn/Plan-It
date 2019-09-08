@@ -14,6 +14,7 @@ export default function AddBtn(props) {
 					setVisibility={setVisibility}
 					isVisible={isVisible}
 					tripId={props.tripId}
+					userId={props.userId}
 					mode={mode}
 				/>
 			)}

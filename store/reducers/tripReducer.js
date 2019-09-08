@@ -4,7 +4,12 @@ import {
 	SELECT_TRIP,
 	REQUEST_TRIP_DATA,
 	RECEIVE_TRIP_DATA,
-	ADD_TRIP_EVENT
+	REQUEST_NEW_EVENT,
+	RECEIVE_NEW_EVENT,
+	REQUEST_NEW_TODO,
+	RECEIVE_NEW_TODO,
+	REQUEST_NEW_EXPENSE,
+	RECEIVE_NEW_EXPENSE
 } from "../actions/tripActions";
 
 function selectedTrip(state = {}, action) {
@@ -26,10 +31,24 @@ function tripData(
 	action
 ) {
 	switch (action.type) {
-		case ADD_TRIP_EVENT:
+		case RECEIVE_NEW_EVENT:
 			return Object.assign({}, state, {
+				isFetchingTrip: false,
 				events: [action.event, ...state.events]
 			});
+		case RECEIVE_NEW_TODO:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				toDos: [action.todo, ...state.toDos]
+			});
+		case RECEIVE_NEW_EXPENSE:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				expenses: [action.expense, ...state.expenses]
+			});
+		case REQUEST_NEW_EVENT:
+		case REQUEST_NEW_TODO:
+		case REQUEST_NEW_EXPENSE:
 		case REQUEST_TRIP_DATA:
 			return Object.assign({}, state, {
 				isFetchingTrip: true
@@ -48,8 +67,14 @@ function tripData(
 
 function gettingTripData(state = {}, action) {
 	switch (action.type) {
+		case RECEIVE_NEW_EVENT:
+		case REQUEST_NEW_EVENT:
 		case RECEIVE_TRIP_DATA:
 		case REQUEST_TRIP_DATA:
+		case RECEIVE_NEW_TODO:
+		case REQUEST_NEW_TODO:
+		case RECEIVE_NEW_EXPENSE:
+		case REQUEST_NEW_EXPENSE:
 			return Object.assign({}, state, {
 				[action.current_trip]: tripData(state[action.current_trip], action)
 			});

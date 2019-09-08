@@ -24,7 +24,7 @@ function EventsTab(props) {
 				)}
 				<View style={{ height: 100 }} />
 			</ScrollView>
-			<AddBtn tripId={props.selectedTrip} />
+			<AddBtn tripId={props.selectedTrip} userId={props.selectedUser} />
 		</View>
 	);
 }

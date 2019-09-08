@@ -9,7 +9,11 @@ import {
 	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { addNewTripEvent } from "../../../store/actions/tripActions";
+import {
+	postNewEvent,
+	postNewTodo,
+	postNewExpense
+} from "../../../store/actions/tripActions";
 import { connect } from "react-redux";
 
 /*
@@ -43,34 +47,21 @@ function AddModal(props) {
 		trip_id: props.tripId
 	});
 
-	const body = {};
-	body[props.mode] = form;
-
 	const handleSubmit = () => {
-		const request = new Request(
-			`http://localhost:5422/user/${props.selectedUser}/trip/${props.tripId}/${
-				props.mode
-			}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-type": "application/json"
-				},
-				body: JSON.stringify(body)
-			}
-		);
-
-		fetch(request)
-			.then(response => response.json())
-			.then(data => {
-				if (data.status === "ok") {
-					console.log("IT WORKED");
-					props.setVisibility(false);
-					props.dispatch(addNewTripEvent(data.event));
-				} else {
-					Alert.alert("There was an issue with saving your trip");
-				}
-			});
+		props.setVisibility(false);
+		switch (props.mode) {
+			case "event":
+				props.dispatch(postNewEvent(form, props.userId, props.tripId));
+				break;
+			case "to_do":
+				props.dispatch(
+					postNewTodo({ ...form, completed: false }, props.userId, props.tripId)
+				);
+				break;
+			case "expense":
+				props.dispatch(postNewExpense(form, props.userId, props.tripId));
+				break;
+		}
 	};
 
 	return (
@@ -181,6 +172,12 @@ function AddModal(props) {
 								style={styles.textInput}
 								value={form.name}
 								onChangeText={text => setForm({ ...form, name: text })}
+							/>
+							<Text>Expense date:</Text>
+							<TextInput
+								style={styles.textInput}
+								value={form.expense_date}
+								onChangeText={text => setForm({ ...form, expense_date: text })}
 							/>
 							<Text>Amount:</Text>
 							<TextInput

@@ -30,27 +30,144 @@ function receiveTripData(trip, data) {
 	};
 }
 
-export const ADD_TRIP_EVENT = "ADD_TRIP_EVENT";
+// For updating store when new event is created
 
-export function addNewTripEvent(event) {
+export const REQUEST_NEW_EVENT = "REQUEST_NEW_EVENT";
+
+function requestNewEvent(current_trip, event) {
 	return {
-		type: ADD_TRIP_EVENT,
-		event
+		type: REQUEST_NEW_EVENT,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_NEW_EVENT = "RECEIVE_NEW_EVENT";
+
+function receivedNewEvent(current_trip, event) {
+	return {
+		type: RECEIVE_NEW_EVENT,
+		event,
+		current_trip
 	};
 }
 
 export function postNewEvent(event, userId, tripId) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}/event`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ event: event })
+		}
+	);
 	return dispatch => {
-		dispatch(addNewTripEvent(user));
-		return Promise(
-			fetch(`http://localhost:5422/user/${userId}/trip/${tripId}/event`)
-		)
+		dispatch(requestNewEvent(tripId, event));
+		fetch(request)
 			.then(response => {
-				let data = response.map(res => res.json());
-				return Promise.all(data);
+				return response.json();
 			})
 			.then(data => {
-				return dispatch(receiveTripData(trip, data));
+				if (data.status === "ok") {
+					return dispatch(receivedNewEvent(tripId, data.event));
+				}
+			});
+	};
+}
+
+// For updating store when new todo is created
+
+export const REQUEST_NEW_TODO = "REQUEST_NEW_TODO";
+
+function requestNewTodo(current_trip, todo) {
+	return {
+		type: REQUEST_NEW_TODO,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_NEW_TODO = "RECEIVE_NEW_TODO";
+
+function receivedNewTodo(current_trip, todo) {
+	return {
+		type: RECEIVE_NEW_TODO,
+		todo,
+		current_trip
+	};
+}
+
+export function postNewTodo(todo, userId, tripId) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}/to_do`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ todo: todo })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewTodo(tripId, todo));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.status === "ok") {
+					return dispatch(receivedNewTodo(tripId, data.todo));
+				}
+			});
+	};
+}
+
+// For updating store when new expense is created
+
+export const REQUEST_NEW_EXPENSE = "REQUEST_NEW_EXPENSE";
+
+function requestNewExpense(current_trip, expense) {
+	return {
+		type: REQUEST_NEW_EXPENSE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_NEW_EXPENSE = "RECEIVE_NEW_EXPENSE";
+
+function receivedNewExpense(current_trip, expense) {
+	return {
+		type: RECEIVE_NEW_EXPENSE,
+		expense,
+		current_trip
+	};
+}
+
+export function postNewExpense(expense, userId, tripId) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}/expense`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ expense: expense })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewExpense(tripId, expense));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				console.log("FROM TRIPACTIONS:", data);
+				if (data.status === "ok") {
+					return dispatch(receivedNewExpense(tripId, data.expense));
+				}
 			});
 	};
 }

@@ -9,7 +9,7 @@ export default function EventCards({ items }) {
 				return (
 					<Card key={e.id}>
 						<View>
-							<Text>Location: {e.location}</Text>
+							<Text>Location: {e.address}</Text>
 							<Text>Description: {e.description}</Text>
 							<Text>Starts on: {e.starts_on}</Text>
 							<Text>Ends on: {e.ends_on}</Text>
