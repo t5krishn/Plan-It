@@ -198,7 +198,7 @@ function AddModal(props) {
 								style={styles.textInput}
 								value={form.amount_in_cents}
 								onChangeText={text =>
-									setForm({ ...form, amount_in_cents: text })
+									setForm({ ...form, amount_in_cents: parseInt(text) * 100 })
 								}
 							/>
 							{invited.length > 0 ? (
