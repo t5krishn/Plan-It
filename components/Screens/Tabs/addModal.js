@@ -14,6 +14,7 @@ import {
 	postNewTodo,
 	postNewExpense
 } from "../../../store/actions/tripActions";
+import AddFriendsModal from "./addFriendsModal";
 import { connect } from "react-redux";
 
 /*
@@ -68,41 +69,20 @@ function AddModal(props) {
 		<View
 			style={{
 				marginTop: 22,
-				alignItems: "center",
-				justifyContent: "center"
+				alignItems: "center"
 			}}
 		>
-			<Modal animationType="fade" transparent={true} visible={props.isVisible}>
-				<View
-					style={{
-						position: "absolute",
-						width: Dimensions.get("screen").width,
-						height: Dimensions.get("screen").height,
-						backgroundColor: "rgba(0,0,0,0.5)",
-						alignItems: "center",
-						justifyContent: "center",
-						opacity: 0.5
-					}}
-				/>
+			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
 				<View
 					style={{
 						borderRadius: 20,
-						shadowColor: "#000",
-						shadowOffset: {
-							width: 0,
-							height: 5
-						},
-						shadowOpacity: 0.5,
-						shadowRadius: 6.27,
 						marginTop: 80,
+						paddingTop: 50,
 						zIndex: 9,
-						position: "absolute",
-						left: 25,
 						backgroundColor: "green",
-						width: Dimensions.get("screen").width - 50,
-						height: Dimensions.get("screen").height - 200,
-						alignItems: "center",
-						justifyContent: "center"
+						width: Dimensions.get("screen").width,
+						height: Dimensions.get("screen").height,
+						alignItems: "center"
 					}}
 				>
 					<TouchableHighlight
@@ -188,9 +168,20 @@ function AddModal(props) {
 								}
 							/>
 							<TouchableHighlight style={styles.submit}>
+								<Text onPress={() => props.setFriendVisibility(true)}>
+									Add friends to split with
+								</Text>
+							</TouchableHighlight>
+							<TouchableHighlight style={styles.submit}>
 								<Text onPress={() => handleSubmit()}>Submit</Text>
 							</TouchableHighlight>
 						</View>
+					)}
+					{props.addFriendsVisible && (
+						<AddFriendsModal
+							setFriendVisibility={props.setFriendVisibility}
+							addFriendsVisible={props.addFriendsVisible}
+						/>
 					)}
 				</View>
 			</Modal>

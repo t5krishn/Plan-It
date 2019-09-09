@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Alert,
 	KeyboardAvoidingView,
@@ -12,8 +12,14 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { addNewUserTrip } from "../../store/actions/userAction";
+import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
 
 function RegisterForm(props) {
+	const [addFriendsVisible, setFriendVisibility] = useState(false);
+
+	// invited is an array of userIds of friends whom the user checks off from the addModal
+	const [invited, setInvited] = useState([]);
+
 	const [state, setState] = useState({
 		name: "",
 		location: "",
@@ -23,13 +29,14 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		
-		props.dispatch(addNewUserTrip(props.selectedUser, state));
+		props.dispatch(
+			addNewUserTrip(props.selectedUser, {
+				...state,
+				trip_users: [props.selectedUser, ...invited]
+			})
+		);
 		props.navigation.navigate("Dashboard");
-
 	};
-
-	const inviteFriends = () => {};
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
@@ -40,6 +47,7 @@ function RegisterForm(props) {
 				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
 			</View>
+			<Text>Create a new trip</Text>
 			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
@@ -66,12 +74,24 @@ function RegisterForm(props) {
 				style={styles.textInput}
 				onChangeText={text => setState({ ...state, description: text })}
 			/>
-			<TouchableOpacity style={styles.button} onPress={() => inviteFriends()}>
-				<Text>Invite Friends</Text>
+
+			<TouchableOpacity
+				style={styles.button}
+				onPress={() => setFriendVisibility(true)}
+			>
+				{invited.length ? (
+					<Text>Edit Friends</Text>
+				) : (
+					<Text>Invite Friends</Text>
+				)}
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-				<Text>Submit</Text>
-			</TouchableOpacity>
+
+			<AddFriendsModal
+				setInvited={setInvited}
+				setFriendVisibility={setFriendVisibility}
+				addFriendsVisible={addFriendsVisible}
+				friends={props.user_friends}
+			/>
 		</KeyboardAvoidingView>
 	);
 }
@@ -94,8 +114,7 @@ const styles = StyleSheet.create({
 		height: 40
 	},
 	buttonText: {
-		fontSize: 16,
-		fontWeight: "bold"
+		fontSize: 16
 	},
 	buttonView: {
 		position: "absolute",
@@ -108,7 +127,13 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
+	const {
+		selectedUser,
+		gettingUserData,
+		selectedTrip,
+		gettingTripData
+	} = state;
+
 	const {
 		isFetchingUser,
 		user,
@@ -123,13 +148,20 @@ function mapStateToProps(state) {
 		user_friends: []
 	};
 
+	const { tripUsers } = gettingTripData[selectedTrip] || {
+		isFetchingTrip: true,
+		tripUsers: []
+	};
+
 	return {
 		selectedUser,
 		isFetchingUser,
 		user,
 		user_trips,
 		user_expenses,
-		user_friends
+		user_friends,
+		selectedTrip,
+		tripUsers
 	};
 }
 

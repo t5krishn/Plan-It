@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 	},
 	bottomTab: {
 		flex: 4,
-		backgroundColor: "red",
+		backgroundColor: "blue",
 		width: "100%"
 	},
 	scrollContainer: {

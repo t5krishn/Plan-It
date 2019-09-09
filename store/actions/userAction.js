@@ -567,11 +567,12 @@ function requestTripInfoUpdate(current_trip) {
 
 // NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
 export const RECEIVE_TRIP_INFO_FOR_TRIP = "RECEIVE_TRIP_INFO_FOR_TRIP";
-function receiveTripInfoUpdateForTrips(current_trip) {
+function receiveTripInfoUpdateForTrips(current_trip, users) {
   return {
     type: RECEIVE_TRIP_INFO_FOR_TRIP,
     isTripUpdated: true,
-    current_trip
+    current_trip,
+    users
   };
 }
 
@@ -584,7 +585,14 @@ function receivedTripInfoUpdate(user_id, trips) {
   };
 }
 
-// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+// TRIP => updateInfo => { 
+//            name,
+//            location,
+//            start_on,
+//            ends_on,
+//            description,
+//            added:[user_ids],
+//            removed:[user_ids] } id is already in params
 export function updateTrip(userId, tripId, updateInfo) {
   const request = new Request(
     `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}`,
@@ -602,12 +610,16 @@ export function updateTrip(userId, tripId, updateInfo) {
     fetch(request)
       .then(response => response.json())
       .then(data => {
-        dispatch(receiveTripInfoUpdateForTrips(tripId));
         if (data.status == "ok") {
           fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`)
             .then(res => res.json())
             .then(json => {
               return dispatch(receivedTripInfoUpdate(userId, json));
+            });
+          fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/users`)
+            .then(res => res.json())
+            .then(json => {
+              dispatch(receiveTripInfoUpdateForTrips(tripId));
             });
         } else {
           // handle error 
@@ -649,7 +661,7 @@ function receivedTripDelete(user_id, trips) {
   };
 }
 
-// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+
 export function deleteTrip(userId, tripId) {
   const request = new Request(
     `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/delete`,

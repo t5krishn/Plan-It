@@ -20,14 +20,15 @@ function requestTripData(trip) {
 export const RECEIVE_TRIP_DATA = "RECEIVE_TRIP_DATA";
 
 function receiveTripData(trip, data) {
-  return {
-    type: RECEIVE_TRIP_DATA,
-    isFetchingTrip: false,
-    current_trip: trip,
-    events: data[0],
-    toDos: data[1],
-    expenses: data[2]
-  };
+	return {
+		type: RECEIVE_TRIP_DATA,
+		isFetchingTrip: false,
+		current_trip: trip,
+		events: data[0],
+		toDos: data[1],
+		expenses: data[2],
+		tripUsers: data[3]
+	};
 }
 
 // For updating store when new event is created
@@ -53,28 +54,28 @@ function receivedNewEvent(current_trip, event) {
 }
 
 export function postNewEvent(event, userId, tripId) {
-  const request = new Request(
-    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/event`,
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({ event: event })
-    }
-  );
-  return dispatch => {
-    dispatch(requestNewEvent(tripId, event));
-    fetch(request)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          return dispatch(receivedNewEvent(tripId, data.event));
-        }
-      });
-  };
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/event`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ event: event })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewEvent(tripId, event));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.status === "ok") {
+					return dispatch(receivedNewEvent(tripId, data.event));
+				}
+			});
+	};
 }
 
 // For updating store when new todo is created
@@ -100,28 +101,28 @@ function receivedNewTodo(current_trip, todo) {
 }
 
 export function postNewTodo(todo, userId, tripId) {
-  const request = new Request(
-    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({ todo: todo })
-    }
-  );
-  return dispatch => {
-    dispatch(requestNewTodo(tripId, todo));
-    fetch(request)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          return dispatch(receivedNewTodo(tripId, data.todo));
-        }
-      });
-  };
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ todo: todo })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewTodo(tripId, todo));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.status === "ok") {
+					return dispatch(receivedNewTodo(tripId, data.todo));
+				}
+			});
+	};
 }
 
 // For updating store when new expense is created
@@ -147,46 +148,48 @@ function receivedNewExpense(current_trip, expense) {
 }
 
 export function postNewExpense(expense, userId, tripId) {
-  const request = new Request(
-    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/expense`,
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({ expense: expense })
-    }
-  );
-  return dispatch => {
-    dispatch(requestNewExpense(tripId, expense));
-    fetch(request)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.status === "ok") {
-          return dispatch(receivedNewExpense(tripId, data.expense));
-        }
-      });
-  };
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/expense`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ expense: expense })
+		}
+	);
+	return dispatch => {
+		dispatch(requestNewExpense(tripId, expense));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				console.log("FROM TRIPACTIONS:", data);
+				if (data.status === "ok") {
+					return dispatch(receivedNewExpense(tripId, data.expense));
+				}
+			});
+	};
 }
 
 export function fetchTripData(trip, user) {
   return dispatch => {
     dispatch(requestTripData(trip));
-    return Promise.all([
-      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`),
-      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`),
-      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`)
-    ])
-      .then(response => {
-        let data = response.map(res => res.json());
-        return Promise.all(data);
-      })
-      .then(data => {
-        return dispatch(receiveTripData(trip, data));
-      });
-  };
+		return Promise.all([
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/users`)
+		])
+			.then(response => {
+				let data = response.map(res => res.json());
+				return Promise.all(data);
+			})
+			.then(data => {
+				return dispatch(receiveTripData(trip, data));
+			});
+	};
 }
 
 export const REQUEST_TRIP_UPDATE = "REQUEST_TRIP_UPDATE";
@@ -310,4 +313,4 @@ export function deleteTripItem(userId, tripId, updateType, updateId) {
 
 
 // USERS => updateInfo => {removed: [ user_ids ], added: [ user_ids ] }
-const updateTrip
+// const updateTrip
