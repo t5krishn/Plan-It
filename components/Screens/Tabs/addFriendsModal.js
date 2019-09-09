@@ -66,7 +66,7 @@ function AddFriendsModal(props) {
 					<Text>Friends:</Text>
 					{props.friends.length > 0 ? (
 						<View style={styles.friendsContainer}>
-							<View>
+							<View style={styles.checkBox}>
 								{props.friends.map(friend => {
 									return (
 										<CheckBox
@@ -103,17 +103,13 @@ const styles = StyleSheet.create({
 		right: 20,
 		top: 20
 	},
-	textInput: {
-		width: "80%",
-		height: 40,
-		borderColor: "#000",
-		borderWidth: 1,
-		marginTop: 20
+	checkBox: {
+		width: "100%"
 	},
 	friendsContainer: {
 		flex: 1,
 		backgroundColor: "yellow",
-		width: "80%",
+		width: "90%%",
 		alignItems: "center"
 	},
 	button: {

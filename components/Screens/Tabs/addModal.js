@@ -7,6 +7,7 @@ import {
 	Dimensions,
 	TextInput,
 	StyleSheet,
+	ScrollView,
 	AlertIOS
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -99,12 +100,7 @@ function AddModal(props) {
 	});
 
 	return (
-		<View
-			style={{
-				marginTop: 22,
-				alignItems: "center"
-			}}
-		>
+		<View style={styles.mainContainer}>
 			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
 				<View
 					style={{
@@ -132,7 +128,7 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "event" && (
-						<View style={styles.event}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new event</Text>
 							<Text>Name:</Text>
 							<TextInput
@@ -170,7 +166,7 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "to_do" && (
-						<View style={styles.todo}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new to do item</Text>
 							<TextInput
 								style={styles.textInput}
@@ -183,7 +179,7 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "expense" && (
-						<View style={styles.expense}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new expense</Text>
 							<Text>Name:</Text>
 							<TextInput
@@ -206,11 +202,25 @@ function AddModal(props) {
 								}
 							/>
 							{invited.length > 0 ? (
-								<TouchableHighlight style={styles.submit}>
-									<Text onPress={() => props.setFriendVisibility(true)}>
-										Edit friends:
-									</Text>
-								</TouchableHighlight>
+								<View style={styles.friendsList}>
+									<TouchableHighlight style={styles.submit}>
+										<Text onPress={() => props.setFriendVisibility(true)}>
+											Edit friends
+										</Text>
+									</TouchableHighlight>
+
+									<Text>Friends added:</Text>
+									<ScrollView>
+										{invited.map(friend => {
+											return (
+												<Text>
+													{friend.first_name} {friend.last_name} (@
+													{friend.username})
+												</Text>
+											);
+										})}
+									</ScrollView>
+								</View>
 							) : (
 								<TouchableHighlight style={styles.submit}>
 									<Text onPress={() => props.setFriendVisibility(true)}>
@@ -238,10 +248,18 @@ function AddModal(props) {
 }
 
 const styles = StyleSheet.create({
+	mainContainer: {
+		marginTop: 22,
+		alignItems: "center",
+		width: "100%"
+	},
 	close: {
 		position: "absolute",
 		right: 20,
 		top: 20
+	},
+	content: {
+		width: "85%"
 	},
 	textInput: {
 		width: 200,
@@ -260,6 +278,10 @@ const styles = StyleSheet.create({
 	error: {
 		backgroundColor: "red",
 		padding: 10
+	},
+	friendsList: {
+		backgroundColor: "yellow",
+		height: "30%"
 	}
 });
 

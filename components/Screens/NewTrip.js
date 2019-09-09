@@ -124,7 +124,7 @@ function RegisterForm(props) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "blue",
+		backgroundColor: "#FFF",
 		alignItems: "center",
 		paddingTop: 100
 	},
