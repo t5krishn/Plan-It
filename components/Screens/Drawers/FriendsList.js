@@ -15,7 +15,7 @@ export default function FriendsList({
 	selectedUser
 }) {
 	return (
-		<View contentContainerStyle={styles.friendContainer}>
+		<View>
 			{items.map((e, i) => (
 				<FriendCard
 					key={i}
@@ -27,10 +27,3 @@ export default function FriendsList({
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	friendContainer: {
-		width: "100%",
-		backgroundColor: "red"
-	}
-});

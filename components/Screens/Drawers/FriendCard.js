@@ -88,15 +88,11 @@ export default function FriendCard({ friend, onAccept, onDecline }) {
 
 const styles = StyleSheet.create({
 	friendCard: {
-		flexDirection: "column",
-		justifyContent: "space-between",
 		alignItems: "center",
-		margin: 10,
-		padding: 10,
-		borderColor: "black",
-		borderWidth: 1,
-		height: 200,
-		backgroundColor: "yellow"
+		backgroundColor: "yellow",
+		width: 300,
+		height: 100,
+		margin: 10
 	},
 	friendInfo: {
 		flex: 1

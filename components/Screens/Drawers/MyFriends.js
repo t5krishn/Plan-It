@@ -32,7 +32,7 @@ function FriendsScreen(props) {
 					<Text>Find friends</Text>
 				</TouchableOpacity>
 			</View>
-			<View style={{ backgroundColor: "blue" }}>
+			<View style={styles.friendsListContainer}>
 				<FriendsList
 					items={props.user_friends}
 					selectedUser={props.selectedUser}
@@ -49,9 +49,16 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
+		justifyContent: "center",
 		backgroundColor: "purple",
 		height: Dimensions.get("screen").height,
 		paddingTop: 40
+	},
+	friendsListContainer: {
+		flex: 4,
+		backgroundColor: "blue",
+		width: "100%",
+		alignItems: "center"
 	}
 });
 

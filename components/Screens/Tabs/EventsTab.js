@@ -14,7 +14,7 @@ function EventsTab(props) {
 				<Text style={styles.upperText}>San Diego Trip! </Text>
 				<Text style={styles.upperText}>{props.events.length} Events Total</Text>
 			</View>
-			<ScrollView style={styles.lower}>
+			<ScrollView contentContainerStyle={styles.lower}>
 				{props.isFetchingTrip ? (
 					<Text>Loading!</Text>
 				) : (
