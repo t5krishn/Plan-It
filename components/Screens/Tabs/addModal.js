@@ -17,6 +17,7 @@ import {
 } from "../../../store/actions/tripActions";
 import AddFriendsModal from "./addFriendsModal";
 import { connect } from "react-redux";
+import getIds from "../../../helpers/getIds";
 
 /*
   Depending on the mode (event/ to_do/ expense) the form is different:
@@ -80,7 +81,7 @@ function AddModal(props) {
 					props.navigation.navigate("TripExpenses");
 					props.dispatch(
 						postNewExpense(
-							{ ...form, users: invited },
+							{ ...form, users: getIds(invited) },
 							props.selectedUser,
 							props.tripId
 						)

@@ -8,16 +8,19 @@ import {
 	StyleSheet,
 	View,
 	Button,
-	Dimensions
+	Dimensions,
+	ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { addNewUserTrip } from "../../store/actions/userAction";
 import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
+import BackBtn from "../Buttons/Backbtn";
+import getIds from "../../helpers/getIds";
 
 function RegisterForm(props) {
 	const [addFriendsVisible, setFriendVisibility] = useState(false);
 
-	// invited is an array of userIds of friends whom the user checks off from the addModal
+	// invited is an array of userIds: {userObject}
 	const [invited, setInvited] = useState([]);
 
 	const [state, setState] = useState({
@@ -32,7 +35,7 @@ function RegisterForm(props) {
 		props.dispatch(
 			addNewUserTrip(props.selectedUser, {
 				...state,
-				trip_users: [...invited, props.selectedUser]
+				trip_users: [...getIds(invited), props.selectedUser]
 			})
 		);
 		props.navigation.navigate("Dashboard");
@@ -40,13 +43,14 @@ function RegisterForm(props) {
 
 	return (
 		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
-			<View style={styles.buttonView}>
+			{/* <View style={styles.buttonView}>
 				<Button
 					title="Cancel"
 					onPress={() => props.navigation.navigate("Dashboard")}
 				/>
 				<Button title="Save" onPress={() => handleSubmit()} />
-			</View>
+			</View> */}
+			<BackBtn onPress={() => props.navigation.navigate("Dashboard")} />
 			<Text>Create a new trip</Text>
 			<Text>Name:</Text>
 			<TextInput
@@ -75,6 +79,23 @@ function RegisterForm(props) {
 				onChangeText={text => setState({ ...state, description: text })}
 			/>
 
+			{invited.length ? (
+				<View style={styles.friendsList}>
+					<Text>Friends invited:</Text>
+					<ScrollView>
+						{invited.map(friend => {
+							return (
+								<Text>
+									{friend.first_name} {friend.last_name} (@{friend.username})
+								</Text>
+							);
+						})}
+					</ScrollView>
+				</View>
+			) : (
+				<View />
+			)}
+
 			<TouchableOpacity
 				style={styles.button}
 				onPress={() => setFriendVisibility(true)}
@@ -84,6 +105,10 @@ function RegisterForm(props) {
 				) : (
 					<Text>Invite Friends</Text>
 				)}
+			</TouchableOpacity>
+
+			<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+				<Text>Submit</Text>
 			</TouchableOpacity>
 
 			<AddFriendsModal
@@ -99,9 +124,9 @@ function RegisterForm(props) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		backgroundColor: "blue",
 		alignItems: "center",
-		justifyContent: "center"
+		paddingTop: 100
 	},
 	textInput: {
 		height: 40,
@@ -110,19 +135,17 @@ const styles = StyleSheet.create({
 		width: 200
 	},
 	button: {
+		padding: 2,
 		backgroundColor: "#FD6592",
 		height: 40
 	},
 	buttonText: {
 		fontSize: 16
 	},
-	buttonView: {
-		position: "absolute",
-		top: 35,
-		justifyContent: "space-between",
-		flexDirection: "row",
-		justifyContent: "space-between",
-		width: 350
+	friendsList: {
+		backgroundColor: "yellow",
+		width: "80%",
+		height: "30%"
 	}
 });
 

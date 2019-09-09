@@ -9,9 +9,7 @@ export default function MenuBtn(props) {
 			style={styles.menubtn}
 			color="#000"
 			size={40}
-			onPress={() => {
-				props.navigation.navigate("Welcome");
-			}}
+			onPress={() => props.onPress}
 		/>
 	);
 }
@@ -22,6 +20,6 @@ const styles = StyleSheet.create({
 		padding: 2,
 		position: "absolute",
 		left: 20,
-		top: 40
+		top: 35
 	}
 });

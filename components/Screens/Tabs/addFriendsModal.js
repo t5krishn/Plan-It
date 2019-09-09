@@ -21,10 +21,9 @@ function AddFriendsModal(props) {
 	};
 
 	const handleSubmit = () => {
-		const friends = Object.keys(state);
 		const invited = [];
-		friends.map(friend => {
-			if (state[friend]) {
+		props.friends.map(friend => {
+			if (state[friend.id]) {
 				invited.push(friend);
 			}
 		});
