@@ -12,7 +12,7 @@ import MenuBtn from "../../Buttons/Menubtn";
 import { connect } from "react-redux";
 import { sendFriendRequest } from "../../../store/actions/userAction";
 
-function FindFriend({ navigation, selectedUser, dispatch }) {
+function FindFriend({ navigation, selectedUser, userFriendIDs, dispatch }) {
   const [searchQuery, changeSearchQuery] = useState("");
 
   const [queryResult, changeQueryResult] = useState({ match: false });
@@ -20,22 +20,21 @@ function FindFriend({ navigation, selectedUser, dispatch }) {
   useEffect(() => {
     let query = searchQuery.trim();
     if (query) {
-      fetch(`http://localhost:5422/user/${selectedUser}/search/${query}`)
+      fetch(`https://plan-it-api-1.herokuapp.com/user/${selectedUser}/search/${query}`)
         .then(res => res.json())
         .then(data => {
-          changeQueryResult(data);
-          return true;
+          if (!userFriendIDs.includes(data.id)){
+            changeQueryResult(data);
+          }
         });
     }
   }, [searchQuery]);
 
   let onHandlePress = result => {
     if (result.match) {
-		dispatch(sendFriendRequest(selectedUser, result.id));
         Alert.alert(
           "Confirm",
-          `Are you sure you want to send a friend request to
-      		${result.first_name} ${result.first_name}`,
+          `Are you sure you want to send a friend request to ${result.first_name} ${result.last_name}`,
           [
             { text: "Cancel", onPress: () => {}, style: "cancel" },
             {
@@ -45,7 +44,7 @@ function FindFriend({ navigation, selectedUser, dispatch }) {
               }
             }
           ],
-          { cancelable: false }
+          { cancelable: true }
         );
     }
   };
@@ -138,6 +137,13 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { selectedUser: state.selectedUser };
+  
+  const { selectedUser, gettingUserData } = state;
+  const { user_friends } = gettingUserData[selectedUser] || {
+		user_friends: []
+  };
+  
+  const userFriendIDs = user_friends.map(e => e.id)
+  return { selectedUser, userFriendIDs };
 }
 export default connect(mapStateToProps)(FindFriend);
