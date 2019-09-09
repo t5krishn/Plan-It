@@ -60,13 +60,16 @@ function receivedNewUserTrip(user_id, trip) {
 export const ADD_NEW_USER_TRIP = "ADD_NEW_USER_TRIP";
 
 export function addNewUserTrip(userId, trip) {
-	const request = new Request(`http://localhost:3000/user/${userId}/trip`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ trip: trip })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ trip: trip })
+		}
+	);
 	return dispatch => {
 		dispatch(requestNewUserTrip(userId, trip));
 		fetch(request)
@@ -85,10 +88,10 @@ export function fetchUserData(user) {
 	return dispatch => {
 		dispatch(requestUserData(user));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/${user}`),
-			fetch(`http://localhost:3000/user/${user}/trip`),
-			fetch(`http://localhost:3000/user/${user}/transactions`),
-			fetch(`http://localhost:3000/user/${user}/friend`)
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/transactions`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
@@ -135,13 +138,16 @@ function errorUpdateUsername(user, data) {
 }
 
 export function changeUsername(user, newUsername) {
-	const request = new Request(`http://localhost:3000/user/${user}/username`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ user, newUsername })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/username`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ user, newUsername })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdateUsername(user));
 		fetch(request)
@@ -193,13 +199,16 @@ function errorUpdateEmail(user, data) {
 }
 
 export function changeEmail(user, newEmail) {
-	const request = new Request(`http://localhost:3000/user/${user}/email`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ user, newEmail })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/email`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ user, newEmail })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdateEmail(user));
 		fetch(request)
@@ -253,13 +262,16 @@ function errorUpdatePassword(user, data) {
 }
 // password = { currentPassword, newPassword }
 export function changePassword(user, password) {
-	const request = new Request(`http://localhost:3000/user/${user}/password`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ password })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/password`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ password })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdatePassword(user));
 		fetch(request)
@@ -306,7 +318,7 @@ function errorUpdateProfilePic(user, data) {
 }
 export function changeProfilePic(user, newProfilePicture) {
 	const request = new Request(
-		`http://localhost:3000/user/${user}/profile_picture`,
+		`https://plan-it-api-1.herokuapp.com/user/${user}/profile_picture`,
 		{
 			method: "POST",
 			headers: {
@@ -358,12 +370,15 @@ function errorDeleteAccount(user, data) {
 	};
 }
 export function deleteAccount(user) {
-	const request = new Request(`http://localhost:3000/user/${user}/delete`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/delete`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
 		}
-	});
+	);
 	return dispatch => {
 		dispatch(requestDeleteAccount(user));
 		fetch(request)

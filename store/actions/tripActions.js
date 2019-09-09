@@ -55,7 +55,7 @@ function receivedNewEvent(current_trip, event) {
 
 export function postNewEvent(event, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/event`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/event`,
 		{
 			method: "POST",
 			headers: {
@@ -102,7 +102,7 @@ function receivedNewTodo(current_trip, todo) {
 
 export function postNewTodo(todo, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/to_do`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
 		{
 			method: "POST",
 			headers: {
@@ -149,7 +149,7 @@ function receivedNewExpense(current_trip, expense) {
 
 export function postNewExpense(expense, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/expense`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/expense`,
 		{
 			method: "POST",
 			headers: {
@@ -177,10 +177,10 @@ export function fetchTripData(trip, user) {
 	return dispatch => {
 		dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/event`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/to_do`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/expense`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/users`)
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/users`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
