@@ -50,13 +50,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "purple",
 		height: Dimensions.get("screen").height,
 		paddingTop: 40
 	},
 	friendsListContainer: {
 		flex: 4,
-		backgroundColor: "blue",
 		width: "100%",
 		alignItems: "center"
 	}

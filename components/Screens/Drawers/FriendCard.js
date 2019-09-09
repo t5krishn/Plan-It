@@ -41,12 +41,18 @@ export default function FriendCard({ friend, onAccept, onDecline }) {
 			}}
 		>
 			<View style={styles.friendInfo}>
+				<Image
+					source={require("../../../assets/Ghost.jpg")}
+					style={{ width: 50, height: 50 }}
+				/>
 				{!friend.is_accepted && friend.type === "follower" && (
-					<Text style={{ fontWeight: "bold" }}>New Friend Request!</Text>
+					<Text>New Friend Request!</Text>
 				)}
-				<Text>{friend.first_name + " " + friend.last_name}HI</Text>
-				<Text>{friend.username}</Text>
-				<Text>{friend.email}</Text>
+				<Text style={styles.friendInfoText}>
+					{friend.first_name + " " + friend.last_name}HI
+				</Text>
+				<Text style={styles.friendInfoText}>{friend.username}</Text>
+				<Text style={styles.friendInfoText}>{friend.email}</Text>
 			</View>
 			{!friend.is_accepted && friend.type === "follower" && (
 				<View style={styles.friendRequestContainer}>
@@ -88,18 +94,28 @@ export default function FriendCard({ friend, onAccept, onDecline }) {
 
 const styles = StyleSheet.create({
 	friendCard: {
-		alignItems: "center",
+		flexDirection: "row",
 		backgroundColor: "yellow",
-		width: 300,
+		width: 330,
 		height: 100,
-		margin: 10
+		margin: 10,
+		padding: 10,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 3.84
 	},
 	friendInfo: {
-		flex: 1
+		flex: 3
+	},
+	friendInfoText: {
+		fontFamily: "Avenir"
 	},
 	friendRequestContainer: {
 		flex: 1,
-		flexDirection: "row",
 		justifyContent: "space-around",
 		alignItems: "center"
 	},
