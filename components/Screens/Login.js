@@ -3,12 +3,14 @@ import {
 	View,
 	Text,
 	TextInput,
-	Button,
+	TouchableOpacity,
 	StyleSheet,
 	Alert,
-	AsyncStorage
+	AsyncStorage,
+	Image
 } from "react-native";
 import Backbtn from "../Buttons/Backbtn";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
@@ -50,24 +52,60 @@ function LoginScreen(props) {
 		<View style={styles.container}>
 			<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 			<Text style={styles.title}>Sign In</Text>
-			<Text style={styles.text}>Email</Text>
-			<TextInput
-				autoCapitalize="none"
-				style={styles.TextInput}
-				onChangeText={text => setState({ ...state, email: text })}
-			/>
-			<Text style={styles.text}>Password</Text>
-			<TextInput
-				autoCapitalize="none"
-				style={styles.TextInput}
-				onChangeText={text => setState({ ...state, password: text })}
-			/>
-			<Button title="Login" onPress={() => handleSubmit()} />
-			<Text style={styles.text}>Don't have an account? Sign up:</Text>
-			<Button
-				title="Sign Up"
-				onPress={() => props.navigation.navigate("Signup")}
-			/>
+			<View style={{ flex: 1 }}>
+				<Image
+					source={require("../../assets/Ghost.jpg")}
+					style={{ width: 100, height: 100 }}
+				/>
+			</View>
+			<View style={styles.inputContainer}>
+				<View style={styles.input}>
+					<Icon
+						name="envelope"
+						size={26}
+						color={"#594D4F"}
+						style={styles.icon}
+					/>
+					<TextInput
+						autoCapitalize="none"
+						style={styles.TextInput}
+						onChangeText={text => setState({ ...state, email: text })}
+						placeholder={"Email"}
+					/>
+				</View>
+				<View style={styles.input}>
+					<Icon
+						name="lock"
+						size={32}
+						color={"#594D4F"}
+						style={[styles.icon, { paddingLeft: 14 }]}
+					/>
+					<TextInput
+						autoCapitalize="none"
+						style={styles.TextInput}
+						onChangeText={text => setState({ ...state, password: text })}
+						placeholder={"Password"}
+					/>
+				</View>
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity
+						onPress={() => handleSubmit()}
+						style={styles.button}
+					>
+						<Text style={styles.buttonText}>Login</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={{
+							width: "95%",
+							flexDirection: "row"
+						}}
+						onPress={() => props.navigation.navigate("Signup")}
+					>
+						<Text style={styles.text}>Don't have an account? </Text>
+						<Text style={[styles.text, styles.signup]}>Signup</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
 		</View>
 	);
 }
@@ -79,20 +117,50 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontFamily: "Avenir",
-		fontSize: 40,
-		marginTop: 110,
-		marginRight: 200
+		fontSize: 45,
+		marginTop: 90,
+		marginRight: 230,
+		marginBottom: 50
+	},
+	inputContainer: {
+		width: "90%",
+		flex: 1
 	},
 	TextInput: {
 		borderColor: "#594D4F",
 		borderBottomWidth: 1,
-		width: "80%"
+		height: 40,
+		width: "80%",
+		fontSize: 18,
+		fontFamily: "Avenir",
+		color: "#594D4F"
+	},
+	input: { flexDirection: "row", flex: 0.3 },
+	buttonContainer: {
+		marginTop: 50,
+		flex: 1,
+		alignItems: "center"
+	},
+	icon: { padding: 10 },
+	button: {
+		backgroundColor: "#000",
+		height: 40,
+		width: "95%%",
+		alignItems: "center",
+		justifyContent: "center",
+		marginBottom: 10
+	},
+	buttonText: {
+		color: "#FFFFFF",
+		fontFamily: "Avenir",
+		fontSize: 20
 	},
 	text: {
-		fontFamily: "Avenir",
 		color: "#594D4F",
-		fontSize: 20
-	}
+		fontFamily: "Avenir",
+		fontSize: 15
+	},
+	signup: { color: "blue", fontWeight: "bold" }
 });
 
 // function mapStateToProps(state) {
