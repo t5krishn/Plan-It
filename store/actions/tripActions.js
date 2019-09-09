@@ -176,10 +176,18 @@ export function fetchTripData(trip, user) {
 	return dispatch => {
 		dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/event`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/to_do`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/expense`),
-			fetch(`http://localhost:3000/user/${user}/trip/${trip}/users`)
+			fetch(
+				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`
+			),
+			fetch(
+				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`
+			),
+			fetch(
+				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`
+			),
+			fetch(
+				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/users`
+			)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());

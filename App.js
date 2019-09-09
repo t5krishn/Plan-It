@@ -56,7 +56,7 @@ import Welcome from "./components/Screens/Welcome";
             -Tab 3: Expenses
 */
 
-export default function App() {
+export default function App({ navigation }) {
 	return (
 		<Provider store={store}>
 			<AppContainer />
