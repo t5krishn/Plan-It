@@ -4,198 +4,25 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	ScrollView
+	ScrollView,
+	Dimensions
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import FriendsCards from "../Drawers/FriendsCards";
+import FriendsList from "./FriendsList";
 
 import { connect } from "react-redux";
+import { acceptInvite, declineInvite } from "../../../store/actions/userAction";
 
 function FriendsScreen(props) {
-	const test = [
-		{
-			id: 1,
-			first_name: "John",
-			last_name: "Doe",
-			email: "johndoe@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/asdasd2eddasd",
-			created_at: "2019-09-07T12:52:34.896Z",
-			updated_at: "2019-09-07T12:52:34.896Z",
-			is_accepted: true
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		},
-		{
-			id: 3,
-			first_name: "Colin",
-			last_name: "Fetus",
-			email: "colinfetus@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-			created_at: "2019-09-07T12:52:34.903Z",
-			updated_at: "2019-09-07T12:52:34.903Z",
-			is_accepted: true
-		},
-		{
-			id: 4,
-			first_name: "Bail",
-			last_name: "Linman",
-			email: "baillinman@gmail.com",
-			username: null,
-			password_digest: "password",
-			profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-			created_at: "2019-09-07T12:52:34.907Z",
-			updated_at: "2019-09-07T12:52:34.907Z",
-			is_accepted: false
-		}
-	];
+	const onAccept = friendId => {
+		props.dispatch(acceptInvite(props.selectedUser, friendId));
+	};
+	const onDecline = friendId => {
+		props.dispatch(declineInvite(props.selectedUser, friendId));
+	};
+
 	return (
-		<View>
+		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.container}>
 				<Text>FriendsScreen</Text>
@@ -205,8 +32,14 @@ function FriendsScreen(props) {
 					<Text>Find friends</Text>
 				</TouchableOpacity>
 			</View>
-			<View>
-				<FriendsCards items={/* props.user_friends */ test} />
+			<View style={{ backgroundColor: "blue" }}>
+				<FriendsList
+					items={props.user_friends}
+					selectedUser={props.selectedUser}
+					onAccept={onAccept}
+					onDecline={onDecline}
+					isFetching={props.isFetchingUser}
+				/>
 			</View>
 		</View>
 	);
@@ -214,13 +47,11 @@ function FriendsScreen(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 200,
-		alignItems: "center"
-	},
-	TextInput: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 100
+		flex: 1,
+		alignItems: "center",
+		backgroundColor: "purple",
+		height: Dimensions.get("screen").height,
+		paddingTop: 40
 	}
 });
 

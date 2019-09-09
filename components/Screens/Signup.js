@@ -28,7 +28,7 @@ function RegisterForm(props) {
 	};
 
 	const handleSubmit = () => {
-		const request = new Request("http://localhost:3000/user", {
+		const request = new Request("https://plan-it-api-1.herokuapp.com/user", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"

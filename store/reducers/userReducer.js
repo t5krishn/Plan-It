@@ -18,8 +18,20 @@ import {
 	ERROR_UPDATE_PROFILEPIC,
 	REQUEST_DELETE_ACCOUNT,
 	CONFIRM_DELETE_ACCOUNT,
-	ERROR_DELETE_ACCOUNT
+	ERROR_DELETE_ACCOUNT,
+	REQUEST_ACCEPT_INVITE,
+	CONFIRM_ACCEPT_INVITE,
+	ERROR_ACCEPT_INVITE,
+	REQUEST_DECLINE_INVITE,
+	CONFIRM_DECLINE_INVITE,
+	ERROR_DECLINE_INVITE,
+	REQUEST_FRIEND_INVITE,
+	CONFIRM_FRIEND_INVITE,
+	ERROR_FRIEND_INVITE,
+	RECEIVE_TRIP_INFO_UPDATE,
+	RECEIVE_TRIP_DELETE
 } from "../actions/userAction";
+
 
 function selectedUser(state = {}, action) {
 	switch (action.type) {
@@ -44,6 +56,11 @@ function userData(
 		case RECEIVED_NEW_USER_TRIP:
 			return Object.assign({}, state, {
 				user_trips: [{ ...action.trip }, ...state.user_trips]
+			});
+		case RECEIVE_TRIP_INFO_UPDATE:
+		case RECEIVE_TRIP_DELETE:
+			return Object.assign({}, state, {
+				user_trips: [ ...action.trips ]
 			});
 		case REQUEST_NEW_USER_TRIP:
 		case REQUEST_USER_DATA:
@@ -161,12 +178,39 @@ function deleteAccount(
 	}
 }
 
+function friendInvite(
+  state = {
+    isUserUpdated: false,
+    user_friends: []
+  },
+  action
+) {
+  switch (action.type) {
+	case REQUEST_ACCEPT_INVITE:
+	case ERROR_ACCEPT_INVITE:	
+	case REQUEST_DECLINE_INVITE:
+	case ERROR_DECLINE_INVITE:
+	case REQUEST_FRIEND_INVITE:
+	case ERROR_FRIEND_INVITE:
+		return Object.assign({}, state, {
+			isUserUpdated: action.isUserUpdated
+		});
+	case CONFIRM_DECLINE_INVITE:
+	case CONFIRM_ACCEPT_INVITE:
+	case CONFIRM_FRIEND_INVITE:
+		return Object.assign({}, state, {
+			user_friends: [...action.friends]
+		});
+  }
+}
+
 function gettingUserData(state = {}, action) {
 	switch (action.type) {
 		case RECEIVE_USER_DATA:
 		case REQUEST_USER_DATA:
 		case RECEIVED_NEW_USER_TRIP:
 		case REQUEST_NEW_USER_TRIP:
+		case RECEIVE_TRIP_INFO_UPDATE:
 			return Object.assign({}, state, {
 				[action.user_id]: userData(state[action.user_id], action)
 			});
@@ -199,6 +243,22 @@ function gettingUserData(state = {}, action) {
 		case ERROR_DELETE_ACCOUNT:
 			return Object.assign({}, state, {
 				[action.user_id]: deleteAccount(state[action.user_id], action)
+			});
+		case REQUEST_ACCEPT_INVITE:
+		case CONFIRM_ACCEPT_INVITE:
+		case ERROR_ACCEPT_INVITE:
+		case REQUEST_DECLINE_INVITE:
+		case CONFIRM_DECLINE_INVITE:
+		case ERROR_DECLINE_INVITE:
+		case REQUEST_FRIEND_INVITE:
+		case CONFIRM_FRIEND_INVITE:
+		case ERROR_FRIEND_INVITE:
+			return Object.assign({}, state, {
+				[action.user_id]: friendInvite(state[action.user_id], action)
+			});
+		case RECEIVE_TRIP_DELETE:
+			return Object.assign({}, {
+				[action.user_id]: userData(state[action.user_id], action)
 			});
 		default:
 			return state;

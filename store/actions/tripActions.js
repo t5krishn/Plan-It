@@ -55,7 +55,7 @@ function receivedNewEvent(current_trip, event) {
 
 export function postNewEvent(event, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/event`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/event`,
 		{
 			method: "POST",
 			headers: {
@@ -102,7 +102,7 @@ function receivedNewTodo(current_trip, todo) {
 
 export function postNewTodo(todo, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/to_do`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
 		{
 			method: "POST",
 			headers: {
@@ -149,7 +149,7 @@ function receivedNewExpense(current_trip, expense) {
 
 export function postNewExpense(expense, userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/expense`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/expense`,
 		{
 			method: "POST",
 			headers: {
@@ -165,7 +165,6 @@ export function postNewExpense(expense, userId, tripId) {
 				return response.json();
 			})
 			.then(data => {
-				console.log("FROM TRIPACTIONS:", data);
 				if (data.status === "ok") {
 					return dispatch(receivedNewExpense(tripId, data.expense));
 				}
@@ -191,3 +190,130 @@ export function fetchTripData(trip, user) {
 			});
 	};
 }
+
+export const REQUEST_TRIP_UPDATE = "REQUEST_TRIP_UPDATE";
+
+function requestTripUpdate(current_trip) {
+	return {
+		type: REQUEST_TRIP_UPDATE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_TRIP_UPDATE = "RECEIVE_TRIP_UPDATE";
+
+function receivedTripUpdate(current_trip, data, updateType) {
+	return {
+		type: RECEIVE_TRIP_UPDATE,
+		updateType,
+		data,
+		current_trip
+	};
+}
+
+// ACTION THAT COMBINES ANY TRIP ITEM UPDATE EXCEPT TRIP USERS
+// -------------------------------------------------------------------------------------
+// updateType could be [ events, toDos, expenses ]
+// -------------------------------------------------------------------------------------
+// events => updateInfo => { id:eventId, name, address, start_on, ends_on, description }
+// toDos => updateInfo => { id:toDoId, content, completed }
+// expenses => updateInfo => { id:expenseID, name, amount_in_cents, expense_date, added:[user_ids], removed:[user_ids] }
+
+export function updateTripItem(userId, tripId, updateType, updateInfo) {
+	// store object array is different from route name so below state handles that
+	const tripItemURl =
+		updateType === "events"
+			? "event"
+			: updateType === "toDos"
+			? "to_do"
+			: "expense";
+
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${
+			updateInfo.id
+		}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ ...updateInfo })
+		}
+	);
+	return dispatch => {
+		dispatch(requestTripUpdate(tripId));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(json => {
+				if (json.status === "ok") {
+					return dispatch(receivedTripUpdate(tripId, json.data, updateType));
+				}
+			});
+	};
+}
+
+export const REQUEST_TRIP_ITEM_DELETE = "REQUEST_TRIP_ITEM_DELETE";
+
+function requestTripItemDelete(current_trip) {
+	return {
+		type: REQUEST_TRIP_ITEM_DELETE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+export const RECEIVE_TRIP_ITEM_DELETE = "RECEIVE_TRIP_ITEM_DELETE";
+
+function receivedTripItemDelete(current_trip, data, updateType) {
+	return {
+		type: RECEIVE_TRIP_ITEM_DELETE,
+		updateType,
+		data,
+		current_trip
+	};
+}
+
+// -------------------------------------------------------------------------------------
+// updateType could be [ events, toDos, expenses ]
+// -------------------------------------------------------------------------------------
+export function deleteTripItem(userId, tripId, updateType, updateId) {
+	const tripItemURl =
+		updateType === "events"
+			? "event"
+			: updateType === "toDos"
+			? "to_do"
+			: "expense";
+
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${updateId}/delete`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
+		}
+	);
+	return dispatch => {
+		dispatch(requestTripItemDelete(tripId));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(json => {
+				if (json.status === "ok") {
+					fetch(
+						`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}`
+					)
+						.then(res => res.json())
+						.then(data => {
+							return dispatch(receivedTripItemDelete(tripId, data, updateType));
+						});
+				}
+			});
+	};
+}
+
+// USERS => updateInfo => {removed: [ user_ids ], added: [ user_ids ] }
