@@ -7,7 +7,7 @@ export default function MenuBtn({ navigation }) {
 		<Ionicons
 			name="md-menu"
 			style={styles.menubtn}
-			color="#000000"
+			color="black"
 			size={32}
 			onPress={() => {
 				navigation.toggleDrawer();
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 		zIndex: 9,
 		padding: 2,
 		position: "absolute",
-		left: 20,
+		left: 30,
 		top: 40
 	}
 });

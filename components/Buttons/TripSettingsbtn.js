@@ -10,39 +10,42 @@ import {
 	TextInput,
 	StyleSheet
 } from "react-native";
-import tripSettingsModal from "../Screens/Tabs/TripSettingsModal";
+import TripSettingsModal from "../Screens/Tabs/TripSettingsModal";
 
-export default function TripSettingsbtn({ navigation }) {
-  const [isVisible, setVisibility] = useState(false);
-  return (
-    <View style={styles.container}>
+export default function TripSettingsbtn({ friends, navigation }) {
+	const [isVisible, setVisibility] = useState(false);
+	return (
+		<View
+			style={{
+				height: 40,
+				width: 30,
+				position: "absolute",
+				zIndex: 900,
+				right: 30,
+				top: 43
+			}}
+		>
 			<Ionicons
-        name="md-settings"
-        style={styles.settingsBtn}
-        color="#000000"
-        size={32}
-        onPress={() => {
-          console.log("pull up modal"); /*  */
-        }}
-      />
-
-      {/* {isVisible && <Modal />} */}
-    </View>
-  );
+				name="md-settings"
+				style={styles.settingsBtn}
+				color="#000000"
+				size={32}
+				onPress={() => {
+					setVisibility(true);
+				}}
+			/>
+			<TripSettingsModal
+				friends={friends}
+				isVisible={isVisible}
+				setVisibility={setVisibility}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-		flexDirection: "column",
-		width: Dimensions.get("screen").width,
-    height: Dimensions.get("screen").height,
-    position: "absolute"
-	},
-  settingsBtn: {
-    zIndex: 9,
-    padding: 2,
-    position: "absolute",
-    right: 20,
-    top: 40
-  }
+	menubtn: {
+		zIndex: 9,
+		padding: 2
+	}
 });

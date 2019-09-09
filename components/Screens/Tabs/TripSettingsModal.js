@@ -14,35 +14,30 @@ import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
 
 function TripSettingsModal(props) {
-	const [state, setState] = useState({});
+	// const [state, setState] = useState({});
 
-	const handlePress = id => {
-		setState({ ...state, [id]: !state[id] });
-	};
+	// const handlePress = id => {
+	// 	setState({ ...state, [id]: !state[id] });
+	// };
 
-	const handleSubmit = () => {
-		const invited = [];
-		props.friends.map(friend => {
-			if (state[friend.id]) {
-				invited.push(friend);
-			}
-		});
-		props.setInvited(invited);
-		props.setFriendVisibility(false);
-	};
+	// const handleSubmit = () => {
+	// 	const invited = [];
+	// 	props.friends.map(friend => {
+	// 		if (state[friend.id]) {
+	// 			invited.push(friend);
+	// 		}
+	// 	});
+	// 	props.setInvited(invited);
+	// 	props.setFriendVisibility(false);
+	// };
 
 	return (
 		<View
 			style={{
-				marginTop: 22,
-				alignItems: "center"
+				backgroundColor: "yellow"
 			}}
 		>
-			<Modal
-				animationType="slide"
-				transparent={true}
-				visible={props.addFriendsVisible}
-			>
+			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
 				<View
 					style={{
 						borderRadius: 20,
@@ -58,7 +53,7 @@ function TripSettingsModal(props) {
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
-							props.setFriendVisibility(false);
+							props.setVisibility(false);
 						}}
 					>
 						<Icon name="close" size={30} />
@@ -66,7 +61,7 @@ function TripSettingsModal(props) {
 					<Text>Friends:</Text>
 					{props.friends.length > 0 ? (
 						<View style={styles.friendsContainer}>
-							<View style={styles.checkBox}>
+							{/* <View style={styles.checkBox}>
 								{props.friends.map(friend => {
 									return (
 										<CheckBox
@@ -77,7 +72,7 @@ function TripSettingsModal(props) {
 										/>
 									);
 								})}
-							</View>
+							</View> */}
 							<TouchableOpacity
 								style={styles.button}
 								onPress={() => handleSubmit()}

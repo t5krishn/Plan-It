@@ -10,7 +10,6 @@ import {
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
 import MenuBtn from "../../Buttons/Menubtn";
-import TripSettingsbtn from "../../Buttons/TripSettingsbtn"
 import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { selectTrip, fetchTripData } from "../../../store/actions/tripActions";
@@ -34,7 +33,6 @@ function Dashboard(props) {
 				}}
 			/>
 			<MenuBtn navigation={props.navigation} />
-			<TripSettingsbtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
 				<View style={styles.calendarContainer}>
 					<CalendarMonth trips={props.user_trips} />
