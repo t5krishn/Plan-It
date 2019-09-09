@@ -51,7 +51,7 @@ function LoginScreen(props) {
 
 	return (
 		<ImageBackground
-			source={require("../../assets/plant1.jpg")}
+			source={require("../../assets/plant1.png")}
 			style={{
 				width: "100%",
 				height: "100%",
@@ -59,6 +59,15 @@ function LoginScreen(props) {
 				alignItems: "center"
 			}}
 		>
+			<View
+				style={{
+					position: "absolute",
+					height: "100%",
+					width: "100%",
+					opacity: 0.5,
+					backgroundColor: "#FFF"
+				}}
+			/>
 			<View style={styles.container}>
 				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 				<Text style={styles.title}>Sign In</Text>
@@ -73,7 +82,7 @@ function LoginScreen(props) {
 						<Icon
 							name="envelope"
 							size={26}
-							color={"#594D4F"}
+							color={"#000"}
 							style={styles.icon}
 						/>
 						<TextInput
@@ -87,7 +96,7 @@ function LoginScreen(props) {
 						<Icon
 							name="lock"
 							size={32}
-							color={"#594D4F"}
+							color={"#000"}
 							style={[styles.icon, { paddingLeft: 14 }]}
 						/>
 						<TextInput
@@ -125,10 +134,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: "center",
-		width: "90%",
-		height: "40%",
-		backgroundColor: "white",
-		opacity: 0.9
+		width: "100%",
+		height: "40%"
 	},
 	title: {
 		fontFamily: "Avenir",
@@ -142,13 +149,13 @@ const styles = StyleSheet.create({
 		flex: 1
 	},
 	TextInput: {
-		borderColor: "#594D4F",
+		borderColor: "#000",
 		borderBottomWidth: 1,
 		height: 40,
 		width: "80%",
 		fontSize: 18,
 		fontFamily: "Avenir",
-		color: "#594D4F"
+		color: "#000"
 	},
 	input: { flexDirection: "row", flex: 0.3 },
 	buttonContainer: {
@@ -171,7 +178,7 @@ const styles = StyleSheet.create({
 		fontSize: 20
 	},
 	text: {
-		color: "#594D4F",
+		color: "#000",
 		fontFamily: "Avenir",
 		fontSize: 15
 	},
