@@ -8,7 +8,7 @@ export default function Backbtn(props) {
 			name="angle-left"
 			style={styles.menubtn}
 			color="#000"
-			size={40}
+			size={45}
 			onPress={() => props.onPress()}
 		/>
 	);
@@ -17,9 +17,9 @@ export default function Backbtn(props) {
 const styles = StyleSheet.create({
 	menubtn: {
 		zIndex: 9,
-		padding: 2,
+		padding: 4,
 		position: "absolute",
-		left: 20,
+		left: 2,
 		top: 38
 	}
 });

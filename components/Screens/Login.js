@@ -7,7 +7,8 @@ import {
 	StyleSheet,
 	Alert,
 	AsyncStorage,
-	Image
+	Image,
+	ImageBackground
 } from "react-native";
 import Backbtn from "../Buttons/Backbtn";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -49,77 +50,91 @@ function LoginScreen(props) {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
-			<Text style={styles.title}>Sign In</Text>
-			<View style={{ flex: 1 }}>
-				<Image
-					source={require("../../assets/Ghost.jpg")}
-					style={{ width: 100, height: 100 }}
-				/>
+		<ImageBackground
+			source={require("../../assets/plant1.jpg")}
+			style={{
+				width: "100%",
+				height: "100%",
+				justifyContent: "center",
+				alignItems: "center"
+			}}
+		>
+			<View style={styles.container}>
+				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
+				<Text style={styles.title}>Sign In</Text>
+				<View style={{ flex: 1 }}>
+					<Image
+						source={require("../../assets/Ghost.jpg")}
+						style={{ width: 100, height: 100 }}
+					/>
+				</View>
+				<View style={styles.inputContainer}>
+					<View style={styles.input}>
+						<Icon
+							name="envelope"
+							size={26}
+							color={"#594D4F"}
+							style={styles.icon}
+						/>
+						<TextInput
+							autoCapitalize="none"
+							style={styles.TextInput}
+							onChangeText={text => setState({ ...state, email: text })}
+							placeholder={"Email"}
+						/>
+					</View>
+					<View style={styles.input}>
+						<Icon
+							name="lock"
+							size={32}
+							color={"#594D4F"}
+							style={[styles.icon, { paddingLeft: 14 }]}
+						/>
+						<TextInput
+							autoCapitalize="none"
+							style={styles.TextInput}
+							onChangeText={text => setState({ ...state, password: text })}
+							placeholder={"Password"}
+						/>
+					</View>
+					<View style={styles.buttonContainer}>
+						<TouchableOpacity
+							onPress={() => handleSubmit()}
+							style={styles.button}
+						>
+							<Text style={styles.buttonText}>Login</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={{
+								width: "95%",
+								flexDirection: "row"
+							}}
+							onPress={() => props.navigation.navigate("Signup")}
+						>
+							<Text style={styles.text}>Don't have an account? </Text>
+							<Text style={[styles.text, styles.signup]}>Signup</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</View>
-			<View style={styles.inputContainer}>
-				<View style={styles.input}>
-					<Icon
-						name="envelope"
-						size={26}
-						color={"#594D4F"}
-						style={styles.icon}
-					/>
-					<TextInput
-						autoCapitalize="none"
-						style={styles.TextInput}
-						onChangeText={text => setState({ ...state, email: text })}
-						placeholder={"Email"}
-					/>
-				</View>
-				<View style={styles.input}>
-					<Icon
-						name="lock"
-						size={32}
-						color={"#594D4F"}
-						style={[styles.icon, { paddingLeft: 14 }]}
-					/>
-					<TextInput
-						autoCapitalize="none"
-						style={styles.TextInput}
-						onChangeText={text => setState({ ...state, password: text })}
-						placeholder={"Password"}
-					/>
-				</View>
-				<View style={styles.buttonContainer}>
-					<TouchableOpacity
-						onPress={() => handleSubmit()}
-						style={styles.button}
-					>
-						<Text style={styles.buttonText}>Login</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={{
-							width: "95%",
-							flexDirection: "row"
-						}}
-						onPress={() => props.navigation.navigate("Signup")}
-					>
-						<Text style={styles.text}>Don't have an account? </Text>
-						<Text style={[styles.text, styles.signup]}>Signup</Text>
-					</TouchableOpacity>
-				</View>
-			</View>
-		</View>
+		</ImageBackground>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: "center"
+		alignItems: "center",
+		width: "90%",
+		height: "40%",
+		backgroundColor: "white",
+		opacity: 0.9
 	},
 	title: {
 		fontFamily: "Avenir",
 		fontSize: 45,
 		marginTop: 90,
-		marginRight: 230,
+		marginRight: 200,
 		marginBottom: 50
 	},
 	inputContainer: {
