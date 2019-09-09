@@ -60,13 +60,16 @@ function receivedNewUserTrip(user_id, trip) {
 export const ADD_NEW_USER_TRIP = "ADD_NEW_USER_TRIP";
 
 export function addNewUserTrip(userId, trip) {
-	const request = new Request(`http://localhost:3000/user/${userId}/trip`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ trip: trip })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ trip: trip })
+		}
+	);
 	return dispatch => {
 		dispatch(requestNewUserTrip(userId, trip));
 		fetch(request)
@@ -85,10 +88,10 @@ export function fetchUserData(user) {
 	return dispatch => {
 		dispatch(requestUserData(user));
 		return Promise.all([
-			fetch(`http://localhost:3000/user/${user}`),
-			fetch(`http://localhost:3000/user/${user}/trip`),
-			fetch(`http://localhost:3000/user/${user}/transactions`),
-			fetch(`http://localhost:3000/user/${user}/friend`)
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/transactions`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
@@ -135,13 +138,16 @@ function errorUpdateUsername(user, data) {
 }
 
 export function changeUsername(user, newUsername) {
-	const request = new Request(`http://localhost:3000/user/${user}/username`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ user, newUsername })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/username`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ user, newUsername })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdateUsername(user));
 		fetch(request)
@@ -193,13 +199,16 @@ function errorUpdateEmail(user, data) {
 }
 
 export function changeEmail(user, newEmail) {
-	const request = new Request(`http://localhost:3000/user/${user}/email`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ user, newEmail })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/email`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ user, newEmail })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdateEmail(user));
 		fetch(request)
@@ -253,13 +262,16 @@ function errorUpdatePassword(user, data) {
 }
 // password = { currentPassword, newPassword }
 export function changePassword(user, password) {
-	const request = new Request(`http://localhost:3000/user/${user}/password`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ password })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/password`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ password })
+		}
+	);
 	return dispatch => {
 		dispatch(requestUpdatePassword(user));
 		fetch(request)
@@ -306,7 +318,7 @@ function errorUpdateProfilePic(user, data) {
 }
 export function changeProfilePic(user, newProfilePicture) {
 	const request = new Request(
-		`http://localhost:3000/user/${user}/profile_picture`,
+		`https://plan-it-api-1.herokuapp.com/user/${user}/profile_picture`,
 		{
 			method: "POST",
 			headers: {
@@ -358,12 +370,15 @@ function errorDeleteAccount(user, data) {
 	};
 }
 export function deleteAccount(user) {
-	const request = new Request(`http://localhost:3000/user/${user}/delete`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/delete`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
 		}
-	});
+	);
 	return dispatch => {
 		dispatch(requestDeleteAccount(user));
 		fetch(request)
@@ -411,7 +426,7 @@ function errorAcceptInvite(user, data) {
 
 export function acceptInvite(user, friendId) {
 	const request = new Request(
-		`http://localhost:3000/user/${user}/friend/${friendId}`,
+		`https://plan-it-api-1.herokuapp.com/user/${user}/friend/${friendId}`,
 		{
 			method: "POST",
 			headers: {
@@ -430,7 +445,7 @@ export function acceptInvite(user, friendId) {
 				if (data.error) {
 					return dispatch(errorAcceptInvite(user, data));
 				} else {
-					fetch(`http://localhost:3000/user/${user}/friend`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
 						.then(res => res.json())
 						.then(data => {
 							return dispatch(confirmAcceptInvite(user, data));
@@ -471,7 +486,7 @@ function errorDeclineInvite(user, data) {
 
 export function declineInvite(user, friendId) {
 	const request = new Request(
-		`http://localhost:3000/user/${user}/friend/${friendId}/delete`,
+		`https://plan-it-api-1.herokuapp.com/user/${user}/friend/${friendId}/delete`,
 		{
 			method: "POST",
 			headers: {
@@ -489,7 +504,7 @@ export function declineInvite(user, friendId) {
 				if (data.error) {
 					return dispatch(errorDeclineInvite(user, data));
 				} else {
-					fetch(`http://localhost:3000/user/${user}/friend`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
 						.then(res => res.json())
 						.then(data => {
 							return dispatch(confirmDeclineInvite(user, data));
@@ -529,13 +544,16 @@ function errorFriendInvite(user, data) {
 }
 
 export function sendFriendRequest(user, friend_id) {
-	const request = new Request(`http://localhost:3000/user/${user}/friend/`, {
-		method: "POST",
-		headers: {
-			"Content-type": "application/json"
-		},
-		body: JSON.stringify({ friend_id })
-	});
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/friend/`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ friend_id })
+		}
+	);
 	return dispatch => {
 		dispatch(requestFriendInvite(user));
 		fetch(request)
@@ -544,7 +562,7 @@ export function sendFriendRequest(user, friend_id) {
 				if (!data.success) {
 					return dispatch(errorFriendInvite(user, data));
 				} else {
-					fetch(`http://localhost:3000/user/${user}/friend`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/friend`)
 						.then(res => res.json())
 						.then(data => {
 							return dispatch(confirmFriendInvite(user, data));
@@ -586,7 +604,7 @@ function receivedTripInfoUpdate(user_id, trips) {
 // TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
 export function updateTrip(userId, tripId, updateInfo) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}`,
 		{
 			method: "POST",
 			headers: {
@@ -603,7 +621,7 @@ export function updateTrip(userId, tripId, updateInfo) {
 			.then(data => {
 				dispatch(receiveTripInfoUpdateForTrips(tripId));
 				if (data.status == "ok") {
-					fetch(`http://localhost:3000/user/${userId}/trip`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`)
 						.then(res => res.json())
 						.then(json => {
 							return dispatch(receivedTripInfoUpdate(userId, json));
@@ -648,7 +666,7 @@ function receivedTripDelete(user_id, trips) {
 // TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
 export function deleteTrip(userId, tripId) {
 	const request = new Request(
-		`http://localhost:3000/user/${userId}/trip/${tripId}/delete`,
+		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/delete`,
 		{
 			method: "POST",
 			headers: {
@@ -664,7 +682,7 @@ export function deleteTrip(userId, tripId) {
 			.then(data => {
 				dispatch(receiveTripDeleteForTrips(tripId));
 				if (data.status == "ok") {
-					fetch(`http://localhost:3000/user/${userId}/trip`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`)
 						.then(res => res.json())
 						.then(json => {
 							return dispatch(receivedTripDelete(userId, json));

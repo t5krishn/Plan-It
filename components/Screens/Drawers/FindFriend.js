@@ -20,7 +20,9 @@ function FindFriend({ navigation, selectedUser, dispatch }) {
 	useEffect(() => {
 		let query = searchQuery.trim();
 		if (query) {
-			fetch(`http://localhost:3000/user/${selectedUser}/search/${query}`)
+			fetch(
+				`https://plan-it-api-1.herokuapp.com/user/${selectedUser}/search/${query}`
+			)
 				.then(res => res.json())
 				.then(data => {
 					changeQueryResult(data);

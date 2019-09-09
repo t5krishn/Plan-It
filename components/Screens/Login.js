@@ -21,7 +21,7 @@ function LoginScreen(props) {
 	};
 
 	const handleSubmit = () => {
-		const request = new Request("http://localhost:3000/login", {
+		const request = new Request("https://plan-it-api-1.herokuapp.com/login", {
 			method: "POST",
 			headers: {
 				"Content-type": "application/json"
