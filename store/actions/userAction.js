@@ -666,6 +666,7 @@ export function deleteTrip(userId, tripId) {
     fetch(request)
       .then(response => response.json())
       .then(data => {
+        // USE FOR TRIP_USERS?
         dispatch(receiveTripDeleteForTrips(tripId));
         if (data.status == "ok") {
           fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`)

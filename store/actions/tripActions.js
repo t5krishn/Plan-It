@@ -310,3 +310,4 @@ export function deleteTripItem(userId, tripId, updateType, updateId) {
 
 
 // USERS => updateInfo => {removed: [ user_ids ], added: [ user_ids ] }
+const updateTrip

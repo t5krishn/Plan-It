@@ -23,27 +23,10 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		// const request = new Request(
-		// 	`https://plan-it-api-1.herokuapp.com/user/${props.selectedUser}/trip`,
-		// 	{
-		// 		method: "POST",
-		// 		headers: {
-		// 			"Content-type": "application/json"
-		// 		},
-		// 		body: JSON.stringify({ trip: state })
-		// 	}
-		// );
-
-		// fetch(request)
-		// 	.then(response => response.json())
-		// 	.then(data => {
-		// 		if (data.status === "ok") {
+		
 		props.dispatch(addNewUserTrip(props.selectedUser, state));
 		props.navigation.navigate("Dashboard");
-		// 	} else {
-		// 		Alert.alert("There was an issue with saving your trip");
-		// 	}
-		// });
+
 	};
 
 	const inviteFriends = () => {};
