@@ -390,12 +390,12 @@ function requestAcceptInvite(user) {
 }
 export const CONFIRM_ACCEPT_INVITE = "CONFIRM_ACCEPT_INVITE";
 function confirmAcceptInvite(user, data) {
-      return {
-        type: CONFIRM_ACCEPT_INVITE,
-        user_id: user,
-        friends: data,
-        isUserUpdated: true
-      };
+  return {
+    type: CONFIRM_ACCEPT_INVITE,
+    user_id: user,
+    friends: data,
+    isUserUpdated: true
+  };
 }
 export const ERROR_ACCEPT_INVITE = "ERROR_ACCEPT_INVITE";
 function errorAcceptInvite(user, data) {
@@ -416,8 +416,8 @@ export function acceptInvite(user, friendId) {
       method: "POST",
       headers: {
         "Content-type": "application/json"
-	  }
-	//   body: JSON.stringify({})
+      }
+      //   body: JSON.stringify({})
     }
   );
   return dispatch => {
@@ -430,11 +430,11 @@ export function acceptInvite(user, friendId) {
         if (data.error) {
           return dispatch(errorAcceptInvite(user, data));
         } else {
-			fetch(`http://localhost:5422/user/${user}/friend`)
-			.then(res => res.json())
-			.then(data => {
-			return dispatch(confirmAcceptInvite(user, data));
-			});
+          fetch(`http://localhost:5422/user/${user}/friend`)
+            .then(res => res.json())
+            .then(data => {
+              return dispatch(confirmAcceptInvite(user, data));
+            });
         }
       });
   };
@@ -450,12 +450,12 @@ function requestDeclineInvite(user) {
 }
 export const CONFIRM_DECLINE_INVITE = "CONFIRM_DECLINE_INVITE";
 function confirmDeclineInvite(user, data) {
-      return {
-        type: CONFIRM_DECLINE_INVITE,
-        user_id: user,
-        friends: data,
-        isUserUpdated: true
-      };
+  return {
+    type: CONFIRM_DECLINE_INVITE,
+    user_id: user,
+    friends: data,
+    isUserUpdated: true
+  };
 }
 export const ERROR_DECLINE_INVITE = "ERROR_DECLINE_INVITE";
 function errorDeclineInvite(user, data) {
@@ -489,11 +489,11 @@ export function declineInvite(user, friendId) {
         if (data.error) {
           return dispatch(errorDeclineInvite(user, data));
         } else {
-			fetch(`http://localhost:5422/user/${user}/friend`)
-			.then(res => res.json())
-			.then(data => {
-				return dispatch(confirmDeclineInvite(user, data));
-			});
+          fetch(`http://localhost:5422/user/${user}/friend`)
+            .then(res => res.json())
+            .then(data => {
+              return dispatch(confirmDeclineInvite(user, data));
+            });
         }
       });
   };
@@ -549,6 +549,132 @@ export function sendFriendRequest(user, friend_id) {
             .then(data => {
               return dispatch(confirmFriendInvite(user, data));
             });
+        }
+      });
+  };
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const REQUEST_TRIP_INFO_UPDATE = "REQUEST_TRIP_INFO_UPDATE";
+function requestTripInfoUpdate(current_trip) {
+  return {
+    type: REQUEST_TRIP_INFO_UPDATE,
+    isTripUpdated: false,
+    current_trip
+  };
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const RECEIVE_TRIP_INFO_FOR_TRIP = "RECEIVE_TRIP_INFO_FOR_TRIP";
+function receiveTripInfoUpdateForTrips(current_trip) {
+  return {
+    type: RECEIVE_TRIP_INFO_FOR_TRIP,
+    isTripUpdated: true,
+    current_trip
+  };
+}
+
+export const RECEIVE_TRIP_INFO_UPDATE = "RECEIVE_TRIP_INFO_UPDATE";
+function receivedTripInfoUpdate(user_id, trips) {
+  return {
+    type: RECEIVE_TRIP_INFO_UPDATE,
+    trips,
+    user_id
+  };
+}
+
+// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+export function updateTrip(userId, tripId, updateInfo) {
+  const request = new Request(
+    `http://localhost:5422/user/${userId}/trip/${tripId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ ...updateInfo })
+    }
+  );
+
+  return dispatch => {
+    dispatch(requestTripInfoUpdate(tripId));
+    fetch(request)
+      .then(response => response.json())
+      .then(data => {
+        dispatch(receiveTripInfoUpdateForTrips(tripId));
+        if (data.status == "ok") {
+          fetch(`http://localhost:5422/user/${userId}/trip`)
+            .then(res => res.json())
+            .then(json => {
+              return dispatch(receivedTripInfoUpdate(userId, json));
+            });
+        } else {
+          // handle error 
+          console.log(json.status, json.error_message);
+        }
+      });
+  };
+}
+
+
+
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const REQUEST_TRIP_DELETE = "REQUEST_TRIP_DELETE";
+function requestTripDelete(current_trip) {
+  return {
+    type: REQUEST_TRIP_DELETE,
+    isTripUpdated: false,
+    current_trip
+  };
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const RECEIVE_TRIP_DELETE_FOR_TRIP = "RECEIVE_TRIP_DELETE_FOR_TRIP";
+function receiveTripDeleteForTrips(current_trip) {
+  return {
+    type: RECEIVE_TRIP_DELETE_FOR_TRIP,
+    isTripUpdated: true,
+    current_trip
+  };
+}
+
+export const RECEIVE_TRIP_DELETE = "RECEIVE_TRIP_DELETE";
+function receivedTripDelete(user_id, trips) {
+  return {
+    type: RECEIVE_TRIP_DELETE,
+    user_id,
+    trips
+  };
+}
+
+// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+export function deleteTrip(userId, tripId) {
+  const request = new Request(
+    `http://localhost:5422/user/${userId}/trip/${tripId}/delete`,
+    {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      }
+    }
+  );
+
+  return dispatch => {
+    dispatch(requestTripDelete(tripId));
+    fetch(request)
+      .then(response => response.json())
+      .then(data => {
+        dispatch(receiveTripDeleteForTrips(tripId));
+        if (data.status == "ok") {
+          fetch(`http://localhost:5422/user/${userId}/trip`)
+          .then(res => res.json())
+          .then(json => {
+            return  dispatch(receivedTripDelete(userId, json));;
+          });
+        } else {
+          // handle error 
+          console.log(json.status, json.error_message);
         }
       });
   };
