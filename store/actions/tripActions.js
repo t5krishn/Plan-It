@@ -173,21 +173,13 @@ export function postNewExpense(expense, userId, tripId) {
 }
 
 export function fetchTripData(trip, user) {
-	return dispatch => {
-		dispatch(requestTripData(trip));
+  return dispatch => {
+    dispatch(requestTripData(trip));
 		return Promise.all([
-			fetch(
-				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`
-			),
-			fetch(
-				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`
-			),
-			fetch(
-				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`
-			),
-			fetch(
-				`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/users`
-			)
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`),
+			fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/users`)
 		])
 			.then(response => {
 				let data = response.map(res => res.json());
@@ -250,17 +242,17 @@ export function updateTripItem(userId, tripId, updateType, updateInfo) {
 		}
 	);
 	return dispatch => {
-		dispatch(requestTripUpdate(tripId));
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				if (json.status === "ok") {
-					return dispatch(receivedTripUpdate(tripId, json.data, updateType));
-				}
-			});
-	};
+    dispatch(requestTripUpdate(tripId));
+    fetch(request)
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        if (json.status === "ok") {
+          return dispatch(receivedTripUpdate(tripId, json.data, updateType));
+        }
+      });
+  };
 }
 
 export const REQUEST_TRIP_ITEM_DELETE = "REQUEST_TRIP_ITEM_DELETE";
@@ -325,3 +317,4 @@ export function deleteTripItem(userId, tripId, updateType, updateId) {
 }
 
 // USERS => updateInfo => {removed: [ user_ids ], added: [ user_ids ] }
+// const updateTrip

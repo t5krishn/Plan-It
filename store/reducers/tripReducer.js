@@ -87,32 +87,36 @@ function updateTrip(
 	},
 	action
 ) {
-	switch (action.type) {
-		case REQUEST_TRIP_UPDATE:
-		case REQUEST_TRIP_ITEM_DELETE:
-		case REQUEST_TRIP_INFO_UPDATE:
-		case REQUEST_TRIP_DELETE:
-			return Object.assign({}, state, {
-				isFetchingTrip: true
-			});
-		case RECEIVE_TRIP_INFO_FOR_TRIP:
-		case RECEIVE_TRIP_DELETE_FOR_TRIP:
-			return Object.assign({}, state, {
-				isFetchingTrip: false
-			});
-		case RECEIVE_TRIP_UPDATE:
-			return Object.assign({}, state, {
-				isFetchingTrip: false,
-				[action.updateType]: [action.data, ...state[action.updateType]]
-			});
-		case RECEIVE_TRIP_ITEM_DELETE:
-			return Object.assign({}, state, {
-				isFetchingTrip: false,
-				[action.updateType]: [...action.data]
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case REQUEST_TRIP_UPDATE:
+    case REQUEST_TRIP_ITEM_DELETE:
+    case REQUEST_TRIP_INFO_UPDATE:
+    case REQUEST_TRIP_DELETE:
+      return Object.assign({}, state, {
+        isFetchingTrip: true
+      });
+    case RECEIVE_TRIP_INFO_FOR_TRIP:
+      return Object.assign({}, state, {
+        isFetchingTrip: false,
+        tripUsers: [...action.users]
+      });
+    case RECEIVE_TRIP_DELETE_FOR_TRIP:
+      return Object.assign({}, state, {
+        isFetchingTrip: false
+      });
+    case RECEIVE_TRIP_UPDATE:
+      return Object.assign({}, state, {
+        isFetchingTrip: false,
+        [action.updateType]: [ action.data, ...state[action.updateType]],
+      });
+    case RECEIVE_TRIP_ITEM_DELETE:
+      return Object.assign({}, state, {
+        isFetchingTrip: false,
+        [action.updateType]: [ ...action.data ],
+      });
+    default:
+      return state;
+  }
 }
 
 function gettingTripData(state = {}, action) {
