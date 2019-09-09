@@ -54,7 +54,7 @@ function receivedNewEvent(current_trip, event) {
 
 export function postNewEvent(event, userId, tripId) {
   const request = new Request(
-    `http://localhost:5422/user/${userId}/trip/${tripId}/event`,
+    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/event`,
     {
       method: "POST",
       headers: {
@@ -101,7 +101,7 @@ function receivedNewTodo(current_trip, todo) {
 
 export function postNewTodo(todo, userId, tripId) {
   const request = new Request(
-    `http://localhost:5422/user/${userId}/trip/${tripId}/to_do`,
+    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
     {
       method: "POST",
       headers: {
@@ -148,7 +148,7 @@ function receivedNewExpense(current_trip, expense) {
 
 export function postNewExpense(expense, userId, tripId) {
   const request = new Request(
-    `http://localhost:5422/user/${userId}/trip/${tripId}/expense`,
+    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/expense`,
     {
       method: "POST",
       headers: {
@@ -175,9 +175,9 @@ export function fetchTripData(trip, user) {
   return dispatch => {
     dispatch(requestTripData(trip));
     return Promise.all([
-      fetch(`http://localhost:5422/user/${user}/trip/${trip}/event`),
-      fetch(`http://localhost:5422/user/${user}/trip/${trip}/to_do`),
-      fetch(`http://localhost:5422/user/${user}/trip/${trip}/expense`)
+      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/event`),
+      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/to_do`),
+      fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/trip/${trip}/expense`)
     ])
       .then(response => {
         let data = response.map(res => res.json());
@@ -223,7 +223,7 @@ export function updateTripItem(userId, tripId, updateType, updateInfo) {
 	const tripItemURl = (updateType === 'events')? 'event' : ((updateType==='toDos')? 'to_do' : 'expense')
 
   const request = new Request(
-    `http://localhost:5422/user/${userId}/trip/${tripId}/${tripItemURl}/${updateInfo.id}`,
+    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${updateInfo.id}`,
     {
       method: "POST",
       headers: {
@@ -277,7 +277,7 @@ export function deleteTripItem(userId, tripId, updateType, updateId) {
 	const tripItemURl = (updateType === 'events')? 'event' : ((updateType==='toDos')? 'to_do' : 'expense')
 
 	const request = new Request(
-    `http://localhost:5422/user/${userId}/trip/${tripId}/${tripItemURl}/${updateId}/delete`,
+    `https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${updateId}/delete`,
     {
       method: "POST",
       headers: {
@@ -293,7 +293,7 @@ export function deleteTripItem(userId, tripId, updateType, updateId) {
       })
       .then(json => {
         if (json.status === "ok") {
-					fetch(`http://localhost:5422/user/${userId}/trip/${tripId}/${tripItemURl}`)
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}`)
 					.then(res => res.json())
 					.then(data => {
 						return dispatch(receivedTripItemDelete(tripId, data, updateType));

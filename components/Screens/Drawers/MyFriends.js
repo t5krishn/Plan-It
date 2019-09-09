@@ -7,7 +7,7 @@ import {
 	ScrollView
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import FriendsCards from "../Drawers/FriendsCards";
+import FriendsList from "./FriendsList";
 
 import { connect } from "react-redux";
 import { acceptInvite, declineInvite } from "../../../store/actions/userAction";
@@ -21,206 +21,6 @@ function FriendsScreen(props) {
 		props.dispatch(declineInvite(props.selectedUser, friendId))
 	};
 
-	const test = [
-    {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      email: "johndoe@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/asdasd2eddasd",
-      created_at: "2019-09-07T12:52:34.896Z",
-      updated_at: "2019-09-07T12:52:34.896Z",
-      is_accepted: false,
-      type: "follower",
-      friend_id: 4
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: false,
-	  type: "followee",
-	  friend_id: 4
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-	  type: "follower",
-	  friend_id: 4
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "follower"
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "follower"
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "follower"
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "followee"
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "followee"
-    },
-    {
-      id: 3,
-      first_name: "Colin",
-      last_name: "Fetus",
-      email: "colinfetus@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/4rbecrh24dfs",
-      created_at: "2019-09-07T12:52:34.903Z",
-      updated_at: "2019-09-07T12:52:34.903Z",
-      is_accepted: true,
-      type: "follower"
-    },
-    {
-      id: 4,
-      first_name: "Bail",
-      last_name: "Linman",
-      email: "baillinman@gmail.com",
-      username: null,
-      password_digest: "password",
-      profile_picture: "someprofilepicture.com/b2kju3gjfbdkb",
-      created_at: "2019-09-07T12:52:34.907Z",
-      updated_at: "2019-09-07T12:52:34.907Z",
-      is_accepted: false,
-      type: "follower"
-    }
-  ];
 	return (
 		<View>
 			<MenuBtn navigation={props.navigation} />
@@ -232,14 +32,14 @@ function FriendsScreen(props) {
 					<Text>Find friends</Text>
 				</TouchableOpacity>
 			</View>
-      <ScrollView>
-        <FriendsCards 
-          items={props.user_friends /* test */}
-          user_id={props.selectedUser}
-          onAccept={onAccept}
-          onDecline={onDecline}
-          isFetching={props.isFetchingUser}/>
-      </ScrollView>
+			<View>
+				<FriendsList 
+				items={props.user_friends}
+				selectedUser={props.selectedUser}
+				onAccept={onAccept}
+				onDecline={onDecline}
+				isFetching={props.isFetchingUser}/>
+			</View>
 		</View>
 	);
 }

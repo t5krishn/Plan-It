@@ -32,6 +32,7 @@ function FindFriend({ navigation, selectedUser, userFriendIDs, dispatch }) {
 
   let onHandlePress = result => {
     if (result.match) {
+      dispatch(sendFriendRequest(selectedUser, result.id));
         Alert.alert(
           "Confirm",
           `Are you sure you want to send a friend request to ${result.first_name} ${result.last_name}`,
@@ -44,7 +45,7 @@ function FindFriend({ navigation, selectedUser, userFriendIDs, dispatch }) {
               }
             }
           ],
-          { cancelable: true }
+          { cancelable: false }
         );
     }
   };

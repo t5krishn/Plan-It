@@ -24,7 +24,7 @@ function RegisterForm(props) {
 
 	const handleSubmit = () => {
 		// const request = new Request(
-		// 	`http://localhost:5422/user/${props.selectedUser}/trip`,
+		// 	`https://plan-it-api-1.herokuapp.com/user/${props.selectedUser}/trip`,
 		// 	{
 		// 		method: "POST",
 		// 		headers: {
