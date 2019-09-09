@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Card } from "react-native-elements";
 
 export default function EventCards({ items }) {
-	return (
+	return items.length > 0 ? (
 		<View style={styles.containerStyle}>
 			{items.map((e, i) => {
 				return (
@@ -15,6 +15,10 @@ export default function EventCards({ items }) {
 					</View>
 				);
 			})}
+		</View>
+	) : (
+		<View>
+			<Text>You have no events yet!</Text>
 		</View>
 	);
 }

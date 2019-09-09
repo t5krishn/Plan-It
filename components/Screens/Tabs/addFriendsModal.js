@@ -65,26 +65,33 @@ function AddFriendsModal(props) {
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
 					<Text>Friends:</Text>
-					<View style={styles.friendsContainer}>
-						<View>
-							{props.friends.map(friend => {
-								return (
-									<CheckBox
-										key={friend.id}
-										title={friend.first_name + " " + friend.last_name}
-										checked={state[friend.id]}
-										onPress={() => handlePress(friend.id)}
-									/>
-								);
-							})}
+					{props.friends.length > 0 ? (
+						<View style={styles.friendsContainer}>
+							<View>
+								{props.friends.map(friend => {
+									return (
+										<CheckBox
+											key={friend.id}
+											title={friend.first_name + " " + friend.last_name}
+											checked={state[friend.id]}
+											onPress={() => handlePress(friend.id)}
+										/>
+									);
+								})}
+							</View>
+							<TouchableOpacity
+								style={styles.button}
+								onPress={() => handleSubmit()}
+							>
+								<Text>Submit</Text>
+							</TouchableOpacity>
 						</View>
-						<TouchableOpacity
-							style={styles.button}
-							onPress={() => handleSubmit()}
-						>
-							<Text>Submit</Text>
-						</TouchableOpacity>
-					</View>
+					) : (
+						<Text>
+							You have no friends added to this trip! Press on trip settings to
+							invite friends!
+						</Text>
+					)}
 				</View>
 			</Modal>
 		</View>

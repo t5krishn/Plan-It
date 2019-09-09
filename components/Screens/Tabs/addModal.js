@@ -47,23 +47,41 @@ function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
+	const [invited, setInvited] = useState([]);
 
 	const handleSubmit = () => {
 		props.setVisibility(false);
 		switch (props.mode) {
 			case "event":
-				props.dispatch(postNewEvent(form, props.userId, props.tripId));
+				props.navigation.navigate("TripEvents");
+				props.dispatch(postNewEvent(form, props.selectedUser, props.tripId));
 				break;
 			case "to_do":
+				props.navigation.navigate("TripTodo");
 				props.dispatch(
-					postNewTodo({ ...form, completed: false }, props.userId, props.tripId)
+					postNewTodo(
+						{ ...form, completed: false },
+						props.selectedUser,
+						props.tripId
+					)
 				);
 				break;
 			case "expense":
-				props.dispatch(postNewExpense(form, props.userId, props.tripId));
+				props.navigation.navigate("TripExpenses");
+				props.dispatch(
+					postNewExpense(
+						{ ...form, users: invited },
+						props.selectedUser,
+						props.tripId
+					)
+				);
 				break;
 		}
 	};
+
+	const friends = props.friends.filter(user => {
+		return user.id !== parseInt(props.selectedUser);
+	});
 
 	return (
 		<View
@@ -167,11 +185,19 @@ function AddModal(props) {
 									setForm({ ...form, amount_in_cents: text })
 								}
 							/>
-							<TouchableHighlight style={styles.submit}>
-								<Text onPress={() => props.setFriendVisibility(true)}>
-									Add friends to split with
-								</Text>
-							</TouchableHighlight>
+							{invited.length > 0 ? (
+								<TouchableHighlight style={styles.submit}>
+									<Text onPress={() => props.setFriendVisibility(true)}>
+										Edit friends:
+									</Text>
+								</TouchableHighlight>
+							) : (
+								<TouchableHighlight style={styles.submit}>
+									<Text onPress={() => props.setFriendVisibility(true)}>
+										Who are you splitting this cost with?:
+									</Text>
+								</TouchableHighlight>
+							)}
 							<TouchableHighlight style={styles.submit}>
 								<Text onPress={() => handleSubmit()}>Submit</Text>
 							</TouchableHighlight>
@@ -179,6 +205,8 @@ function AddModal(props) {
 					)}
 					{props.addFriendsVisible && (
 						<AddFriendsModal
+							setInvited={setInvited}
+							friends={friends}
 							setFriendVisibility={props.setFriendVisibility}
 							addFriendsVisible={props.addFriendsVisible}
 						/>
