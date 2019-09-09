@@ -379,3 +379,300 @@ export function deleteAccount(user) {
 			});
 	};
 }
+
+export const REQUEST_ACCEPT_INVITE = "REQUEST_ACCEPT_INVITE";
+function requestAcceptInvite(user) {
+	return {
+		type: REQUEST_ACCEPT_INVITE,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+export const CONFIRM_ACCEPT_INVITE = "CONFIRM_ACCEPT_INVITE";
+function confirmAcceptInvite(user, data) {
+	return {
+		type: CONFIRM_ACCEPT_INVITE,
+		user_id: user,
+		friends: data,
+		isUserUpdated: true
+	};
+}
+export const ERROR_ACCEPT_INVITE = "ERROR_ACCEPT_INVITE";
+function errorAcceptInvite(user, data) {
+	return {
+		type: ERROR_ACCEPT_INVITE,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+
+export function acceptInvite(user, friendId) {
+	const request = new Request(
+		`http://localhost:3000/user/${user}/friend/${friendId}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
+			//   body: JSON.stringify({})
+		}
+	);
+	return dispatch => {
+		dispatch(requestAcceptInvite(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorAcceptInvite(user, data));
+				} else {
+					fetch(`http://localhost:3000/user/${user}/friend`)
+						.then(res => res.json())
+						.then(data => {
+							return dispatch(confirmAcceptInvite(user, data));
+						});
+				}
+			});
+	};
+}
+
+export const REQUEST_DECLINE_INVITE = "REQUEST_DECLINE_INVITE";
+function requestDeclineInvite(user) {
+	return {
+		type: REQUEST_DECLINE_INVITE,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+export const CONFIRM_DECLINE_INVITE = "CONFIRM_DECLINE_INVITE";
+function confirmDeclineInvite(user, data) {
+	return {
+		type: CONFIRM_DECLINE_INVITE,
+		user_id: user,
+		friends: data,
+		isUserUpdated: true
+	};
+}
+export const ERROR_DECLINE_INVITE = "ERROR_DECLINE_INVITE";
+function errorDeclineInvite(user, data) {
+	return {
+		type: ERROR_DECLINE_INVITE,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+
+export function declineInvite(user, friendId) {
+	const request = new Request(
+		`http://localhost:3000/user/${user}/friend/${friendId}/delete`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
+		}
+	);
+	return dispatch => {
+		dispatch(requestDeclineInvite(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorDeclineInvite(user, data));
+				} else {
+					fetch(`http://localhost:3000/user/${user}/friend`)
+						.then(res => res.json())
+						.then(data => {
+							return dispatch(confirmDeclineInvite(user, data));
+						});
+				}
+			});
+	};
+}
+
+export const REQUEST_FRIEND_INVITE = "REQUEST_FRIEND_INVITE";
+function requestFriendInvite(user) {
+	return {
+		type: REQUEST_FRIEND_INVITE,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+export const CONFIRM_FRIEND_INVITE = "CONFIRM_FRIEND_INVITE";
+function confirmFriendInvite(user, data) {
+	return {
+		type: CONFIRM_FRIEND_INVITE,
+		user_id: user,
+		friends: data,
+		isUserUpdated: true
+	};
+}
+export const ERROR_FRIEND_INVITE = "ERROR_FRIEND_INVITE";
+function errorFriendInvite(user, data) {
+	return {
+		type: ERROR_FRIEND_INVITE,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+
+export function sendFriendRequest(user, friend_id) {
+	const request = new Request(`http://localhost:3000/user/${user}/friend/`, {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json"
+		},
+		body: JSON.stringify({ friend_id })
+	});
+	return dispatch => {
+		dispatch(requestFriendInvite(user));
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				if (!data.success) {
+					return dispatch(errorFriendInvite(user, data));
+				} else {
+					fetch(`http://localhost:3000/user/${user}/friend`)
+						.then(res => res.json())
+						.then(data => {
+							return dispatch(confirmFriendInvite(user, data));
+						});
+				}
+			});
+	};
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const REQUEST_TRIP_INFO_UPDATE = "REQUEST_TRIP_INFO_UPDATE";
+function requestTripInfoUpdate(current_trip) {
+	return {
+		type: REQUEST_TRIP_INFO_UPDATE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const RECEIVE_TRIP_INFO_FOR_TRIP = "RECEIVE_TRIP_INFO_FOR_TRIP";
+function receiveTripInfoUpdateForTrips(current_trip) {
+	return {
+		type: RECEIVE_TRIP_INFO_FOR_TRIP,
+		isTripUpdated: true,
+		current_trip
+	};
+}
+
+export const RECEIVE_TRIP_INFO_UPDATE = "RECEIVE_TRIP_INFO_UPDATE";
+function receivedTripInfoUpdate(user_id, trips) {
+	return {
+		type: RECEIVE_TRIP_INFO_UPDATE,
+		trips,
+		user_id
+	};
+}
+
+// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+export function updateTrip(userId, tripId, updateInfo) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			},
+			body: JSON.stringify({ ...updateInfo })
+		}
+	);
+
+	return dispatch => {
+		dispatch(requestTripInfoUpdate(tripId));
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				dispatch(receiveTripInfoUpdateForTrips(tripId));
+				if (data.status == "ok") {
+					fetch(`http://localhost:3000/user/${userId}/trip`)
+						.then(res => res.json())
+						.then(json => {
+							return dispatch(receivedTripInfoUpdate(userId, json));
+						});
+				} else {
+					// handle error
+					console.log(json.status, json.error_message);
+				}
+			});
+	};
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const REQUEST_TRIP_DELETE = "REQUEST_TRIP_DELETE";
+function requestTripDelete(current_trip) {
+	return {
+		type: REQUEST_TRIP_DELETE,
+		isTripUpdated: false,
+		current_trip
+	};
+}
+
+// NOT IN USER REDUCER, IN TRIP REDUCER INSTEAD TO SHOW LOADING SCREEN IF NEEDED
+export const RECEIVE_TRIP_DELETE_FOR_TRIP = "RECEIVE_TRIP_DELETE_FOR_TRIP";
+function receiveTripDeleteForTrips(current_trip) {
+	return {
+		type: RECEIVE_TRIP_DELETE_FOR_TRIP,
+		isTripUpdated: true,
+		current_trip
+	};
+}
+
+export const RECEIVE_TRIP_DELETE = "RECEIVE_TRIP_DELETE";
+function receivedTripDelete(user_id, trips) {
+	return {
+		type: RECEIVE_TRIP_DELETE,
+		user_id,
+		trips
+	};
+}
+
+// TRIP => updateInfo => { name, location, start_on, ends_on, description } id is already in params
+export function deleteTrip(userId, tripId) {
+	const request = new Request(
+		`http://localhost:3000/user/${userId}/trip/${tripId}/delete`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
+		}
+	);
+
+	return dispatch => {
+		dispatch(requestTripDelete(tripId));
+		fetch(request)
+			.then(response => response.json())
+			.then(data => {
+				dispatch(receiveTripDeleteForTrips(tripId));
+				if (data.status == "ok") {
+					fetch(`http://localhost:3000/user/${userId}/trip`)
+						.then(res => res.json())
+						.then(json => {
+							return dispatch(receivedTripDelete(userId, json));
+						});
+				} else {
+					// handle error
+					console.log(json.status, json.error_message);
+				}
+			});
+	};
+}
