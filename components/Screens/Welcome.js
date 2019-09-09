@@ -21,16 +21,16 @@ export default function Welcome(props) {
 					style={{
 						marginTop: 60,
 						fontFamily: "Avenir",
-						fontSize: 20
+						fontSize: 22
 					}}
 				>
 					Welcome to
 				</Text>
-				<Text style={{ fontFamily: "Avenir-Light", fontSize: 60 }}>PlanIt</Text>
+				<Text style={{ fontFamily: "Avenir-Light", fontSize: 65 }}>PlanIt</Text>
 				<Text
 					style={{
 						fontFamily: "Avenir",
-						fontSize: 15,
+						fontSize: 18,
 						marginTop: 40,
 						color: "#594D4F"
 					}}
@@ -46,7 +46,9 @@ export default function Welcome(props) {
 					<Text style={styles.buttonText}>Sign In</Text>
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => props.navigation.navigate("Signup")}>
-					<Text style={{ fontFamily: "Avenir", color: "#594D4F" }}>
+					<Text
+						style={{ fontFamily: "Avenir", color: "#594D4F", fontSize: 20 }}
+					>
 						Create Account
 					</Text>
 				</TouchableOpacity>
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
 		alignItems: "center"
 	},
 	bottomContainer: {
-		flex: 1,
+		flex: 1.5,
 		alignItems: "center",
 		backgroundColor: "#FFFFFF",
 		width: "100%"
@@ -79,6 +81,6 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: "#FFFFFF",
 		fontFamily: "Avenir",
-		fontSize: 15
+		fontSize: 20
 	}
 });
