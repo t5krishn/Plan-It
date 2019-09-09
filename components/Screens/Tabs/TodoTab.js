@@ -19,7 +19,11 @@ function TodoTab(props) {
 				<TodoCards items={props.toDos} />
 				<View style={{ height: 100 }} />
 			</ScrollView>
-			<AddBtn tripId={props.selectedTrip} userId={props.selectedUser} />
+			<AddBtn
+				tripId={props.selectedTrip}
+				userId={props.selectedUser}
+				navigation={props.navigation}
+			/>
 		</View>
 	);
 }

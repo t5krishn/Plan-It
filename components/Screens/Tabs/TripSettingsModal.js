@@ -13,7 +13,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
 
-function AddFriendsModal(props) {
+function TripSettingsModal(props) {
 	const [state, setState] = useState({});
 
 	const handlePress = id => {
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect()(AddFriendsModal);
+export default connect()(TripSettingsModal);

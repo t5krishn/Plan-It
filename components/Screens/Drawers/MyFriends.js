@@ -4,7 +4,8 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	ScrollView
+	ScrollView,
+	Dimensions
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import FriendsList from "./FriendsList";
@@ -13,16 +14,15 @@ import { connect } from "react-redux";
 import { acceptInvite, declineInvite } from "../../../store/actions/userAction";
 
 function FriendsScreen(props) {
-
-	const onAccept = (friendId) => {
-		props.dispatch(acceptInvite(props.selectedUser, friendId))
+	const onAccept = friendId => {
+		props.dispatch(acceptInvite(props.selectedUser, friendId));
 	};
-	const onDecline = (friendId) => {
-		props.dispatch(declineInvite(props.selectedUser, friendId))
+	const onDecline = friendId => {
+		props.dispatch(declineInvite(props.selectedUser, friendId));
 	};
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.container}>
 				<Text>FriendsScreen</Text>
@@ -32,13 +32,14 @@ function FriendsScreen(props) {
 					<Text>Find friends</Text>
 				</TouchableOpacity>
 			</View>
-			<View>
-				<FriendsList 
-				items={props.user_friends}
-				selectedUser={props.selectedUser}
-				onAccept={onAccept}
-				onDecline={onDecline}
-				isFetching={props.isFetchingUser}/>
+			<View style={styles.friendsListContainer}>
+				<FriendsList
+					items={props.user_friends}
+					selectedUser={props.selectedUser}
+					onAccept={onAccept}
+					onDecline={onDecline}
+					isFetching={props.isFetchingUser}
+				/>
 			</View>
 		</View>
 	);
@@ -46,13 +47,16 @@ function FriendsScreen(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 200,
-		alignItems: "center"
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		height: Dimensions.get("screen").height,
+		paddingTop: 40
 	},
-	TextInput: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 100
+	friendsListContainer: {
+		flex: 4,
+		width: "100%",
+		alignItems: "center"
 	}
 });
 

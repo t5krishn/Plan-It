@@ -614,12 +614,12 @@ export function updateTrip(userId, tripId, updateInfo) {
           fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip`)
             .then(res => res.json())
             .then(json => {
-              return dispatch(receivedTripInfoUpdate(userId, json));
+               dispatch(receivedTripInfoUpdate(userId, json));
             });
           fetch(`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/users`)
             .then(res => res.json())
             .then(json => {
-              dispatch(receiveTripInfoUpdateForTrips(tripId));
+               dispatch(receiveTripInfoUpdateForTrips(tripId, json));
             });
         } else {
           // handle error 

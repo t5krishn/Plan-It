@@ -48,7 +48,7 @@ function LoginScreen(props) {
 
 	return (
 		<View style={styles.container}>
-			<Backbtn navigation={props.navigation} />
+			<Backbtn onPress={()=> props.navigation.navigate("Welcome")} />
 			<Text style={styles.title}>Sign In</Text>
 			<Text style={styles.text}>Email</Text>
 			<TextInput

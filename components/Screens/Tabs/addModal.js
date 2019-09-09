@@ -6,7 +6,9 @@ import {
 	TouchableHighlight,
 	Dimensions,
 	TextInput,
-	StyleSheet
+	StyleSheet,
+	ScrollView,
+	AlertIOS
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -16,6 +18,7 @@ import {
 } from "../../../store/actions/tripActions";
 import AddFriendsModal from "./addFriendsModal";
 import { connect } from "react-redux";
+import getIds from "../../../helpers/getIds";
 
 /*
   Depending on the mode (event/ to_do/ expense) the form is different:
@@ -47,31 +50,57 @@ function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
+	const [invited, setInvited] = useState([]);
+	const [error, setError] = useState(false);
+
+	useEffect(() => {
+		if (invited.length) {
+			setError(false);
+		}
+	}, [invited]);
 
 	const handleSubmit = () => {
-		props.setVisibility(false);
 		switch (props.mode) {
 			case "event":
-				props.dispatch(postNewEvent(form, props.userId, props.tripId));
+				props.navigation.navigate("TripEvents");
+				props.dispatch(postNewEvent(form, props.selectedUser, props.tripId));
+				props.setVisibility(false);
 				break;
 			case "to_do":
+				props.navigation.navigate("TripTodo");
 				props.dispatch(
-					postNewTodo({ ...form, completed: false }, props.userId, props.tripId)
+					postNewTodo(
+						{ ...form, completed: false },
+						props.selectedUser,
+						props.tripId
+					)
 				);
+				props.setVisibility(false);
 				break;
 			case "expense":
-				props.dispatch(postNewExpense(form, props.userId, props.tripId));
-				break;
+				if (invited.length > 0) {
+					props.navigation.navigate("TripExpenses");
+					props.dispatch(
+						postNewExpense(
+							{ ...form, users: getIds(invited) },
+							props.selectedUser,
+							props.tripId
+						)
+					);
+					props.setVisibility(false);
+					break;
+				} else {
+					setError(true);
+				}
 		}
 	};
 
+	const friends = props.friends.filter(user => {
+		return user.id !== parseInt(props.selectedUser);
+	});
+
 	return (
-		<View
-			style={{
-				marginTop: 22,
-				alignItems: "center"
-			}}
-		>
+		<View style={styles.mainContainer}>
 			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
 				<View
 					style={{
@@ -93,8 +122,13 @@ function AddModal(props) {
 					>
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
+					{error && (
+						<View style={styles.error}>
+							<Text>You must add friends to split the expense with!</Text>
+						</View>
+					)}
 					{props.mode === "event" && (
-						<View style={styles.event}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new event</Text>
 							<Text>Name:</Text>
 							<TextInput
@@ -132,7 +166,7 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "to_do" && (
-						<View style={styles.todo}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new to do item</Text>
 							<TextInput
 								style={styles.textInput}
@@ -145,7 +179,7 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "expense" && (
-						<View style={styles.expense}>
+						<View style={styles.content}>
 							<Text style={styles.title}>Create a new expense</Text>
 							<Text>Name:</Text>
 							<TextInput
@@ -167,11 +201,33 @@ function AddModal(props) {
 									setForm({ ...form, amount_in_cents: text })
 								}
 							/>
-							<TouchableHighlight style={styles.submit}>
-								<Text onPress={() => props.setFriendVisibility(true)}>
-									Add friends to split with
-								</Text>
-							</TouchableHighlight>
+							{invited.length > 0 ? (
+								<View style={styles.friendsList}>
+									<TouchableHighlight style={styles.submit}>
+										<Text onPress={() => props.setFriendVisibility(true)}>
+											Edit friends
+										</Text>
+									</TouchableHighlight>
+
+									<Text>Friends added:</Text>
+									<ScrollView>
+										{invited.map(friend => {
+											return (
+												<Text>
+													{friend.first_name} {friend.last_name} (@
+													{friend.username})
+												</Text>
+											);
+										})}
+									</ScrollView>
+								</View>
+							) : (
+								<TouchableHighlight style={styles.submit}>
+									<Text onPress={() => props.setFriendVisibility(true)}>
+										Who are you splitting this cost with?:
+									</Text>
+								</TouchableHighlight>
+							)}
 							<TouchableHighlight style={styles.submit}>
 								<Text onPress={() => handleSubmit()}>Submit</Text>
 							</TouchableHighlight>
@@ -179,6 +235,8 @@ function AddModal(props) {
 					)}
 					{props.addFriendsVisible && (
 						<AddFriendsModal
+							setInvited={setInvited}
+							friends={friends}
 							setFriendVisibility={props.setFriendVisibility}
 							addFriendsVisible={props.addFriendsVisible}
 						/>
@@ -190,10 +248,18 @@ function AddModal(props) {
 }
 
 const styles = StyleSheet.create({
+	mainContainer: {
+		marginTop: 22,
+		alignItems: "center",
+		width: "100%"
+	},
 	close: {
 		position: "absolute",
 		right: 20,
 		top: 20
+	},
+	content: {
+		width: "85%"
 	},
 	textInput: {
 		width: 200,
@@ -208,6 +274,14 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		borderWidth: 2,
 		borderColor: "black"
+	},
+	error: {
+		backgroundColor: "red",
+		padding: 10
+	},
+	friendsList: {
+		backgroundColor: "yellow",
+		height: "30%"
 	}
 });
 

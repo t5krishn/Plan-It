@@ -19,7 +19,11 @@ function ExpensesTab(props) {
 				<ExpenseCards items={props.expenses} />
 				<View style={{ height: 100 }} />
 			</ScrollView>
-			<AddBtn tripId={props.selectedTrip} userId={props.selectedUser} />
+			<AddBtn
+				navigation={props.navigation}
+				tripId={props.selectedTrip}
+				userId={props.selectedUser}
+			/>
 		</View>
 	);
 }
