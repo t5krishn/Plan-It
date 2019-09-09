@@ -6,7 +6,8 @@ import {
 	TouchableHighlight,
 	Dimensions,
 	TextInput,
-	StyleSheet
+	StyleSheet,
+	AlertIOS
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -48,13 +49,20 @@ function AddModal(props) {
 		trip_id: props.tripId
 	});
 	const [invited, setInvited] = useState([]);
+	const [error, setError] = useState(false);
+
+	useEffect(() => {
+		if (invited.length) {
+			setError(false);
+		}
+	}, [invited]);
 
 	const handleSubmit = () => {
-		props.setVisibility(false);
 		switch (props.mode) {
 			case "event":
 				props.navigation.navigate("TripEvents");
 				props.dispatch(postNewEvent(form, props.selectedUser, props.tripId));
+				props.setVisibility(false);
 				break;
 			case "to_do":
 				props.navigation.navigate("TripTodo");
@@ -65,17 +73,23 @@ function AddModal(props) {
 						props.tripId
 					)
 				);
+				props.setVisibility(false);
 				break;
 			case "expense":
-				props.navigation.navigate("TripExpenses");
-				props.dispatch(
-					postNewExpense(
-						{ ...form, users: invited },
-						props.selectedUser,
-						props.tripId
-					)
-				);
-				break;
+				if (invited.length > 0) {
+					props.navigation.navigate("TripExpenses");
+					props.dispatch(
+						postNewExpense(
+							{ ...form, users: invited },
+							props.selectedUser,
+							props.tripId
+						)
+					);
+					props.setVisibility(false);
+					break;
+				} else {
+					setError(true);
+				}
 		}
 	};
 
@@ -111,6 +125,11 @@ function AddModal(props) {
 					>
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
+					{error && (
+						<View style={styles.error}>
+							<Text>You must add friends to split the expense with!</Text>
+						</View>
+					)}
 					{props.mode === "event" && (
 						<View style={styles.event}>
 							<Text style={styles.title}>Create a new event</Text>
@@ -236,6 +255,10 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 		borderWidth: 2,
 		borderColor: "black"
+	},
+	error: {
+		backgroundColor: "red",
+		padding: 10
 	}
 });
 
