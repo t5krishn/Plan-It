@@ -139,10 +139,12 @@ function requestNewExpense(current_trip, expense) {
 
 export const RECEIVE_NEW_EXPENSE = "RECEIVE_NEW_EXPENSE";
 
-function receivedNewExpense(current_trip, expense) {
+function receivedNewExpense(current_trip, data) {
 	return {
 		type: RECEIVE_NEW_EXPENSE,
-		expense,
+		expense: data.expense,
+		borrowers: data.borrowers,
+		lender: data.lender,
 		current_trip
 	};
 }
