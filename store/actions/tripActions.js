@@ -100,7 +100,7 @@ function receivedNewTodo(current_trip, todo) {
 	};
 }
 
-export function postNewTodo(todo, userId, tripId) {
+export function postNewTodo(to_do, userId, tripId) {
 	const request = new Request(
 		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/to_do`,
 		{
@@ -108,11 +108,11 @@ export function postNewTodo(todo, userId, tripId) {
 			headers: {
 				"Content-type": "application/json"
 			},
-			body: JSON.stringify({ todo: todo })
+			body: JSON.stringify({ to_do })
 		}
 	);
 	return dispatch => {
-		dispatch(requestNewTodo(tripId, todo));
+		dispatch(requestNewTodo(tripId, to_do));
 		fetch(request)
 			.then(response => {
 				return response.json();
@@ -216,18 +216,13 @@ function receivedTripUpdate(current_trip, data, updateType) {
 // -------------------------------------------------------------------------------------
 // updateType could be [ events, toDos, expenses ]
 // -------------------------------------------------------------------------------------
-// events => updateInfo => { id:eventId, name, address, start_on, ends_on, description }
+// events => updateInfo => { id:eventId, name, address, starts_on, ends_on, description }
 // toDos => updateInfo => { id:toDoId, content, completed }
 // expenses => updateInfo => { id:expenseID, name, amount_in_cents, expense_date, added:[user_ids], removed:[user_ids] }
 
 export function updateTripItem(userId, tripId, updateType, updateInfo) {
 	// store object array is different from route name so below state handles that
-	const tripItemURl =
-		updateType === "events"
-			? "event"
-			: updateType === "toDos"
-			? "to_do"
-			: "expense";
+	const tripItemURl = (updateType === "events")? "event": updateType === "toDos" ? "to_do" : "expense";
 
 	const request = new Request(
 		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${

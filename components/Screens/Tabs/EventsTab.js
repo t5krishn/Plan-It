@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import EventCards from "./EventCards";
 import AddBtn from "../../Buttons/Addbtn";
+import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 import CalendarMonth from "../myDashboard/CalendarMonth";
 import { connect } from "react-redux";
 
@@ -10,6 +11,11 @@ function EventsTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
+			<TripSettingsBtn
+				friends={props.tripUsers.filter(user => {
+					return user !== parseInt(props.selectedUser);
+				})}
+			/>
 			<View style={styles.upper}>
 				<Text style={styles.upperText}>San Diego Trip! </Text>
 				<Text style={styles.upperText}>{props.events.length} Events Total</Text>
@@ -55,16 +61,17 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData } = state;
-	const { events, isFetchingTrip } = gettingTripData[selectedTrip] || {
-		isFetchingTrip: true,
-		events: []
+	const { selectedTrip, gettingTripData, selectedUser } = state;
+	const { events, tripUsers } = gettingTripData[selectedTrip] || {
+		events: [],
+		tripUsers: []
 	};
 
 	return {
 		selectedTrip,
-		isFetchingTrip,
-		events
+		events,
+		tripUsers,
+		selectedUser
 	};
 }
 
