@@ -77,7 +77,9 @@ function tripData(
         isFetchingTrip: false,
         events: action.events,
         toDos: action.toDos,
-        expenses: action.expenses,
+        expenses: action.expenses.map(
+          e => 
+            { return {...e.expense, borrowers: e.borrowers, lender: e.lender}}),
         tripUsers: action.tripUsers
       });
     default:
