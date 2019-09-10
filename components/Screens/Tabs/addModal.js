@@ -16,9 +16,12 @@ import {
 	postNewTodo,
 	postNewExpense
 } from "../../../store/actions/tripActions";
-import AddFriendsModal from "./addFriendsModal";
 import { connect } from "react-redux";
 import getIds from "../../../helpers/getIds";
+import EventModal from "./Modals/EventModal";
+import TodoModal from "./Modals/TodoModal";
+import ExpenseModal from "./Modals/ExpenseModal";
+import AddFriendsModal from "./addFriendsModal";
 
 /*
   Depending on the mode (event/ to_do/ expense) the form is different:
@@ -59,8 +62,8 @@ function AddModal(props) {
 		}
 	}, [invited]);
 
-	const handleSubmit = () => {
-		switch (props.mode) {
+	const handleSubmit = mode => {
+		switch (mode) {
 			case "event":
 				props.navigation.navigate("TripEvents");
 				props.dispatch(postNewEvent(form, props.selectedUser, props.tripId));
@@ -128,110 +131,28 @@ function AddModal(props) {
 						</View>
 					)}
 					{props.mode === "event" && (
-						<View style={styles.content}>
-							<Text style={styles.title}>Create a new event</Text>
-							<Text>Name:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.name}
-								onChangeText={text => setForm({ ...form, name: text })}
-							/>
-							<Text>Address:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.address}
-								onChangeText={text => setForm({ ...form, address: text })}
-							/>
-							<Text>Starts on:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.starts_on}
-								onChangeText={text => setForm({ ...form, starts_on: text })}
-							/>
-							<Text>Ends on:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.ends_on}
-								onChangeText={text => setForm({ ...form, ends_on: text })}
-							/>
-							<Text>Description:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.description}
-								onChangeText={text => setForm({ ...form, description: text })}
-							/>
-							<TouchableHighlight style={styles.submit}>
-								<Text onPress={() => handleSubmit()}>Submit</Text>
-							</TouchableHighlight>
-						</View>
+						<EventModal
+							form={form}
+							setForm={setForm}
+							handleSubmit={handleSubmit}
+						/>
 					)}
 					{props.mode === "to_do" && (
-						<View style={styles.content}>
-							<Text style={styles.title}>Create a new to do item</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.content}
-								onChangeText={text => setForm({ ...form, content: text })}
-							/>
-							<TouchableHighlight style={styles.submit}>
-								<Text onPress={() => handleSubmit()}>Submit</Text>
-							</TouchableHighlight>
-						</View>
+						<TodoModal
+							form={form}
+							setForm={setForm}
+							handleSubmit={handleSubmit}
+						/>
 					)}
 					{props.mode === "expense" && (
-						<View style={styles.content}>
-							<Text style={styles.title}>Create a new expense</Text>
-							<Text>Name:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.name}
-								onChangeText={text => setForm({ ...form, name: text })}
-							/>
-							<Text>Expense date:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.expense_date}
-								onChangeText={text => setForm({ ...form, expense_date: text })}
-							/>
-							<Text>Amount:</Text>
-							<TextInput
-								style={styles.textInput}
-								value={form.amount_in_cents}
-								onChangeText={text =>
-									setForm({ ...form, amount_in_cents: text })
-								}
-							/>
-							{invited.length > 0 ? (
-								<View style={styles.friendsList}>
-									<TouchableHighlight style={styles.submit}>
-										<Text onPress={() => props.setFriendVisibility(true)}>
-											Edit friends
-										</Text>
-									</TouchableHighlight>
-
-									<Text>Friends added:</Text>
-									<ScrollView>
-										{invited.map(friend => {
-											return (
-												<Text>
-													{friend.first_name} {friend.last_name} (@
-													{friend.username})
-												</Text>
-											);
-										})}
-									</ScrollView>
-								</View>
-							) : (
-								<TouchableHighlight style={styles.submit}>
-									<Text onPress={() => props.setFriendVisibility(true)}>
-										Who are you splitting this cost with?:
-									</Text>
-								</TouchableHighlight>
-							)}
-							<TouchableHighlight style={styles.submit}>
-								<Text onPress={() => handleSubmit()}>Submit</Text>
-							</TouchableHighlight>
-						</View>
+						<ExpenseModal
+							form={form}
+							setForm={setForm}
+							handleSubmit={handleSubmit}
+							invited={invited}
+							setFriendVisibility={props.setFriendVisibility}
+							addFriendsVisible={props.addFriendsVisible}
+						/>
 					)}
 					{props.addFriendsVisible && (
 						<AddFriendsModal
