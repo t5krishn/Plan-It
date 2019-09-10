@@ -11,24 +11,19 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
-import { updateTripItem } from "../../../store/actions/tripActions";
+import {
+	updateTripItem,
+	deleteTripItem
+} from "../../../store/actions/tripActions";
 
 //Import modals:
 import EventModal from "./Modals/EventModal";
+import TodoModal from "./Modals/TodoModal";
 
 const editModal = function(props) {
 	const [error, setError] = useState(false);
 
 	const handleSubmit = () => {
-		console.log(
-			"HEY LOOK HERE",
-			props.selectedUser,
-			props.selectedTrip,
-			props.mode,
-			{
-				...props.form
-			}
-		);
 		switch (props.mode) {
 			case "events":
 				props.dispatch(
@@ -38,12 +33,51 @@ const editModal = function(props) {
 				);
 				props.onClose();
 				break;
-			case "to_do":
+			case "toDos":
 				props.dispatch(
-					updateTripItem(
-						{ ...props.form, completed: false },
+					updateTripItem(props.selectedUser, props.selectedTrip, props.mode, {
+						...props.form
+					})
+				);
+				props.onClose();
+				break;
+			case "expense":
+				if (invited.length > 0) {
+					props.dispatch(
+						updateTripItem(
+							{ ...props.form, users: getIds(invited) },
+							props.selectedUser,
+							props.tripId
+						)
+					);
+					props.onClose();
+					break;
+				} else {
+					setError(true);
+				}
+		}
+	};
+
+	const deleteItem = form => {
+		switch (props.mode) {
+			case "events":
+				props.dispatch(
+					deleteTripItem(
 						props.selectedUser,
-						props.tripId
+						props.selectedTrip,
+						props.mode,
+						props.form.id
+					)
+				);
+				props.onClose();
+				break;
+			case "toDos":
+				props.dispatch(
+					deleteTripItem(
+						props.selectedUser,
+						props.selectedTrip,
+						props.mode,
+						props.form.id
 					)
 				);
 				props.onClose();
@@ -61,6 +95,7 @@ const editModal = function(props) {
 					break;
 				} else {
 					setError(true);
+					break;
 				}
 		}
 	};
@@ -103,6 +138,17 @@ const editModal = function(props) {
 							form={props.form}
 							setForm={props.setForm}
 							handleSubmit={handleSubmit}
+							onDelete={deleteItem}
+							title={"Edit Event"}
+						/>
+					)}
+					{props.mode === "toDos" && (
+						<TodoModal
+							form={props.form}
+							setForm={props.setForm}
+							handleSubmit={handleSubmit}
+							onDelete={deleteItem}
+							title={"Edit To Do Item"}
 						/>
 					)}
 				</View>

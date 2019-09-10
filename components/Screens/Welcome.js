@@ -33,7 +33,7 @@ export default function Welcome(props) {
 						Welcome to
 					</Text>
 					<Text style={{ fontFamily: "Avenir-Light", fontSize: 65 }}>
-						PlanIt
+						Plan It
 					</Text>
 					<Text
 						style={{

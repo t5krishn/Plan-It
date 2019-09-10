@@ -135,6 +135,7 @@ function AddModal(props) {
 							form={form}
 							setForm={setForm}
 							handleSubmit={handleSubmit}
+							title={"Create A New Event"}
 						/>
 					)}
 					{props.mode === "to_do" && (
@@ -142,6 +143,7 @@ function AddModal(props) {
 							form={form}
 							setForm={setForm}
 							handleSubmit={handleSubmit}
+							title={"Create A New To do Item"}
 						/>
 					)}
 					{props.mode === "expense" && (

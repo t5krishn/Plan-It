@@ -11,17 +11,27 @@ import {
 	AlertIOS
 } from "react-native";
 
-export default function EventModal({ form, setForm, handleSubmit }) {
+export default function EventModal(props) {
 	return (
 		<View style={styles.content}>
-			<Text style={styles.title}>Create a new to do item</Text>
-			<TextInput
-				style={styles.textInput}
-				value={form.content ? form.content : ""}
-				onChangeText={text => setForm({ ...form, content: text })}
-			/>
+			<Text style={styles.title}>{props.title}</Text>
+			<View>
+				<TextInput
+					style={styles.textInput}
+					value={props.form.content ? props.form.content : ""}
+					onChangeText={text => props.setForm({ ...props.form, content: text })}
+				/>
+			</View>
+			{props.onDelete && (
+				<TouchableHighlight
+					style={styles.button}
+					onPress={() => props.onDelete(props.form.id)}
+				>
+					<Text>Delete</Text>
+				</TouchableHighlight>
+			)}
 			<TouchableHighlight style={styles.submit}>
-				<Text onPress={() => handleSubmit("to_do")}>Submit</Text>
+				<Text onPress={() => props.handleSubmit("to_do")}>Submit</Text>
 			</TouchableHighlight>
 		</View>
 	);
