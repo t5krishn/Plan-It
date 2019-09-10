@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
+import KeyboardShift from "../../helpers/keyboard"
 function RegisterForm(props) {
 	const [state, setState] = useState({
 		first_name: "",
@@ -52,7 +53,8 @@ function RegisterForm(props) {
 	};
 
 	return (
-		<KeyboardAvoidingView bahaviour="padding" style={styles.container}>
+		<KeyboardShift>
+		<View /* bahaviour="padding" */ style={styles.container}>
 			<View style={styles.btnView}>
 				<Button
 					title="Cancel"
@@ -81,14 +83,18 @@ function RegisterForm(props) {
 				<TextInput
 					style={styles.textInput}
 					onChangeText={text => setState({ ...state, email: text })}
+					keyboardType= "email-address"
 				/>
 				<Text>Password:</Text>
 				<TextInput
 					style={styles.textInput}
 					onChangeText={text => setState({ ...state, password: text })}
+					keyboardType= "email-address"
+					
 				/>
 			</View>
-		</KeyboardAvoidingView>
+		</View>
+		</KeyboardShift>
 	);
 }
 
