@@ -6,8 +6,19 @@ import AddBtn from "../../Buttons/Addbtn";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 import CalendarMonth from "../myDashboard/CalendarMonth";
 import { connect } from "react-redux";
+import EditModal from "./editModal";
+
+//event update form should look like this { id:eventId, name, address, start_on, ends_on, description }
 
 function EventsTab(props) {
+	const [edit, setEdit] = useState(false);
+	const [form, setForm] = useState({});
+
+	const onPress = event => {
+		setForm(event);
+		setEdit(true);
+	};
+
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
@@ -24,10 +35,19 @@ function EventsTab(props) {
 				{props.isFetchingTrip ? (
 					<Text>Loading!</Text>
 				) : (
-					<EventCards items={props.events} />
+					<EventCards items={props.events} onPress={onPress} />
 				)}
 				<View style={{ height: 100 }} />
 			</ScrollView>
+			{edit && (
+				<EditModal
+					isVisible={edit}
+					onClose={() => setEdit(false)}
+					mode={"events"}
+					form={form}
+					setForm={setForm}
+				/>
+			)}
 			<AddBtn
 				tripId={props.selectedTrip}
 				userId={props.selectedUser}

@@ -224,7 +224,7 @@ function receivedTripUpdate(current_trip, data, updateType) {
 // -------------------------------------------------------------------------------------
 // updateType could be [ events, toDos, expenses ]
 // -------------------------------------------------------------------------------------
-// events => updateInfo => { id:eventId, name, address, start_on, ends_on, description }
+// events => updateInfo => { id:eventId, name, address, starts_on, ends_on, description }
 // toDos => updateInfo => { id:toDoId, content, completed }
 // expenses => updateInfo => { id:expenseID, name, amount_in_cents, expense_date, added:[user_ids], removed:[user_ids] }
 
