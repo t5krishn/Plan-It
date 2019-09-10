@@ -19,6 +19,7 @@ import {
 //Import modals:
 import EventModal from "./Modals/EventModal";
 import TodoModal from "./Modals/TodoModal";
+import ExpenseModal from "./Modals/ExpenseModal";
 
 const editModal = function(props) {
 	const [error, setError] = useState(false);
@@ -41,7 +42,7 @@ const editModal = function(props) {
 				);
 				props.onClose();
 				break;
-			case "expense":
+			case "expenses":
 				if (invited.length > 0) {
 					props.dispatch(
 						updateTripItem(
@@ -82,7 +83,7 @@ const editModal = function(props) {
 				);
 				props.onClose();
 				break;
-			case "expense":
+			case "expenses":
 				if (invited.length > 0) {
 					props.dispatch(
 						updateTripItem(
@@ -144,6 +145,15 @@ const editModal = function(props) {
 					)}
 					{props.mode === "toDos" && (
 						<TodoModal
+							form={props.form}
+							setForm={props.setForm}
+							handleSubmit={handleSubmit}
+							onDelete={deleteItem}
+							title={"Edit To Do Item"}
+						/>
+					)}
+					{props.mode === "expenses" && (
+						<ExpenseModal
 							form={props.form}
 							setForm={props.setForm}
 							handleSubmit={handleSubmit}
