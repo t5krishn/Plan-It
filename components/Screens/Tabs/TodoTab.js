@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
 import AddBtn from "../../Buttons/Addbtn";
+import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
+
 import EditModal from "./editModal";
 import { connect } from "react-redux";
 
@@ -18,6 +20,19 @@ function TodoTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
+			
+			{!props.isFetchingTrip && (
+				<TripSettingsBtn
+					tripUsers={props.tripUsers.filter(user => {
+						return user.id !== parseInt(props.selectedUser);
+					})}
+					user={props.selectedUser}
+					trip={props.trip}
+					dispatch={props.dispatch}
+					navigation={props.navigation}
+					friends={props.user_friends}
+				/>
+			)}
 			<View style={styles.upper}>
 				<Text>TodoTab: </Text>
 				<Text>{props.toDos.length} To do items</Text>
@@ -70,19 +85,22 @@ function mapStateToProps(state) {
 		selectedUser,
 		gettingUserData
 	} = state;
-	const { toDos, isFetchingTrip } = gettingTripData[selectedTrip] || {
-		toDos: []
+	const { toDos, isFetchingTrip, tripUsers } = gettingTripData[selectedTrip] || {
+		toDos: [],
+		tripUsers: []
 	};
-	const { user } = gettingUserData[selectedUser] || {
-		user: { first_name: "default" }
+	const  { user_friends } = gettingUserData[selectedUser] || {
+		user_friends: []
 	};
-
+	const trip = gettingUserData[selectedUser].user_trips.find(e=> e.id===selectedTrip)
 	return {
 		selectedUser,
 		selectedTrip,
 		toDos,
 		isFetchingTrip,
-		user
+		trip,
+		tripUsers,
+		user_friends
 	};
 }
 

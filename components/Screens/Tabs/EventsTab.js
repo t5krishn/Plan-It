@@ -22,11 +22,20 @@ function EventsTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
-			<TripSettingsBtn
-				friends={props.tripUsers.filter(user => {
-					return user !== parseInt(props.selectedUser);
-				})}
-			/>
+
+			{!props.isFetchingTrip && (
+				<TripSettingsBtn
+					tripUsers={props.tripUsers.filter(user => {
+						return user.id !== parseInt(props.selectedUser);
+					})}
+					user={props.selectedUser}
+					trip={props.trip}
+					dispatch={props.dispatch}
+					navigation={props.navigation}
+					friends={props.user_friends}					
+				/>
+			)}
+			
 			<View style={styles.upper}>
 				<Text style={styles.upperText}>San Diego Trip! </Text>
 				<Text style={styles.upperText}>{props.events.length} Events Total</Text>
@@ -81,17 +90,25 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData, selectedUser } = state;
-	const { events, tripUsers } = gettingTripData[selectedTrip] || {
+	const { selectedTrip, gettingTripData, selectedUser, gettingUserData } = state;
+	const { events, tripUsers, isFetchingTrip } = gettingTripData[selectedTrip] || {
 		events: [],
 		tripUsers: []
 	};
 
+	const  { user_friends } = gettingUserData[selectedUser] || {
+		user_friends: []
+	};
+	const trip = gettingUserData[selectedUser].user_trips.find(e=> e.id===selectedTrip)
+
 	return {
 		selectedTrip,
 		events,
+		trip,
 		tripUsers,
-		selectedUser
+		selectedUser,
+		isFetchingTrip,
+		user_friends
 	};
 }
 

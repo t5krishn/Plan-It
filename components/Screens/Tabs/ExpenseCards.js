@@ -9,7 +9,7 @@ export default function EventCards({ items, onPress }) {
 					<TouchableHighlight key={e.id} onPress={() => onPress(e)}>
 						<View>
 							<Text>{e.name}</Text>
-							<Text>Amount in cents: {e.amount_in_cents}</Text>
+							<Text>Expense amount: {e.amount_in_cents / 100}</Text>
 							<Text>Date: {e.expense_date}</Text>
 						</View>
 					</TouchableHighlight>

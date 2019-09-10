@@ -4,6 +4,7 @@ import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
 import AddBtn from "../../Buttons/Addbtn";
 import EditModal from "./editModal";
+import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 
 import { connect } from "react-redux";
 
@@ -28,6 +29,19 @@ function ExpensesTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
+
+			{!props.isFetchingTrip && (
+				<TripSettingsBtn
+					tripUsers={props.tripUsers.filter(user => {
+						return user.id !== parseInt(props.selectedUser);
+					})}
+					user={props.selectedUser}
+					trip={props.trip}
+					dispatch={props.dispatch}
+					navigation={props.navigation}
+					friends={props.user_friends}
+				/>
+			)}
 			<View style={styles.upper}>
 				<Text>San Diego Trip!</Text>
 				<Text>{props.expenses.length} Expenses</Text>
@@ -74,14 +88,32 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData } = state;
-	const { expenses } = gettingTripData[selectedTrip] || {
-		expenses: []
+	const {
+		selectedTrip,
+		gettingTripData,
+		selectedUser,
+		gettingUserData
+	} = state;
+	const { expenses, tripUsers, isFetchingTrip } = gettingTripData[
+		selectedTrip
+	] || {
+		expenses: [],
+		tripUsers: []
 	};
-
+	const trip = gettingUserData[selectedUser].user_trips.find(
+		e => e.id === selectedTrip
+	);
+	const { user_friends } = gettingUserData[selectedUser] || {
+		user_friends: []
+	};
 	return {
 		selectedTrip,
-		expenses
+		selectedUser,
+		expenses,
+		trip,
+		tripUsers,
+		isFetchingTrip,
+		user_friends
 	};
 }
 

@@ -71,6 +71,7 @@ function AddModal(props) {
 				break;
 			case "to_do":
 				props.navigation.navigate("TripTodo");
+				console.log("TO DO =>>> ", form)
 				props.dispatch(
 					postNewTodo(
 						{ ...form, completed: false },

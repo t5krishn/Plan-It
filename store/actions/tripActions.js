@@ -118,7 +118,6 @@ export function postNewTodo(to_do, userId, tripId) {
 				return response.json();
 			})
 			.then(data => {
-				console.log("RETURNED >>>>>>>>>>>", data);
 				if (data.status === "ok") {
 					return dispatch(receivedNewTodo(tripId, data.todo));
 				}
@@ -167,7 +166,7 @@ export function postNewExpense(expense, userId, tripId) {
 			})
 			.then(data => {
 				if (data.status === "ok") {
-					return dispatch(receivedNewExpense(tripId, data.expense));
+					return dispatch(receivedNewExpense(tripId, data));
 				}
 			});
 	};

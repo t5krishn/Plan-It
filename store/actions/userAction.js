@@ -606,7 +606,7 @@ function receivedTripInfoUpdate(user_id, trips) {
 // TRIP => updateInfo => {
 //            name,
 //            location,
-//            start_on,
+//            starts_on,
 //            ends_on,
 //            description,
 //            added:[user_ids],

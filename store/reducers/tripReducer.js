@@ -56,7 +56,14 @@ function tripData(
 		case RECEIVE_NEW_EXPENSE:
 			return Object.assign({}, state, {
 				isFetchingTrip: false,
-				expenses: [action.expense, ...state.expenses]
+				expenses: [
+					{
+						...action.expense,
+						borrowers: action.borrowers,
+						lender: action.lender
+					},
+					...state.expenses
+				]
 			});
 		case REQUEST_NEW_EVENT:
 		case REQUEST_NEW_TODO:
@@ -105,13 +112,27 @@ function updateTrip(
 				isFetchingTrip: false
 			});
 		case RECEIVE_TRIP_UPDATE:
-			return Object.assign({}, state, {
-				isFetchingTrip: false,
-				[action.updateType]: [
-					action.data,
-					...state[action.updateType].filter(d => d.id !== action.data.id)
-				]
-			});
+			if (action.updateType === "expenses") {
+				return Object.assign({}, state, {
+					isFetchingTrip: false,
+					expenses: [
+						{
+							...action.data.expense,
+							borrowers: action.data.borrowers,
+							lender: action.data.lender
+						},
+						...state.expenses.filter(d => d.id !== action.data.expense.id)
+					]
+				});
+			} else {
+				return Object.assign({}, state, {
+					isFetchingTrip: false,
+					[action.updateType]: [
+						action.data,
+						...state[action.updateType].filter(d => d.id !== action.data.id)
+					]
+				});
+			}
 		case RECEIVE_TRIP_ITEM_DELETE:
 			return Object.assign({}, state, {
 				isFetchingTrip: false,
