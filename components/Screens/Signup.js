@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
 import KeyboardShift from "../../helpers/keyboard"
+
 function RegisterForm(props) {
 	const [state, setState] = useState({
 		first_name: "",

@@ -12,7 +12,6 @@ export default function FriendCard({ friend, onAccept, onDecline }) {
 	const [isVisible, setVisibility] = useState(false);
 
 	const onHandlePress = () => {
-		onDecline(friend.friend_id);
 		Alert.alert(
 			"Confirm",
 			`Are you sure you want to remove ${friend.first_name} ${
