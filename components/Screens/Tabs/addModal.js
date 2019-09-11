@@ -5,10 +5,8 @@ import {
 	Text,
 	TouchableHighlight,
 	Dimensions,
-	TextInput,
-	StyleSheet,
-	ScrollView,
-	AlertIOS
+	ImageBackground,
+	StyleSheet
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import {
@@ -71,7 +69,6 @@ function AddModal(props) {
 				break;
 			case "to_do":
 				props.navigation.navigate("TripTodo");
-				console.log("TO DO =>>> ", form)
 				props.dispatch(
 					postNewTodo(
 						{ ...form, completed: false },
@@ -104,20 +101,27 @@ function AddModal(props) {
 	});
 
 	return (
-		<View style={styles.mainContainer}>
+		<View>
 			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
-				<View
+				<ImageBackground
+					source={require("../../../assets/plant1.jpg")}
 					style={{
-						borderRadius: 20,
-						marginTop: 80,
-						paddingTop: 50,
-						zIndex: 9,
-						backgroundColor: "green",
-						width: Dimensions.get("screen").width,
+						flex: 1,
+						marginTop: "10%",
+						width: "100%",
 						height: Dimensions.get("screen").height,
 						alignItems: "center"
 					}}
 				>
+					<View
+						style={{
+							position: "absolute",
+							backgroundColor: "white",
+							opacity: 0.5,
+							width: "100%",
+							height: Dimensions.get("screen").height
+						}}
+					/>
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
@@ -152,6 +156,7 @@ function AddModal(props) {
 							form={form}
 							setForm={setForm}
 							handleSubmit={handleSubmit}
+							setInvited={setInvited}
 							invited={invited}
 							setFriendVisibility={props.setFriendVisibility}
 							addFriendsVisible={props.addFriendsVisible}
@@ -165,47 +170,18 @@ function AddModal(props) {
 							addFriendsVisible={props.addFriendsVisible}
 						/>
 					)}
-				</View>
+				</ImageBackground>
 			</Modal>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	mainContainer: {
-		marginTop: 22,
-		alignItems: "center",
-		width: "100%"
-	},
 	close: {
 		position: "absolute",
 		right: 20,
-		top: 20
-	},
-	content: {
-		width: "85%"
-	},
-	textInput: {
-		width: 200,
-		height: 40,
-		borderColor: "#000",
-		borderWidth: 1
-	},
-	title: {
-		fontSize: 20
-	},
-	submit: {
-		marginTop: 10,
-		borderWidth: 2,
-		borderColor: "black"
-	},
-	error: {
-		backgroundColor: "red",
-		padding: 10
-	},
-	friendsList: {
-		backgroundColor: "yellow",
-		height: "30%"
+		top: 20,
+		zIndex: 300
 	}
 });
 

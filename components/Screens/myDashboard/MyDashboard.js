@@ -5,7 +5,8 @@ import {
 	StyleSheet,
 	ScrollView,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	Image
 } from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
@@ -24,14 +25,6 @@ function Dashboard(props) {
 
 	return (
 		<View style={styles.mainScreenContainer}>
-			<View
-				style={{
-					zIndex: 100,
-					backgroundColor: "black",
-					position: "absolute",
-					top: 100
-				}}
-			/>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
 				<View style={styles.calendarContainer}>
@@ -65,7 +58,16 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
+					{!props.isFetchingUser &&
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />}
+					{props.isFetchingUser && 
+					<View>
+						<Image 
+						source={require('../../../assets/loading.gif')} 
+						style={styles.loading}/>
+						<Text style={styles.loadingText}>Your data is being loaded...</Text>
+					</View>
+						}
 				</ScrollView>
 			</View>
 		</View>
@@ -79,31 +81,33 @@ const styles = StyleSheet.create({
 	},
 	topContainer: {
 		flex: 1,
-		marginTop: 35,
+		marginTop: "5%",
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center"
 	},
 	bottomContainer: {
-		flex: 1.3,
+		flex: 1.6,
 		flexDirection: "column",
 		justifyContent: "center",
-		backgroundColor: "#FFFFFF",
 		width: "100%"
 	},
-	titleText: {
-		fontSize: 20,
-		marginTop: "12%"
-	},
 	calendarContainer: {
-		flex: 1,
 		marginTop: "2%"
 	},
 	tripsScrollContainer: {
 		width: "100%"
 	},
-	tripsContsent: {
+	tripsContent: {
 		paddingBottom: 10
+	},
+	loading: {
+		alignSelf: "center",
+		marginTop: 50
+	},
+	loadingText: {
+		textAlign: "center",
+		marginTop: 20
 	}
 });
 
@@ -122,7 +126,7 @@ function mapStateToProps(state) {
 	// };
 
 	const { isFetchingUser, user_trips } = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
+		isFetchingUser: false,
 		user_trips: []
 	};
 

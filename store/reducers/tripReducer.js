@@ -42,49 +42,49 @@ function tripData(
 	},
 	action
 ) {
-  switch (action.type) {
-    case RECEIVE_NEW_EVENT:
-      return Object.assign({}, state, {
-        isFetchingTrip: false,
-        events: [action.event, ...state.events]
-      });
-    case RECEIVE_NEW_TODO:
-      return Object.assign({}, state, {
-        isFetchingTrip: false,
-        toDos: [action.todo, ...state.toDos]
-      });
-    case RECEIVE_NEW_EXPENSE:
-      return Object.assign({}, state, {
-        isFetchingTrip: false,
-        expenses: [
-          {
-            ...action.expense,
-            borrowers: action.borrowers,
-            lender: action.lender
-          },
-          ...state.expenses
-        ]
-      });
-    case REQUEST_NEW_EVENT:
-    case REQUEST_NEW_TODO:
-    case REQUEST_NEW_EXPENSE:
-    case REQUEST_TRIP_DATA:
-      return Object.assign({}, state, {
-        isFetchingTrip: true
-      });
-    case RECEIVE_TRIP_DATA:
-      return Object.assign({}, state, {
-        isFetchingTrip: false,
-        events: action.events,
-        toDos: action.toDos,
-        expenses: action.expenses.map(
-          e => 
-            { return {...e.expense, borrowers: e.borrowers, lender: e.lender}}),
-        tripUsers: action.tripUsers
-      });
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case RECEIVE_NEW_EVENT:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				events: [action.event, ...state.events]
+			});
+		case RECEIVE_NEW_TODO:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				toDos: [action.todo, ...state.toDos]
+			});
+		case RECEIVE_NEW_EXPENSE:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				expenses: [
+					{
+						...action.expense,
+						borrowers: action.borrowers,
+						lender: action.lender
+					},
+					...state.expenses
+				]
+			});
+		case REQUEST_NEW_EVENT:
+		case REQUEST_NEW_TODO:
+		case REQUEST_NEW_EXPENSE:
+		case REQUEST_TRIP_DATA:
+			return Object.assign({}, state, {
+				isFetchingTrip: true
+			});
+		case RECEIVE_TRIP_DATA:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				events: action.events,
+				toDos: action.toDos,
+				expenses: action.expenses.map(e => {
+					return { ...e.expense, borrowers: e.borrowers, lender: e.lender };
+				}),
+				tripUsers: action.tripUsers
+			});
+		default:
+			return state;
+	}
 }
 
 function updateTrip(

@@ -5,36 +5,33 @@ import {
 	Text,
 	ImageBackground,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
+const width = Dimensions.get("screen").width;
+const height = Dimensions.get("screen").height;
+
 export default function Welcome(props) {
 	return (
 		<ImageBackground
-			source={require("../../assets/plant1.png")}
-			style={{ height: Dimensions.get("screen").height + 100 }}
+			source={require("../../assets/plant1.jpg")}
+			style={{
+				height: Dimensions.get("screen").height,
+				width: Dimensions.get("screen").width
+			}}
 		>
 			<View style={styles.opacity} />
 			<View style={styles.container}>
 				<View style={styles.topContainer}>
 					<ImageBackground
 						source={require("../../assets/logoTransparent.png")}
-						style={{ width: 210, height: 200 }}
+						style={{ width: (width / 1.8) * 1.035, height: width / 1.8 }}
 					/>
-					<Text
-						style={{
-							marginTop: 60,
-							fontFamily: "Avenir",
-							fontSize: 22
-						}}
-					>
-						Welcome to
-					</Text>
-					<Text style={{ fontFamily: "Avenir-Light", fontSize: 65 }}>
-						Plan It
-					</Text>
+					<Text style={styles.slogan}>Welcome to</Text>
+					<Text style={styles.title}>Plan It</Text>
 					<Text
 						style={{
 							fontFamily: "Avenir",
@@ -65,28 +62,37 @@ export default function Welcome(props) {
 }
 
 const styles = StyleSheet.create({
-	container: { flex: 1 },
+	container: { flex: 1, width: "100%", height: "100%" },
 	topContainer: {
-		flex: 3,
-		marginTop: 180,
+		flex: 2,
+		marginTop: height / 8,
 		alignItems: "center"
 	},
+	slogan: {
+		marginTop: height / 20,
+		fontFamily: "Avenir",
+		fontSize: 22
+	},
+	title: {
+		fontFamily: "Avenir-Light",
+		fontSize: 65
+	},
 	bottomContainer: {
-		flex: 2,
-		marginTop: "30%",
+		flex: 1,
+		marginTop: height / 5,
 		alignItems: "center",
 		width: "100%"
 	},
 	button: {
 		backgroundColor: "#000",
 		width: "80%",
-		height: 40,
+		height: height / 18,
 		alignItems: "center",
 		justifyContent: "center",
-		marginBottom: 10
+		padding: "5%"
 	},
 	buttonText: {
-		color: "#FFFFFF",
+		color: "#FFF",
 		fontFamily: "Avenir",
 		fontSize: 20
 	},

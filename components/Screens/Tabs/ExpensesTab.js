@@ -21,7 +21,6 @@ function ExpensesTab(props) {
 	}, [invited]);
 
 	const onPress = expense => {
-		console.log(expense);
 		setForm(expense);
 		setEdit(true);
 	};
@@ -39,7 +38,9 @@ function ExpensesTab(props) {
 					trip={props.trip}
 					dispatch={props.dispatch}
 					navigation={props.navigation}
-					friends={props.user_friends}
+					friends={props.tripUsers.map(
+						f => f.id !== parseInt(props.selectedUser)
+					)}
 				/>
 			)}
 			<View style={styles.upper}>
@@ -48,7 +49,11 @@ function ExpensesTab(props) {
 				<Text>You owe $800 total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<ExpenseCards items={props.expenses} onPress={onPress} />
+				<ExpenseCards
+					items={props.expenses}
+					onPress={onPress}
+					friends={props.tripUsers}
+				/>
 				<View style={{ height: 100 }} />
 			</ScrollView>
 			{edit && (

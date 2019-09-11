@@ -29,8 +29,8 @@ import {
 function SettingsScreen(props) {
 	const handleLogout = async () => {
 		await AsyncStorage.clear();
-		props.dispatch(resetStore());
 		props.navigation.navigate("Login");
+		props.dispatch(resetStore());
 	};
 
 	const onUpdateUsername = (user, newUsername) => {

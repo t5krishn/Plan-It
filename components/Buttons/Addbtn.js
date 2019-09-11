@@ -25,7 +25,7 @@ function AddBtn(props) {
 				/>
 			)}
 			<FloatingAction
-				distanceToEdge={{ vertical: 100, horizontal: 20 }}
+				distanceToEdge={{ vertical: 20, horizontal: 20 }}
 				actions={actions}
 				showBackground={true}
 				onPressItem={name => {

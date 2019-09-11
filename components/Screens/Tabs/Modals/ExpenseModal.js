@@ -10,36 +10,45 @@ import {
 	ScrollView,
 	AlertIOS
 } from "react-native";
+import getFriends from "../../../../helpers/getFriends";
 
-export default function ExpenseModal({
-	form,
-	setForm,
-	handleSubmit,
-	invited,
-	setFriendVisibility
-}) {
+export default function ExpenseModal(props) {
+	const {
+		title,
+		form,
+		setForm,
+		handleSubmit,
+		invited,
+		setInvited,
+		setFriendVisibility
+	} = props;
+
+	if (form.name) {
+		setInvited(form.borrowers);
+	}
+
 	return (
 		<View style={styles.content}>
-			<Text style={styles.title}>Create a new expense</Text>
+			<Text style={styles.title}>{title}</Text>
 			<Text>Name:</Text>
 			<TextInput
 				style={styles.textInput}
-				value={form.name}
+				value={form && form.name ? form.name : ""}
 				onChangeText={text => setForm({ ...form, name: text })}
 			/>
 			<Text>Expense date:</Text>
 			<TextInput
 				style={styles.textInput}
-				value={form.expense_date}
+				value={form && form.expense_date ? form.expense_date : ""}
 				onChangeText={text => setForm({ ...form, expense_date: text })}
 			/>
 			<Text>Amount:</Text>
 			<TextInput
 				style={styles.textInput}
-				value={form.amount_in_cents}
+				value={form && form.amount_in_cents ? form.amount_in_cents : ""}
 				onChangeText={text => setForm({ ...form, amount_in_cents: text })}
 			/>
-			{invited.length > 0 ? (
+			{invited && invited.length > 0 ? (
 				<View style={styles.friendsList}>
 					<TouchableHighlight style={styles.submit}>
 						<Text onPress={() => setFriendVisibility(true)}>Edit friends</Text>
@@ -62,6 +71,17 @@ export default function ExpenseModal({
 					<Text onPress={() => setFriendVisibility(true)}>
 						Split the cost with:
 					</Text>
+				</TouchableHighlight>
+			)}
+			{props.onDelete && (
+				<TouchableHighlight
+					style={styles.button}
+					onPress={() => {
+						console.log("EXPENSE MODAL", form);
+						props.onDelete(form.id);
+					}}
+				>
+					<Text>Delete</Text>
 				</TouchableHighlight>
 			)}
 			<TouchableHighlight style={styles.submit}>

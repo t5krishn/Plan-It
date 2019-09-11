@@ -7,7 +7,7 @@ import {
 	StyleSheet,
 	Alert,
 	AsyncStorage,
-	Image,
+	Dimensions,
 	ImageBackground
 } from "react-native";
 import Backbtn from "../Buttons/Backbtn";
@@ -51,7 +51,7 @@ function LoginScreen(props) {
 
 	return (
 		<ImageBackground
-			source={require("../../assets/plant1.png")}
+			source={require("../../assets/plant1.jpg")}
 			style={{
 				width: "100%",
 				height: "100%",
@@ -69,14 +69,9 @@ function LoginScreen(props) {
 				}}
 			/>
 			<View style={styles.container}>
-				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 				<Text style={styles.title}>Sign In</Text>
-				<View style={{ flex: 1 }}>
-					<Image
-						source={require("../../assets/Ghost.jpg")}
-						style={{ width: 100, height: 100 }}
-					/>
-				</View>
+				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
+				<View style={{ flex: 1 }} />
 				<View style={styles.inputContainer}>
 					<View style={styles.input}>
 						<Icon
@@ -97,7 +92,7 @@ function LoginScreen(props) {
 							name="lock"
 							size={32}
 							color={"#000"}
-							style={[styles.icon, { paddingLeft: 14 }]}
+							style={[styles.icon, { paddingLeft: 18 }]}
 						/>
 						<TextInput
 							autoCapitalize="none"
@@ -135,14 +130,14 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		width: "100%",
-		height: "40%"
+		height: "100%"
 	},
 	title: {
 		fontFamily: "Avenir",
 		fontSize: 45,
-		marginTop: 90,
-		marginRight: 200,
-		marginBottom: 50
+		marginTop: "20%",
+		marginRight: "53%",
+		marginBottom: "30%"
 	},
 	inputContainer: {
 		width: "90%",
@@ -157,20 +152,19 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir",
 		color: "#000"
 	},
-	input: { flexDirection: "row", flex: 0.3 },
+	input: { flexDirection: "row", flex: 0.5 },
 	buttonContainer: {
 		marginTop: 50,
 		flex: 1,
 		alignItems: "center"
 	},
-	icon: { padding: 10 },
+	icon: { padding: 15 },
 	button: {
 		backgroundColor: "#000",
 		height: 40,
 		width: "95%%",
 		alignItems: "center",
-		justifyContent: "center",
-		marginBottom: 10
+		justifyContent: "center"
 	},
 	buttonText: {
 		color: "#FFFFFF",
