@@ -5,7 +5,8 @@ import {
 	StyleSheet,
 	ScrollView,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	Image
 } from "react-native";
 import CalendarMonth from "./CalendarMonth";
 import TripsList from "./TripsList";
@@ -65,7 +66,16 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
+					{!props.isFetchingUser &&
+					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />}
+					{props.isFetchingUser && 
+					<View>
+						<Image 
+						source={require('../../../assets/loading.gif')} 
+						style={styles.loading}/>
+						<Text style={styles.loadingText}>Your data is being loaded...</Text>
+					</View>
+						}
 				</ScrollView>
 			</View>
 		</View>
@@ -104,6 +114,14 @@ const styles = StyleSheet.create({
 	},
 	tripsContsent: {
 		paddingBottom: 10
+	},
+	loading: {
+		alignSelf: "center",
+		marginTop: 50
+	},
+	loadingText: {
+		textAlign: "center",
+		marginTop: 20
 	}
 });
 
