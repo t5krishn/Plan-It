@@ -218,7 +218,9 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		width: "90%",
-		marginTop: "10%"
+		marginTop: "10%",
+		alignContent: "center",
+		justifyContent: "center"
 	},
 	textTitles: {
 		fontSize: 15,

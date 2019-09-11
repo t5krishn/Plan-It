@@ -7,7 +7,8 @@ import {
 	TouchableOpacity,
 	Dimensions,
 	TextInput,
-	StyleSheet
+	StyleSheet,
+	ImageBackground
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
@@ -32,29 +33,25 @@ function AddFriendsModal(props) {
 	};
 
 	return (
-		<View
-			style={{
-				marginTop: 22,
-				alignItems: "center"
-			}}
-		>
+		<View style={styles.mainContainer}>
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={props.addFriendsVisible}
 			>
-				<View
-					style={{
-						borderRadius: 20,
-						marginTop: 100,
-						paddingTop: 50,
-						zIndex: 9,
-						backgroundColor: "gray",
-						width: Dimensions.get("screen").width,
-						height: Dimensions.get("screen").height,
-						alignItems: "center"
-					}}
+				<ImageBackground
+					source={require("../../../assets/plant1.jpg")}
+					style={styles.modalContainer}
 				>
+					<View
+						style={{
+							position: "absolute",
+							backgroundColor: "white",
+							opacity: 0.5,
+							width: "100%",
+							height: Dimensions.get("screen").height
+						}}
+					/>
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
@@ -63,7 +60,7 @@ function AddFriendsModal(props) {
 					>
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
-					<Text>Friends:</Text>
+					<Text style={styles.title}>Friends:</Text>
 					{props.friends.length > 0 ? (
 						<View style={styles.friendsContainer}>
 							<View style={styles.checkBox}>
@@ -91,17 +88,31 @@ function AddFriendsModal(props) {
 							invite friends!
 						</Text>
 					)}
-				</View>
+				</ImageBackground>
 			</Modal>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	mainContainer: {
+		width: "100%",
+		height: Dimensions.get("screen").height,
+		justifyContent: "center",
+		alignContent: "center"
+	},
+	modalContainer: {
+		zIndex: 9,
+		height: "100%",
+		alignItems: "center",
+		width: "100%",
+		marginTop: "10%"
+	},
 	close: {
 		position: "absolute",
 		right: 20,
-		top: 20
+		top: 20,
+		zIndex: 300
 	},
 	checkBox: {
 		width: "100%"
@@ -109,7 +120,7 @@ const styles = StyleSheet.create({
 	friendsContainer: {
 		flex: 1,
 		backgroundColor: "yellow",
-		width: "90%%",
+		width: "90%",
 		alignItems: "center"
 	},
 	button: {
@@ -117,6 +128,10 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		width: 50,
 		height: 20
+	},
+	title: {
+		fontSize: 24,
+		paddingBottom: "10%"
 	}
 });
 

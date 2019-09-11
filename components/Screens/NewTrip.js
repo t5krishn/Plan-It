@@ -17,6 +17,8 @@ import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
 import BackBtn from "../Buttons/Backbtn";
 import getIds from "../../helpers/getIds";
 
+const width = Dimensions.get("screen").width;
+
 function RegisterForm(props) {
 	const [addFriendsVisible, setFriendVisibility] = useState(false);
 	const [isDateTimePickerVisible, setDateTimeVisibility] = useState({
@@ -201,11 +203,27 @@ function RegisterForm(props) {
 
 				{invited.length ? (
 					<View style={styles.friendsList}>
-						<Text>Friends invited:</Text>
-						<ScrollView>
+						<Text
+							style={[
+								styles.inputTitle,
+								{
+									marginLeft: "35%",
+									fontFamily: "Avenir-MediumOblique",
+									paddingTop: "2%"
+								}
+							]}
+						>
+							{invited.length} Friends invited:
+						</Text>
+						<ScrollView showsVerticalScrollIndicator={true}>
 							{invited.map(friend => {
 								return (
-									<Text>
+									<Text
+										style={[
+											styles.text,
+											{ paddingLeft: "10%", paddingRight: "10%" }
+										]}
+									>
 										{friend.first_name} {friend.last_name} (@{friend.username})
 									</Text>
 								);
@@ -218,10 +236,10 @@ function RegisterForm(props) {
 
 				{invited.length ? (
 					<TouchableOpacity
-						style={styles.button}
+						style={[styles.button, { backgroundColor: "#72AA98" }]}
 						onPress={() => setFriendVisibility(true)}
 					>
-						<Text style={styles.datePickerButtonText}>Edit Friends</Text>
+						<Text style={[styles.datePickerButtonText]}>Edit Friends</Text>
 					</TouchableOpacity>
 				) : (
 					<TouchableOpacity
@@ -253,6 +271,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFF",
 		paddingTop: 80
 	},
+	text: {
+		fontFamily: "Avenir"
+	},
 	title: {
 		paddingLeft: 20
 	},
@@ -265,33 +286,33 @@ const styles = StyleSheet.create({
 		fontSize: 15
 	},
 	inputContainer: {
-		marginTop: "10%",
-		padding: 20,
+		paddingLeft: "5%",
+		paddingRight: "5%",
 		alignItems: "center"
 	},
 	textInput: {
-		height: 40,
+		height: width / 10,
 		borderColor: "#000",
 		borderBottomWidth: 1,
 		width: "100%"
 	},
 	button: {
-		marginTop: 15,
+		marginTop: "5%",
 		backgroundColor: "black",
 		justifyContent: "center",
 		alignItems: "center",
 		width: "100%",
-		height: 50
+		height: width / 9
 	},
 	buttonText: {
 		color: "white",
 		fontSize: 15
 	},
 	friendsList: {
-		margin: 20,
-		backgroundColor: "yellow",
+		marginTop: "4%",
+		backgroundColor: "#72AA98",
 		width: "100%",
-		height: "30%"
+		height: "25%"
 	},
 	textInputContainer: {
 		width: "100%",
@@ -299,7 +320,8 @@ const styles = StyleSheet.create({
 	},
 	dateButton: {
 		backgroundColor: "black",
-		alignItems: "center"
+		alignItems: "center",
+		marginTop: "2%"
 	},
 	dateText: {
 		color: "white",
@@ -312,7 +334,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		paddingTop: 2,
-		height: 50
+		height: width / 9
 	},
 	datePickerButtonText: {
 		fontSize: 15,
@@ -322,7 +344,7 @@ const styles = StyleSheet.create({
 	datePickerButton: {
 		flex: 1,
 		backgroundColor: "black",
-		width: 180,
+		width: width / 2.4,
 		alignItems: "center",
 		justifyContent: "center"
 	}
