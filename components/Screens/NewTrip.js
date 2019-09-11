@@ -216,18 +216,21 @@ function RegisterForm(props) {
 					<View />
 				)}
 
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => setFriendVisibility(true)}
-				>
-					{invited.length ? (
+				{invited.length ? (
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => setFriendVisibility(true)}
+					>
 						<Text style={styles.datePickerButtonText}>Edit Friends</Text>
-					) : (
-						<Text style={[styles.buttonText, { backgroundColor: "pink" }]}>
-							Invite Friends
-						</Text>
-					)}
-				</TouchableOpacity>
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity
+						style={[styles.button, { backgroundColor: "pink" }]}
+						onPress={() => setFriendVisibility(true)}
+					>
+						<Text style={styles.buttonText}>Invite Friends</Text>
+					</TouchableOpacity>
+				)}
 
 				<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
 					<Text style={styles.buttonText}>Submit</Text>

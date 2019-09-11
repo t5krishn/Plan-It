@@ -51,7 +51,7 @@ function LoginScreen(props) {
 
 	return (
 		<ImageBackground
-			source={require("../../assets/plant1.png")}
+			source={require("../../assets/plant1.jpg")}
 			style={{
 				width: "100%",
 				height: "100%",
@@ -71,12 +71,7 @@ function LoginScreen(props) {
 			<View style={styles.container}>
 				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 				<Text style={styles.title}>Sign In</Text>
-				<View style={{ flex: 1 }}>
-					<Image
-						source={require("../../assets/Ghost.jpg")}
-						style={{ width: 100, height: 100 }}
-					/>
-				</View>
+				<View style={{ flex: 1 }} />
 				<View style={styles.inputContainer}>
 					<View style={styles.input}>
 						<Icon
@@ -135,7 +130,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		width: "100%",
-		height: "40%"
+		height: "100%"
 	},
 	title: {
 		fontFamily: "Avenir",

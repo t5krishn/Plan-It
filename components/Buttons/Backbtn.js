@@ -17,9 +17,9 @@ export default function Backbtn(props) {
 const styles = StyleSheet.create({
 	menubtn: {
 		zIndex: 9,
-		padding: 4,
+		padding: 10,
 		position: "absolute",
-		left: 2,
-		top: 38
+		left: 20,
+		top: 40
 	}
 });
