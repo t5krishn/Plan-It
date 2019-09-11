@@ -293,6 +293,10 @@ const styles = StyleSheet.create({
 		width: "100%",
 		height: "30%"
 	},
+	textInputContainer: {
+		width: "100%",
+		margin: 10
+	},
 	dateButton: {
 		backgroundColor: "black",
 		alignItems: "center"
@@ -302,10 +306,6 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir",
 		height: "100%",
 		fontSize: 15
-	},
-	textInputContainer: {
-		width: "100%",
-		margin: 10
 	},
 	datePickerContainer: {
 		width: "100%",
