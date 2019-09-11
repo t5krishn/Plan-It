@@ -108,7 +108,7 @@ function mapStateToProps(state) {
 	// };
 
 	const { isFetchingUser, user_trips } = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
+		isFetchingUser: false,
 		user_trips: []
 	};
 

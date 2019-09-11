@@ -35,7 +35,7 @@ function RegisterForm(props) {
 	});
 
 	const handleSubmit = () => {
-		if (state.name && state.location && state.start && state.ends_on) {
+		if (state.name && state.location && state.starts_on && state.ends_on) {
 			props.dispatch(
 				addNewUserTrip(props.selectedUser, {
 					...state,
