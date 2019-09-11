@@ -203,7 +203,7 @@ export default function EventModal(props) {
 				</TouchableHighlight>
 				{props.onDelete && (
 					<TouchableHighlight
-						style={styles.button}
+						style={[styles.button, styles.datePickerButtonText]}
 						onPress={() => props.onDelete(form.id)}
 					>
 						<Text style={styles.datePickerButtonText}>Delete</Text>
