@@ -4,6 +4,7 @@ import {
 	View,
 	Text,
 	TouchableHighlight,
+	ImageBackground,
 	TouchableOpacity,
 	Dimensions,
 	TextInput,
@@ -108,8 +109,17 @@ const editModal = function(props) {
 			}}
 		>
 			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
-				<View
+				<ImageBackground
+					source={require("../../../assets/plant2.jpg")}
 					style={{
+						flex: 1,
+						marginTop: "5%",
+						width: "100%",
+						height: Dimensions.get("screen").height,
+						alignItems: "center"
+					}}
+				>
+					{/* style={{
 						borderRadius: 20,
 						marginTop: 100,
 						paddingTop: 50,
@@ -118,8 +128,7 @@ const editModal = function(props) {
 						width: Dimensions.get("screen").width,
 						height: Dimensions.get("screen").height,
 						alignItems: "center"
-					}}
-				>
+					}} */}
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
@@ -172,7 +181,7 @@ const editModal = function(props) {
 							addFriendsVisible={addFriendsVisible}
 						/>
 					)}
-				</View>
+				</ImageBackground>
 			</Modal>
 		</View>
 	);

@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
 	},
 	upper: {
 		flex: 0.3,
-		backgroundColor: "#FFFFFF",
 		width: "100%",
 		alignItems: "center",
 		paddingTop: "20%"
@@ -124,9 +123,9 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir"
 	},
 	lower: {
-		flex: 3,
+		flex: 6,
 		width: "100%",
-		backgroundColor: "#FFF",
+		backgroundColor: "yellow",
 		alignItems: "center"
 	}
 });

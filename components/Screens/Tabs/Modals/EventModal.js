@@ -11,8 +11,7 @@ import {
 	AlertIOS
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
-import getCurrentTrip from "../../../../helpers/dateCovertFormat";
-import { stringify } from "qs";
+import { formatDate, formatTime } from "../../../../helpers/formatDateTime";
 const width = Dimensions.get("screen").width;
 
 export default function EventModal(props) {
@@ -21,26 +20,6 @@ export default function EventModal(props) {
 		start: false,
 		end: false
 	});
-
-	const formatDate = date => {
-		return new Date(date)
-			.toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric"
-			})
-			.replace(/ /g, ", ");
-	};
-
-	const formatTime = date => {
-		return (
-			new Date(date).getHours() +
-			":" +
-			(new Date(date).getMinutes().length !== 1
-				? new Date(date).getMinutes()
-				: "0" + new Date(date).getMinutes())
-		);
-	};
 
 	const handleDatePicked = (date, mode) => {
 		if (mode === "startDate") {
@@ -193,11 +172,11 @@ export default function EventModal(props) {
 				/>
 			</View>
 			<View style={styles.button}>
-				<TouchableOpacity style={[styles.submit, styles.datePickerButtonText]}>
-					<Text
-						onPress={() => handleSubmit("event")}
-						style={styles.datePickerButtonText}
-					>
+				<TouchableOpacity
+					style={[styles.submit, styles.datePickerButtonText]}
+					onPress={() => handleSubmit("event")}
+				>
+					<Text style={styles.datePickerButtonText}>
 						{props.onDelete ? "Update" : "Submit"}
 					</Text>
 				</TouchableOpacity>

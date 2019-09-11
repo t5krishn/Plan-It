@@ -88,8 +88,7 @@ const styles = StyleSheet.create({
 		width: "80%",
 		height: height / 18,
 		alignItems: "center",
-		justifyContent: "center",
-		padding: "5%"
+		justifyContent: "center"
 	},
 	buttonText: {
 		color: "#FFF",

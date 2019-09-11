@@ -23,7 +23,6 @@ export default function TripItem(props) {
 					<Text style={styles.tripTimeText}>
 						{dateConvertFormat(props.trip.starts_on)}
 					</Text>
-					{/* <Text style={{ fontSize: 20 }}>-</Text> */}
 					<Icon
 						name="ellipsis-h"
 						size={20}

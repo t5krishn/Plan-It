@@ -6,7 +6,6 @@ import {
 	TouchableHighlight,
 	TouchableOpacity,
 	Dimensions,
-	TextInput,
 	StyleSheet,
 	ImageBackground
 } from "react-native";

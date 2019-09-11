@@ -9,8 +9,6 @@ function AddBtn(props) {
 	const [addFriendsVisible, setFriendVisibility] = useState(false);
 	const [mode, setMode] = useState("");
 
-	console.log(">>>>>>>>>>>>>", props.tripUsers);
-
 	return (
 		<View>
 			{isVisible && (
