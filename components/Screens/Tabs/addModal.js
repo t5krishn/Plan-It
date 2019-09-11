@@ -51,11 +51,12 @@ function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
+	const [addFriendsVisible, setFriendVisibility] = useState(false);
 	const [invited, setInvited] = useState([]);
 	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		if (invited.length) {
+		if (invited && invited.length) {
 			setError(false);
 		}
 	}, [invited]);
@@ -79,7 +80,7 @@ function AddModal(props) {
 				props.setVisibility(false);
 				break;
 			case "expense":
-				if (invited.length > 0) {
+				if (invited && invited.length > 0) {
 					props.navigation.navigate("TripExpenses");
 					props.dispatch(
 						postNewExpense(
@@ -165,9 +166,9 @@ function AddModal(props) {
 					{props.addFriendsVisible && (
 						<AddFriendsModal
 							setInvited={setInvited}
+							setFriendVisibility={setFriendVisibility}
+							addFriendsVisible={addFriendsVisible}
 							friends={friends}
-							setFriendVisibility={props.setFriendVisibility}
-							addFriendsVisible={props.addFriendsVisible}
 						/>
 					)}
 				</ImageBackground>

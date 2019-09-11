@@ -67,17 +67,17 @@ export default function ExpenseModal(props) {
 					</ScrollView>
 				</View>
 			) : (
-				<TouchableHighlight style={styles.submit}>
-					<Text onPress={() => setFriendVisibility(true)}>
-						Split the cost with:
-					</Text>
+				<TouchableHighlight
+					style={styles.submit}
+					onPress={() => setFriendVisibility(true)}
+				>
+					<Text>Split the cost with:</Text>
 				</TouchableHighlight>
 			)}
 			{props.onDelete && (
 				<TouchableHighlight
 					style={styles.button}
 					onPress={() => {
-						console.log("EXPENSE MODAL", form);
 						props.onDelete(form.id);
 					}}
 				>

@@ -70,7 +70,9 @@ function AddFriendsModal(props) {
 											key={friend.id}
 											title={friend.first_name + " " + friend.last_name}
 											checked={state[friend.id]}
-											onPress={() => handlePress(friend.id)}
+											onPress={() => {
+												handlePress(friend.id);
+											}}
 										/>
 									);
 								})}
