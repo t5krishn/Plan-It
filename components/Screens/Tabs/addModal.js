@@ -108,7 +108,7 @@ function AddModal(props) {
 					source={require("../../../assets/plant1.jpg")}
 					style={{
 						flex: 1,
-						marginTop: "10%",
+						marginTop: "5%",
 						width: "100%",
 						height: Dimensions.get("screen").height,
 						alignItems: "center"
