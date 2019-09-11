@@ -91,10 +91,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "#FFFFFF",
 		width: "100%"
 	},
-	titleText: {
-		fontSize: 20,
-		marginTop: "12%"
-	},
 	calendarContainer: {
 		flex: 1,
 		marginTop: "2%"
@@ -102,7 +98,7 @@ const styles = StyleSheet.create({
 	tripsScrollContainer: {
 		width: "100%"
 	},
-	tripsContsent: {
+	tripsContent: {
 		paddingBottom: 10
 	}
 });

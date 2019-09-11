@@ -78,11 +78,7 @@ function tripData(
 				events: action.events,
 				toDos: action.toDos,
 				expenses: action.expenses.map(e => {
-					return {
-						...e.expense,
-						borrowers: e.borrowers,
-						lender: e.lender
-					};
+					return { ...e.expense, borrowers: e.borrowers, lender: e.lender };
 				}),
 				tripUsers: action.tripUsers
 			});

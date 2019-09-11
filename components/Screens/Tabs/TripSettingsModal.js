@@ -24,13 +24,8 @@ function TripSettingsModal(props) {
       location: props.trip.location,
       starts_on: props.trip.starts_on,
       ends_on: props.trip.ends_on,
-      description: props.trip.description,
-      added: [],
-      removed: []
-    }) || {
-      added: [],
-      removed: []
-    }
+      description: props.trip.description
+    })
   );
 
   const [showStartsOn, setShowStartsOn] = useState(false);
@@ -50,7 +45,7 @@ function TripSettingsModal(props) {
       }
     });
 
-	const filteredFriends = props.friends.filter(f => f.id in friends);
+  const filteredFriends = props.friends.filter(f => f.id in friends);
 
   const [checkedTripUsers, setCheckedTripUsers] = useState(tripUsers);
   const [checkedFriends, setCheckedFriends] = useState(friends);
@@ -82,26 +77,12 @@ function TripSettingsModal(props) {
 
   const handleSubmit = () => {
 
-		// const added = Object.keys(tripUsers).filter( a => trip );
-		// const removed = [];
-
+		updateInfo.added = Object.keys(checkedFriends).filter(key => checkedFriends[key]);
+		updateInfo.removed = Object.keys(checkedTripUsers).filter(key => !checkedTripUsers[key]);
 
     props.onSubmit(updateInfo);
   };
-  // const handlePress = id => {
-  // 	setState({ ...state, [id]: !state[id] });
-  // };
 
-  // const handleSubmit = () => {
-  // 	const invited = [];
-  // 	props.friends.map(friend => {
-  // 		if (state[friend.id]) {
-  // 			invited.push(friend);
-  // 		}
-  // 	});
-  // 	props.setInvited(invited);
-  // 	props.setFriendVisibility(false);
-  // };
 
   return (
     <View
@@ -131,13 +112,21 @@ function TripSettingsModal(props) {
             <Icon name="close" size={30} />
           </TouchableHighlight>
 
-          <Text style={styles.title}>Edit your trip below: {filteredFriends.length}</Text>
+          <Text style={styles.title}>
+            Edit your trip below
+          </Text>
 
           <Text style={styles.content}>Trip Name</Text>
-          <TextInput style={styles.TextInput} value={updateInfo.name} />
+          <TextInput
+						style={styles.TextInput}
+						value={updateInfo.name}
+						onChangeText={text=> setUpdateInfo({...updateInfo, name: text})}/>
 
           <Text style={styles.content}>Trip Location</Text>
-          <TextInput style={styles.TextInput} value={updateInfo.location} />
+					<TextInput
+						style={styles.TextInput}
+						value={updateInfo.location}
+						onChangeText={text=> setUpdateInfo({...updateInfo, location: text})}/>
 
           <View style={styles.dateEdit}>
             <Text style={styles.content}>
@@ -214,10 +203,20 @@ function TripSettingsModal(props) {
           />
 
 
-          <Text style={styles.content}>Trip Attendees:</Text>
-
+					<Text style={styles.content}>Trip Attendees:</Text>
           <View style={styles.friendsContainer}>
             <ScrollView contentContainerStyle={styles.checkBox}>
+							{(!filteredFriends.length && !props.tripUsers.length)?  (
+								<Text style={styles.warning}>
+									No people added to trip. Go to Find friends and add some friends to add to your trip
+								</Text>
+							) : null}
+							{(filteredFriends.length && !props.tripUsers.length)? (
+								<Text style={styles.warning}>
+									No people added to trip. Add some friends to your trip
+								</Text>
+							) : null}
+
               {props.tripUsers.map(tripUser => {
                 return (
                   <CheckBox
@@ -225,38 +224,38 @@ function TripSettingsModal(props) {
                     title={tripUser.first_name + " " + tripUser.last_name}
                     checked={checkedTripUsers[tripUser.id]}
                     onPress={() => {
-											setCheckedTripUsers({
-												...checkedTripUsers,
-												[tripUser.id] : !checkedTripUsers[tripUser.id]
-											})
-										}}
+                      setCheckedTripUsers({
+                        ...checkedTripUsers,
+                        [tripUser.id]: !checkedTripUsers[tripUser.id]
+                      });
+                    }}
                   />
                 );
-							})}
-							{filteredFriends.map(friend => {
-									return (
-										<CheckBox
-											key={friend.id}
-											title={friend.first_name + " " + friend.last_name}
-											checked={checkedFriends[friend.id]}
-											onPress={() => {
-												setCheckedFriends({
-													...checkedFriends,
-													[friend.id] : !checkedFriends[friend.id]
-												})
-											}}
-										/>
-									);
+              })}
+              {filteredFriends.map(friend => {
+                return (
+                  <CheckBox
+                    key={friend.id}
+                    title={friend.first_name + " " + friend.last_name}
+                    checked={checkedFriends[friend.id]}
+                    onPress={() => {
+                      setCheckedFriends({
+                        ...checkedFriends,
+                        [friend.id]: !checkedFriends[friend.id]
+                      });
+                    }}
+                  />
+                );
               })}
             </ScrollView>
           </View>
 
-					<TouchableOpacity
-						style={styles.button}
-						onPress={() => handleSubmit()}
-					>
-						<Text style={styles.buttonText}>Update Trip</Text>
-					</TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => handleSubmit()}
+          >
+            <Text style={styles.buttonText}>Update Trip</Text>
+          </TouchableOpacity>
 
           <View style={styles.deleteTrip}>
             <Text style={styles.title}>Delete your trip</Text>
@@ -284,10 +283,11 @@ const styles = StyleSheet.create({
     top: 20
   },
   checkBox: {
-    width: "100%"
+		width: "100%",
+		// height: 200
   },
   friendsContainer: {
-    // flex: 1,
+		// flex: 1,
     backgroundColor: "yellow",
     width: "90%%",
     alignItems: "center"
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
   deletebutton: {
     borderColor: "black",
     borderWidth: 2,
-    padding: 10,
+    padding: 8,
     backgroundColor: "red",
     justifyContent: "center",
     alignItems: "center"
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "black",
     textAlign: "left",
-    marginTop: 10,
+    marginTop: 5,
     marginRight: 10,
     // fontWeight: "bold",
     fontFamily: "Avenir-Light"
@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
   dateButton: {
     backgroundColor: "black",
     alignItems: "center",
-    paddingTop: 20
+    padding: 10
   },
   dateText: {
     color: "white",
@@ -366,9 +366,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "space-between",
     // padding: 10,
-    marginTop: 20,
+    marginTop: 10,
     width: 350
-  }
+	}
 });
 
 export default connect()(TripSettingsModal);
