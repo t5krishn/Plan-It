@@ -72,8 +72,8 @@ function LoginScreen(props) {
 				}}
 			/>
 			<View style={styles.container}>
-				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 				<Text style={styles.title}>Sign In</Text>
+				<Backbtn onPress={() => props.navigation.navigate("Welcome")} />
 				<View style={{ flex: 1 }} />
 				<View style={styles.inputContainer}>
 					<View style={styles.input}>

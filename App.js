@@ -155,11 +155,11 @@ const AppDrawerNavigator = createDrawerNavigator(
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
+	Signup: { screen: Signup },
 	Login: { screen: Login },
 	Welcome: { screen: Welcome },
 	LoadAuth: { screen: LoadAuth },
-	Dashboard: { screen: AppDrawerNavigator },
-	Signup: { screen: Signup }
+	Dashboard: { screen: AppDrawerNavigator }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
