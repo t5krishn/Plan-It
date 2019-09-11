@@ -1,28 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
-	createSwitchNavigator,
-	createAppContainer,
-	createDrawerNavigator,
-	createBottomTabNavigator,
-	createStackNavigator,
-	DrawerItems
-} from "react-navigation";
+  createSwitchNavigator,
+  createAppContainer,
+  createDrawerNavigator,
+  createBottomTabNavigator,
+  createStackNavigator} from "react-navigation";
 import {
-	StyleSheet,
-	View,
-	Image,
-	Text,
-	Button,
-	TextInput,
-	SafeAreaView,
-	AsyncStorage
+  StyleSheet,
+  Text,
+  Button,
+  TextInput,
+  AsyncStorage
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 
 const store = configureStore();
+
+// Firebase for image storing
+import * as firebase from "firebase";
+import firebaseConfig from "./firebaseConfig";
 
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
@@ -38,6 +36,7 @@ import NewTrip from "./components/Screens/NewTrip";
 import FindFriend from "./components/Screens/Drawers/FindFriend";
 import LoadAuth from "./components/Screens/LoadAuth";
 import Welcome from "./components/Screens/Welcome";
+import CustomDrawerComponent from "./CustomDrawerComponent";
 
 /*
   NAVIGATION:
@@ -57,109 +56,91 @@ import Welcome from "./components/Screens/Welcome";
 */
 
 export default function App({ navigation }) {
-	return (
-		<Provider store={store}>
-			<AppContainer />
-		</Provider>
-	);
+	
+	firebase.initializeApp(firebaseConfig);
+
+  return (
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>
+  );
 }
 
 const TabNavigator = createBottomTabNavigator({
-	TripEvents: {
-		screen: EventsTab
-	},
-	TripTodo: {
-		screen: TodoTab
-	},
-	TripExpenses: {
-		screen: ExpensesTab
-	}
+  TripEvents: {
+    screen: EventsTab
+  },
+  TripTodo: {
+    screen: TodoTab
+  },
+  TripExpenses: {
+    screen: ExpensesTab
+  }
 });
 
 const StackNavigator = createStackNavigator(
-	{
-		Dashboard: {
-			screen: Dashboard
-		},
-		TabNavigator: {
-			screen: TabNavigator
-		},
-		NewTrip: {
-			screen: NewTrip
-		}
-	},
-	{
-		headerMode: "none",
-		navigationOptions: {
-			headerVisible: false
-		}
-	}
-);
-
-const CustomDrawerComponent = props => (
-	<SafeAreaView>
-		<View
-			style={{
-				height: 150,
-				backgroundColor: "black",
-				justifyContent: "center",
-				alignItems: "center"
-			}}
-		>
-			<Image
-				source={require("./assets/icon.png")}
-				style={{ height: 120, width: 120 }}
-			/>
-		</View>
-		<ScrollView>
-			<DrawerItems {...props} />
-		</ScrollView>
-	</SafeAreaView>
+  {
+    Dashboard: {
+      screen: Dashboard
+    },
+    TabNavigator: {
+      screen: TabNavigator
+    },
+    NewTrip: {
+      screen: NewTrip
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
 );
 
 const FriendsStack = createStackNavigator(
-	{
-		FriendsList: {
-			screen: MyFriends
-		},
-		FindFriend: {
-			screen: FindFriend
-		}
-	},
-	{
-		headerMode: "none",
-		navigationOptions: {
-			headerVisible: false
-		}
-	}
+  {
+    FriendsList: {
+      screen: MyFriends
+    },
+    FindFriend: {
+      screen: FindFriend
+    }
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false
+    }
+  }
 );
 
 const AppDrawerNavigator = createDrawerNavigator(
-	{
-		Dashboard: {
-			screen: StackNavigator
-		},
-		Expenses: {
-			screen: MyExpenses
-		},
-		Friends: {
-			screen: FriendsStack
-		},
-		Settings: {
-			screen: MySettings
-		}
-	},
-	{
-		contentComponent: CustomDrawerComponent
-	}
+  {
+    Dashboard: {
+      screen: StackNavigator
+    },
+    Expenses: {
+      screen: MyExpenses
+    },
+    Friends: {
+      screen: FriendsStack
+    },
+    Settings: {
+      screen: MySettings
+    }
+  },
+  {
+    contentComponent: CustomDrawerComponent
+  }
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
-	LoadAuth: { screen: LoadAuth },
-	Welcome: { screen: Welcome },
-	Signup: { screen: Signup },
-	Login: { screen: Login },
-	Dashboard: { screen: AppDrawerNavigator }
+  LoadAuth: { screen: LoadAuth },
+  Welcome: { screen: Welcome },
+  Login: { screen: Login },
+  Dashboard: { screen: AppDrawerNavigator },
+  Signup: { screen: Signup }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
