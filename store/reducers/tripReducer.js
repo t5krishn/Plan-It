@@ -80,7 +80,7 @@ function tripData(
 				expenses: action.expenses.map(e => {
 					return {
 						...e.expense,
-						borrower: e.borrower,
+						borrowers: e.borrowers,
 						lender: e.lender
 					};
 				}),

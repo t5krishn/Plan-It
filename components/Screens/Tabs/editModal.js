@@ -15,14 +15,18 @@ import {
 	updateTripItem,
 	deleteTripItem
 } from "../../../store/actions/tripActions";
+import getIds from "../../../helpers/getIds";
 
 //Import modals:
 import EventModal from "./Modals/EventModal";
 import TodoModal from "./Modals/TodoModal";
 import ExpenseModal from "./Modals/ExpenseModal";
+import AddFriendsModal from "./addFriendsModal";
 
 const editModal = function(props) {
 	const [error, setError] = useState(false);
+	const [invited, setInvited] = useState([]);
+	const [addFriendsVisible, setFriendVisibility] = useState(false);
 
 	const handleSubmit = () => {
 		switch (props.mode) {
@@ -43,19 +47,14 @@ const editModal = function(props) {
 				props.onClose();
 				break;
 			case "expenses":
-				if (invited.length > 0) {
-					props.dispatch(
-						updateTripItem(
-							{ ...props.form, users: getIds(invited) },
-							props.selectedUser,
-							props.tripId
-						)
-					);
-					props.onClose();
-					break;
-				} else {
-					setError(true);
-				}
+				props.dispatch(
+					updateTripItem(props.selectedUser, props.selectedTrip, props.mode, {
+						...props.form,
+						users: getIds(invited)
+					})
+				);
+				props.onClose();
+				break;
 		}
 	};
 
@@ -158,7 +157,19 @@ const editModal = function(props) {
 							setForm={props.setForm}
 							handleSubmit={handleSubmit}
 							onDelete={deleteItem}
-							title={"Edit To Do Item"}
+							title={"Edit Expense"}
+							setFriendVisibility={props.setFriendVisibility}
+							setInvited={setInvited}
+							invited={invited}
+							users={props.tripUsers}
+						/>
+					)}
+					{addFriendsVisible && (
+						<AddFriendsModal
+							setInvited={setInvited}
+							friends={props.tripUsers}
+							setFriendVisibility={setFriendVisibility}
+							addFriendsVisible={addFriendsVisible}
 						/>
 					)}
 				</View>
