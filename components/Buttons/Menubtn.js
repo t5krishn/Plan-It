@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
 		padding: 2,
 		position: "absolute",
 		left: "5%",
-		top: "5%"
+		top: "4%"
 	}
 });

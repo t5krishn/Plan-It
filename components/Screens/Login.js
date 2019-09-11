@@ -15,9 +15,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
-const width = Dimensions.get("screen").width;
-const height = Dimensions.get("screen").height;
-
 function LoginScreen(props) {
 	const [state, setState] = useState({ email: "", password: "" });
 
