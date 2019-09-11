@@ -7,13 +7,16 @@ import {
 	StyleSheet,
 	Alert,
 	AsyncStorage,
-	Image,
+	Dimensions,
 	ImageBackground
 } from "react-native";
 import Backbtn from "../Buttons/Backbtn";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";
+
+const width = Dimensions.get("screen").width;
+const height = Dimensions.get("screen").height;
 
 function LoginScreen(props) {
 	const [state, setState] = useState({ email: "", password: "" });
@@ -92,7 +95,7 @@ function LoginScreen(props) {
 							name="lock"
 							size={32}
 							color={"#000"}
-							style={[styles.icon, { paddingLeft: 14 }]}
+							style={[styles.icon, { paddingLeft: 18 }]}
 						/>
 						<TextInput
 							autoCapitalize="none"
@@ -135,9 +138,9 @@ const styles = StyleSheet.create({
 	title: {
 		fontFamily: "Avenir",
 		fontSize: 45,
-		marginTop: 90,
-		marginRight: 200,
-		marginBottom: 50
+		marginTop: "20%",
+		marginRight: "53%",
+		marginBottom: "30%"
 	},
 	inputContainer: {
 		width: "90%",
@@ -152,20 +155,19 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir",
 		color: "#000"
 	},
-	input: { flexDirection: "row", flex: 0.3 },
+	input: { flexDirection: "row", flex: 0.5 },
 	buttonContainer: {
 		marginTop: 50,
 		flex: 1,
 		alignItems: "center"
 	},
-	icon: { padding: 10 },
+	icon: { padding: 15 },
 	button: {
 		backgroundColor: "#000",
 		height: 40,
 		width: "95%%",
 		alignItems: "center",
-		justifyContent: "center",
-		marginBottom: 10
+		justifyContent: "center"
 	},
 	buttonText: {
 		color: "#FFFFFF",

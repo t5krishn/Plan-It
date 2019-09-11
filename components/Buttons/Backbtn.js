@@ -1,6 +1,8 @@
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const width = Dimensions.get("screen").width;
 
 export default function Backbtn(props) {
 	return (
@@ -17,9 +19,9 @@ export default function Backbtn(props) {
 const styles = StyleSheet.create({
 	menubtn: {
 		zIndex: 9,
-		padding: 10,
+		padding: "5%",
 		position: "absolute",
-		left: 20,
-		top: 40
+		left: "2%",
+		top: width / 25
 	}
 });
