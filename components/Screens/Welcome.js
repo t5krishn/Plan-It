@@ -5,7 +5,8 @@ import {
 	Text,
 	ImageBackground,
 	TouchableOpacity,
-	Dimensions
+	Dimensions,
+	AsyncStorage
 } from "react-native";
 import { connect } from "react-redux";
 import { selectUser, fetchUserData } from "../../store/actions/userAction";

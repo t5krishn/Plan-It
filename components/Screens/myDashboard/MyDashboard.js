@@ -24,14 +24,6 @@ function Dashboard(props) {
 
 	return (
 		<View style={styles.mainScreenContainer}>
-			<View
-				style={{
-					zIndex: 100,
-					backgroundColor: "black",
-					position: "absolute",
-					top: 100
-				}}
-			/>
 			<MenuBtn navigation={props.navigation} />
 			<View style={styles.topContainer}>
 				<View style={styles.calendarContainer}>
@@ -79,20 +71,18 @@ const styles = StyleSheet.create({
 	},
 	topContainer: {
 		flex: 1,
-		marginTop: 35,
+		marginTop: "5%",
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center"
 	},
 	bottomContainer: {
-		flex: 1.3,
+		flex: 1.6,
 		flexDirection: "column",
 		justifyContent: "center",
-		backgroundColor: "#FFFFFF",
 		width: "100%"
 	},
 	calendarContainer: {
-		flex: 1,
 		marginTop: "2%"
 	},
 	tripsScrollContainer: {
