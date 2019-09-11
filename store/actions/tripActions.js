@@ -232,7 +232,12 @@ function receivedTripUpdate(current_trip, data, updateType) {
 
 export function updateTripItem(userId, tripId, updateType, updateInfo) {
 	// store object array is different from route name so below state handles that
-	const tripItemURl = (updateType === "events")? "event": updateType === "toDos" ? "to_do" : "expense";
+	const tripItemURl =
+		updateType === "events"
+			? "event"
+			: updateType === "toDos"
+			? "to_do"
+			: "expense";
 
 	const request = new Request(
 		`https://plan-it-api-1.herokuapp.com/user/${userId}/trip/${tripId}/${tripItemURl}/${

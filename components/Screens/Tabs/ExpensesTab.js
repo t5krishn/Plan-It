@@ -3,11 +3,29 @@ import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import ExpenseCards from "./ExpenseCards";
 import AddBtn from "../../Buttons/Addbtn";
+import EditModal from "./editModal";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 
 import { connect } from "react-redux";
 
 function ExpensesTab(props) {
+	const [edit, setEdit] = useState(false);
+	const [form, setForm] = useState({});
+	const [invited, setInvited] = useState([]);
+	const [error, setError] = useState(false);
+
+	useEffect(() => {
+		if (invited.length) {
+			setError(false);
+		}
+	}, [invited]);
+
+	const onPress = expense => {
+		console.log(expense);
+		setForm(expense);
+		setEdit(true);
+	};
+
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
@@ -30,9 +48,18 @@ function ExpensesTab(props) {
 				<Text>You owe $800 total</Text>
 			</View>
 			<ScrollView style={styles.lower}>
-				<ExpenseCards items={props.expenses} />
+				<ExpenseCards items={props.expenses} onPress={onPress} />
 				<View style={{ height: 100 }} />
 			</ScrollView>
+			{edit && (
+				<EditModal
+					isVisible={edit}
+					onClose={() => setEdit(false)}
+					mode={"expenses"}
+					form={form}
+					setForm={setForm}
+				/>
+			)}
 			<AddBtn
 				navigation={props.navigation}
 				tripId={props.selectedTrip}
@@ -61,13 +88,22 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-	const { selectedTrip, gettingTripData, selectedUser, gettingUserData } = state;
-	const { expenses, tripUsers, isFetchingTrip } = gettingTripData[selectedTrip] || {
+	const {
+		selectedTrip,
+		gettingTripData,
+		selectedUser,
+		gettingUserData
+	} = state;
+	const { expenses, tripUsers, isFetchingTrip } = gettingTripData[
+		selectedTrip
+	] || {
 		expenses: [],
 		tripUsers: []
 	};
-	const trip = gettingUserData[selectedUser].user_trips.find(e=> e.id===selectedTrip)
-	const  { user_friends } = gettingUserData[selectedUser] || {
+	const trip = gettingUserData[selectedUser].user_trips.find(
+		e => e.id === selectedTrip
+	);
+	const { user_friends } = gettingUserData[selectedUser] || {
 		user_friends: []
 	};
 	return {
