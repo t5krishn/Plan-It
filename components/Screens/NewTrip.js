@@ -49,7 +49,6 @@ function RegisterForm(props) {
 	};
 
 	const handleDatePicked = (date, mode) => {
-		console.log("FROM HANDLED PICKED", date);
 		if (mode === "startDate") {
 			setState({ ...state, starts_on: date });
 			setDateTimeVisibility({ ...isDateTimePickerVisible, start: false });
@@ -89,7 +88,7 @@ function RegisterForm(props) {
 					/>
 				</View>
 				<View style={styles.datePickerContainer}>
-					{state.starts_on ? (
+					{!state.starts_on ? (
 						<View style={styles.datePicker}>
 							<TouchableOpacity
 								style={styles.datePickerButton}
@@ -127,13 +126,24 @@ function RegisterForm(props) {
 						</View>
 					) : (
 						<View style={styles.datePicker}>
-							<TouchableOpacity style={styles.datePickerButton}>
-								<Text style={styles.datePickerButtonText}>Date</Text>
+							<TouchableOpacity
+								style={styles.datePickerButton}
+								onPress={() => {
+									setState({ ...state, starts_on: "" });
+									setDateTimeVisibility({
+										...isDateTimePickerVisible,
+										start: true
+									});
+								}}
+							>
+								<Text style={styles.datePickerButtonText}>
+									{state.starts_on.toISOString().split("T")[0]}
+								</Text>
 							</TouchableOpacity>
 						</View>
 					)}
 
-					{!state.ends_on && (
+					{!state.ends_on ? (
 						<View style={styles.datePicker}>
 							<TouchableOpacity
 								style={styles.datePickerButton}
@@ -169,6 +179,23 @@ function RegisterForm(props) {
 								}
 							/>
 						</View>
+					) : (
+						<View style={styles.datePicker}>
+							<TouchableOpacity
+								style={styles.datePickerButton}
+								onPress={() => {
+									setState({ ...state, ends_on: "" });
+									setDateTimeVisibility({
+										...isDateTimePickerVisible,
+										end: true
+									});
+								}}
+							>
+								<Text style={styles.datePickerButtonText}>
+									{state.ends_on.toISOString().split("T")[0]}
+								</Text>
+							</TouchableOpacity>
+						</View>
 					)}
 				</View>
 
@@ -189,19 +216,24 @@ function RegisterForm(props) {
 					<View />
 				)}
 
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => setFriendVisibility(true)}
-				>
-					{invited.length ? (
+				{invited.length ? (
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => setFriendVisibility(true)}
+					>
 						<Text style={styles.datePickerButtonText}>Edit Friends</Text>
-					) : (
-						<Text style={styles.datePickerButtonText}>Invite Friends</Text>
-					)}
-				</TouchableOpacity>
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity
+						style={[styles.button, { backgroundColor: "pink" }]}
+						onPress={() => setFriendVisibility(true)}
+					>
+						<Text style={styles.buttonText}>Invite Friends</Text>
+					</TouchableOpacity>
+				)}
 
 				<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-					<Text>Submit</Text>
+					<Text style={styles.buttonText}>Submit</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -222,15 +254,15 @@ const styles = StyleSheet.create({
 		paddingTop: 80
 	},
 	title: {
-		backgroundColor: "yellow",
 		paddingLeft: 20
 	},
 	titleText: {
 		fontFamily: "Avenir",
-		fontSize: 22
+		fontSize: 24
 	},
 	inputTitle: {
-		width: "100%"
+		width: "100%",
+		fontSize: 15
 	},
 	inputContainer: {
 		marginTop: "10%",
@@ -245,33 +277,35 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		marginTop: 15,
-		backgroundColor: "#FD6592",
-		height: 30,
+		backgroundColor: "black",
 		justifyContent: "center",
 		alignItems: "center",
 		width: "100%",
 		height: 50
 	},
+	buttonText: {
+		color: "white",
+		fontSize: 15
+	},
 	friendsList: {
+		margin: 20,
 		backgroundColor: "yellow",
-		width: "80%",
+		width: "100%",
 		height: "30%"
+	},
+	textInputContainer: {
+		width: "100%",
+		margin: 10
 	},
 	dateButton: {
 		backgroundColor: "black",
-		alignItems: "center",
-		paddingTop: 20
+		alignItems: "center"
 	},
 	dateText: {
 		color: "white",
 		fontFamily: "Avenir",
 		height: "100%",
-		fontSize: 16
-	},
-	textInputContainer: {
-		backgroundColor: "yellow",
-		width: "100%",
-		margin: 10
+		fontSize: 15
 	},
 	datePickerContainer: {
 		width: "100%",

@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 		zIndex: 9,
 		padding: 2,
 		position: "absolute",
-		left: 30,
-		top: 40
+		left: "5%",
+		top: "5%"
 	}
 });
