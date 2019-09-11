@@ -12,7 +12,7 @@ export default function EventCards({ items, onPress }) {
 						style={styles.cards}
 						onPress={() => onPress(e)}
 					>
-						<Text>Location: {e.name}</Text>
+						<Text>Name: {e.name}</Text>
 						<Text>Location: {e.address}</Text>
 						<Text>Description: {e.description}</Text>
 						<Text>Starts on: {e.starts_on}</Text>
