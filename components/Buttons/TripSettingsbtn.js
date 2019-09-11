@@ -12,16 +12,25 @@ import {
 } from "react-native";
 import TripSettingsModal from "../Screens/Tabs/TripSettingsModal";
 import { connect } from "react-redux";
-import { deleteTrip, updateTrip } from "../../store/actions/userAction"
+import { deleteTrip, updateTrip } from "../../store/actions/userAction";
 
-function TripSettingsbtn({ tripUsers, navigation, user, trip, dispatch, friends }) {
+const width = Dimensions.get("screen").width;
+
+function TripSettingsbtn({
+	tripUsers,
+	navigation,
+	user,
+	trip,
+	dispatch,
+	friends
+}) {
 	const [isVisible, setVisibility] = useState(false);
 
 	const handleDeleteTrip = () => {
 		navigation.navigate("Dashboard");
 		dispatch(deleteTrip(user, trip.id));
-	}
-	// updateInfo => { 
+	};
+	// updateInfo => {
 	//            name,
 	//            location,
 	//            starts_on,
@@ -29,17 +38,17 @@ function TripSettingsbtn({ tripUsers, navigation, user, trip, dispatch, friends 
 	//            description,
 	//            added:[user_ids],
 	//            removed:[user_ids] }
-	const handleSubmitTrip = updateInfo => dispatch(updateTrip(user, trip.id, updateInfo));
+	const handleSubmitTrip = updateInfo =>
+		dispatch(updateTrip(user, trip.id, updateInfo));
 
 	return (
 		<View
 			style={{
-				height: 40,
-				width: 30,
+				zIndex: 9,
+				padding: 2,
 				position: "absolute",
-				zIndex: 900,
-				right: 30,
-				top: 43
+				right: "5%",
+				top: "5%"
 			}}
 		>
 			<Ionicons
@@ -68,8 +77,8 @@ function TripSettingsbtn({ tripUsers, navigation, user, trip, dispatch, friends 
 const styles = StyleSheet.create({
 	menubtn: {
 		zIndex: 9,
-		padding: 2
+		padding: 3
 	}
 });
 
-export default connect()(TripSettingsbtn)
+export default connect()(TripSettingsbtn);
