@@ -12,7 +12,8 @@ import {
 	AlertIOS
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
-
+import getCurrentTrip from "../../../../helpers/dateCovertFormat";
+import { stringify } from "qs";
 const width = Dimensions.get("screen").width;
 
 export default function EventModal(props) {
@@ -22,8 +23,27 @@ export default function EventModal(props) {
 		end: false
 	});
 
+	const formatDate = date => {
+		return new Date(date)
+			.toLocaleDateString("en-GB", {
+				day: "numeric",
+				month: "short",
+				year: "numeric"
+			})
+			.replace(/ /g, ", ");
+	};
+
+	const formatTime = date => {
+		return (
+			new Date(date).getHours() +
+			":" +
+			(new Date(date).getMinutes().length !== 1
+				? new Date(date).getMinutes()
+				: "0" + new Date(date).getMinutes())
+		);
+	};
+
 	const handleDatePicked = (date, mode) => {
-		console.log(date);
 		if (mode === "startDate") {
 			setForm({ ...form, starts_on: date });
 			setDateTimeVisibility({ ...isDateTimePickerVisible, start: false });
@@ -75,6 +95,7 @@ export default function EventModal(props) {
 										<Text style={styles.dateText}>Confirm</Text>
 									</View>
 								}
+								is24Hour={true}
 								mode={"datetime"}
 								datePickerContainerStyleIOS={{ borderRadius: 0 }}
 								titleIOS={"Pick a start date"}
@@ -101,7 +122,8 @@ export default function EventModal(props) {
 								}}
 							>
 								<Text style={styles.datePickerButtonText}>
-									{form.starts_on.toISOString().split("T")[0]}
+									Starts: {formatDate(form.starts_on)} at{" "}
+									{formatTime(form.starts_on)}
 								</Text>
 							</TouchableOpacity>
 						</View>
@@ -131,15 +153,16 @@ export default function EventModal(props) {
 										<Text style={styles.dateText}>Confirm</Text>
 									</View>
 								}
+								is24Hour={true}
 								mode={"datetime"}
 								datePickerContainerStyleIOS={{ borderRadius: 0 }}
 								titleIOS={"Pick a start date"}
-								isVisible={isDateTimePickerVisible.start}
+								isVisible={isDateTimePickerVisible.end}
 								onConfirm={date => handleDatePicked(date, "endDate")}
 								onCancel={() =>
 									setDateTimeVisibility({
 										...isDateTimePickerVisible,
-										start: false
+										end: false
 									})
 								}
 							/>
@@ -152,12 +175,12 @@ export default function EventModal(props) {
 									setForm({ ...form, ends_on: "" });
 									setDateTimeVisibility({
 										...isDateTimePickerVisible,
-										start: true
+										end: true
 									});
 								}}
 							>
 								<Text style={styles.datePickerButtonText}>
-									{form.starts_on.toISOString().split("T")[0]}
+									Ends: {formatDate(form.ends_on)} at {formatTime(form.ends_on)}
 								</Text>
 							</TouchableOpacity>
 						</View>
@@ -226,7 +249,8 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		alignItems: "center",
-		flex: 0.5
+		flex: 0.5,
+		justifyContent: "center"
 	},
 	dateButton: {
 		backgroundColor: "black",
