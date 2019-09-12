@@ -52,51 +52,51 @@ function ExpensesTab(props) {
       <View style={styles.container}>
         <MenuBtn navigation={props.navigation} />
 
-        {!props.isFetchingTrip && (
-          <TripSettingsBtn
-            tripUsers={props.tripUsers.filter(user => {
-              return user.id !== parseInt(props.selectedUser);
-            })}
-            user={props.selectedUser}
-            trip={props.trip}
-            dispatch={props.dispatch}
-            navigation={props.navigation}
-            friends={props.user_friends}
-          />
-        )}
-        <View style={styles.upper}>
-          <View style={styles.title}>
-            <Text style={[styles.title, styles.text]}>{trip.name}</Text>
-            <View style={styles.tripInfoContainer}>
-              <View style={styles.iconContainer}>
-                <Icon name="map-pin" size={20} style={styles.icon} />
-                <Icon name="user" size={20} style={styles.icon} />
-                <Icon name="calendar-o" size={18} style={styles.icon} />
-              </View>
-              <View style={styles.tripinfo}>
-                <Text style={[styles.upperText, styles.text]}>
-                  {trip.location}
-                </Text>
-                <Text style={[styles.upperText, styles.text]}>
-                  {props.tripUsers.length} people going
-                </Text>
-                <Text style={[styles.upperText, styles.text]}>
-                  {props.expenses.length} total events
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-        <ScrollView contentContainerStyle={styles.lower}>
-          <ExpenseCards
-            items={props.expenses}
-            onPress={onPress}
-            userId={props.selectedUser}
-            tripUsers={props.tripUsers}
-          />
-          <View style={{ height: 100 }} />
-        </ScrollView>
-        {/* {edit && (
+			{!props.isFetchingTrip && (
+				<TripSettingsBtn
+					tripUsers={props.tripUsers.filter(user => {
+						return user.id !== parseInt(props.selectedUser);
+					})}
+					user={props.selectedUser}
+					trip={props.trip}
+					dispatch={props.dispatch}
+					navigation={props.navigation}
+					friends={props.user_friends}
+				/>
+			)}
+			<View style={styles.upper}>
+				<View style={styles.title}>
+					<Text style={[styles.title, styles.text]}>{trip.name}</Text>
+					<View style={styles.tripInfoContainer}>
+						<View style={styles.iconContainer}>
+							<Icon name="map-pin" size={20} style={styles.icon} />
+							<Icon name="user" size={20} style={styles.icon} />
+							<Icon name="calendar-o" size={18} style={styles.icon} />
+						</View>
+						<View style={styles.tripinfo}>
+							<Text style={[styles.upperText, styles.text]}>
+								{trip.location}
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.tripUsers.length} people going
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.expenses.length} total events
+							</Text>
+						</View>
+					</View>
+				</View>
+			</View>
+			<ScrollView contentContainerStyle={styles.lower}>
+				<ExpenseCards
+					items={props.expenses}
+					onPress={onPress}
+					userId={props.selectedUser}
+					tripUsers={props.tripUsers}
+				/>
+				<View style={{ height: 100 }} />
+			</ScrollView>
+			{/* {edit && (
 				<EditModal
 					isVisible={edit}
 					onClose={() => setEdit(false)}
