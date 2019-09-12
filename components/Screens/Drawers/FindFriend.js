@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 	},
 	TextInput: {
 		borderColor: "black",
-		borderWidth: 1,
+		borderBottomWidth: 1,
 		width: "80%",
 		padding: 10
 	},
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		borderColor: "black",
-		borderWidth: 2,
+		borderBottomWidth: 2,
 		borderRadius: 9
 	}
 });

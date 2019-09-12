@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		borderColor: "black",
-		borderWidth: 2,
+		borderBottomWidth: 2,
 		width: 50,
 		height: 20
 	}
