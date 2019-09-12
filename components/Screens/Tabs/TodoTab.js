@@ -5,13 +5,20 @@ import TodoCards from "./TodoCards";
 import AddBtn from "../../Buttons/Addbtn";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { CheckBox } from "react-native-elements";
+import { deleteTripItem } from "../../../store/actions/tripActions";
 import EditModal from "./editModal";
 import { connect } from "react-redux";
 
 function TodoTab(props) {
 	const [edit, setEdit] = useState(false);
 	const [form, setForm] = useState({});
+
+	//Pressing a todo item deletes (completes) it
+	const onChecked = todo => {
+		props.dispatch(
+			deleteTripItem(props.selectedUser, props.selectedTrip, "toDos", todo.id)
+		);
+	};
 
 	const onPress = todo => {
 		setForm(todo);
@@ -60,7 +67,11 @@ function TodoTab(props) {
 				</View>
 			</View>
 			<ScrollView style={styles.lower}>
-				<TodoCards items={props.toDos} onPress={onPress} />
+				<TodoCards
+					items={props.toDos}
+					onChecked={onChecked}
+					onPress={onPress}
+				/>
 				<View style={{ height: 100 }} />
 			</ScrollView>
 			{edit && (
@@ -113,8 +124,7 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir"
 	},
 	lower: {
-		flex: 6,
-		backgroundColor: "blue"
+		flex: 6
 	}
 });
 

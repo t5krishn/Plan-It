@@ -22,14 +22,6 @@ export default function TodoModal(props) {
 					onChangeText={text => props.setForm({ ...props.form, content: text })}
 				/>
 			</View>
-			{props.onDelete && (
-				<TouchableOpacity
-					style={styles.submit}
-					onPress={() => props.onDelete(props.form.id)}
-				>
-					<Text style={styles.buttonText}>Delete</Text>
-				</TouchableOpacity>
-			)}
 			<TouchableOpacity
 				style={styles.submit}
 				onPress={() => props.handleSubmit("to_do")}

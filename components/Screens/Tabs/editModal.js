@@ -72,17 +72,6 @@ const editModal = function(props) {
 				);
 				props.onClose();
 				break;
-			case "toDos":
-				props.dispatch(
-					deleteTripItem(
-						props.selectedUser,
-						props.selectedTrip,
-						props.mode,
-						props.form.id
-					)
-				);
-				props.onClose();
-				break;
 			case "expenses":
 				if (invited.length > 0) {
 					props.dispatch(
