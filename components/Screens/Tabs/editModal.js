@@ -108,16 +108,15 @@ const editModal = function(props) {
 						alignItems: "center"
 					}}
 				>
-					{/* style={{
-						borderRadius: 20,
-						marginTop: 100,
-						paddingTop: 50,
-						zIndex: 9,
-						backgroundColor: "gray",
-						width: Dimensions.get("screen").width,
-						height: Dimensions.get("screen").height,
-						alignItems: "center"
-					}} */}
+					<View
+						style={{
+							position: "absolute",
+							backgroundColor: "white",
+							opacity: 0.5,
+							width: "100%",
+							height: Dimensions.get("screen").height
+						}}
+					/>
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {

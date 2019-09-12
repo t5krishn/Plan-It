@@ -69,6 +69,7 @@ function AddFriendsModal(props) {
 												textStyle={{
 													fontFamily: "Avenir",
 													fontSize: 16,
+													fontWeight: "normal",
 													color: "black"
 												}}
 												key={friend.id}
@@ -113,12 +114,11 @@ function AddFriendsModal(props) {
 
 const styles = StyleSheet.create({
 	mainContainer: {
-		flex: 1,
 		width: "100%",
-		height: "100%",
 		marginTop: "10%",
 		alignContent: "center",
-		justifyContent: "center"
+		justifyContent: "center",
+		backgroundColor: "purple"
 	},
 	modalContainer: {
 		zIndex: 100,
