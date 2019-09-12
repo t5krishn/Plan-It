@@ -62,7 +62,6 @@ export default function ExpenseModal(props) {
                   checked={checkedTripUsers[usr.id]}
                   onPress={() => {
                     if (checkedTripUsers[usr.id]) {
-                      console.log("in if true", form.users);
                       setForm({
                         ...form,
                         users: form.users.filter(
@@ -70,7 +69,6 @@ export default function ExpenseModal(props) {
                         )
                       });
                     } else {
-                      console.log("in if false", form.users);
                       if (form.users && form.users.length) {
                         let newUsers = [usr.id, ...form.users];
                         setForm({ ...form, users: newUsers });
@@ -96,7 +94,6 @@ export default function ExpenseModal(props) {
       <TouchableHighlight style={styles.submit}>
         <Text
           onPress={() => {
-            // setForm({...form, amount_in_cents: Math.round((parseFloat(form.amount_in_cents) * 100))})
             handleSubmit("expense");
           }}
         >
