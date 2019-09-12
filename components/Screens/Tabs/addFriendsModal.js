@@ -13,6 +13,11 @@ import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
 
 function AddFriendsModal(props) {
+	// const initialState = {}
+	// props.friends.forEach(friend => {
+	// 	initialState[friend.id] = (props.invited[friend.id])? true : false
+	// });
+
 	const [state, setState] = useState({});
 
 	const handlePress = id => {
@@ -117,8 +122,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		marginTop: "10%",
 		alignContent: "center",
-		justifyContent: "center",
-		backgroundColor: "purple"
+		justifyContent: "center"
 	},
 	modalContainer: {
 		zIndex: 100,

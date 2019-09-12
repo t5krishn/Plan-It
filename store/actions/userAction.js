@@ -52,6 +52,7 @@ export const RECEIVED_NEW_USER_TRIP = "RECEIVED_NEW_USER_TRIP";
 function receivedNewUserTrip(user_id, trip) {
 	return {
 		type: RECEIVED_NEW_USER_TRIP,
+		isUserUpdated : true,
 		trip,
 		user_id
 	};
@@ -705,6 +706,66 @@ export function deleteTrip(userId, tripId) {
 				} else {
 					// handle error
 					console.log(json.status, json.error_message);
+				}
+			});
+	};
+}
+
+
+export const REQUEST_UPDATE_TRANSACTION = "REQUEST_UPDATE_TRANSACTION";
+function requestUpdateTransaction(user) {
+	return {
+		type: REQUEST_UPDATE_TRANSACTION,
+		user_id: user,
+		isUserUpdated: false
+	};
+}
+export const RECEIVE_UPDATE_TRANSACTION = "RECEIVE_UPDATE_TRANSACTION";
+function receiveUpdateTransaction(user, data) {
+	return {
+		type: RECEIVE_UPDATE_TRANSACTION,
+		user_id: user,
+		user_expenses: data,
+		isUserUpdated: true
+	};
+}
+export const ERROR_UPDATE_TRANSACTION = "ERROR_UPDATE_TRANSACTION";
+function errorUpdateTransaction(user, data) {
+	return {
+		type: ERROR_UPDATE_TRANSACTION,
+		user_id: user,
+		isUserUpdated: {
+			error: data.error,
+			error_message: data.error_message
+		}
+	};
+}
+// /user/:user_id/transaction/:id/
+export function updateTransaction(user, transactionId) {
+	const request = new Request(
+		`https://plan-it-api-1.herokuapp.com/user/${user}/transaction/${transactionId}/`,
+		{
+			method: "POST",
+			headers: {
+				"Content-type": "application/json"
+			}
+		}
+	);
+	return dispatch => {
+		dispatch(requestUpdateTransaction(user));
+		fetch(request)
+			.then(response => {
+				return response.json();
+			})
+			.then(data => {
+				if (data.error) {
+					return dispatch(errorUpdateTransaction(user, data));
+				} else {
+					fetch(`https://plan-it-api-1.herokuapp.com/user/${user}/transactions`)
+						.then(res => res.json())
+						.then(data => {
+							return dispatch(receiveUpdateTransaction(user, data));
+						});
 				}
 			});
 	};

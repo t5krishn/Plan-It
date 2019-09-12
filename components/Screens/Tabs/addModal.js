@@ -51,15 +51,7 @@ function AddModal(props) {
 	const [form, setForm] = useState({
 		trip_id: props.tripId
 	});
-	const [addFriendsVisible, setFriendVisibility] = useState(false);
-	const [invited, setInvited] = useState([]);
 	const [error, setError] = useState(false);
-
-	useEffect(() => {
-		if (invited && invited.length) {
-			setError(false);
-		}
-	}, [invited]);
 
 	const handleSubmit = mode => {
 		switch (mode) {
@@ -80,24 +72,25 @@ function AddModal(props) {
 				props.setVisibility(false);
 				break;
 			case "expense":
-				if (invited && invited.length > 0) {
-					props.navigation.navigate("TripExpenses");
-					props.dispatch(
-						postNewExpense(
-							{ ...form, users: getIds(invited) },
-							props.selectedUser,
-							props.tripId
-						)
-					);
-					props.setVisibility(false);
-					break;
-				} else {
-					setError(true);
-				}
+				props.navigation.navigate("TripExpenses");
+				props.dispatch(
+					postNewExpense(
+						{
+							...form,
+							amount_in_cents: Math.round(
+								parseFloat(form.amount_in_cents) * 100
+							)
+						},
+						props.selectedUser,
+						props.tripId
+					)
+				);
+				props.setVisibility(false);
+				break;
 		}
 	};
 
-	const friends = props.friends.filter(user => {
+	const tripUsers = props.friends.filter(user => {
 		return user.id !== parseInt(props.selectedUser);
 	});
 
@@ -108,7 +101,7 @@ function AddModal(props) {
 					source={require("../../../assets/plant1.jpg")}
 					style={{
 						flex: 1,
-						marginTop: "5%",
+						marginTop: "10%",
 						width: "100%",
 						height: Dimensions.get("screen").height,
 						alignItems: "center"
@@ -131,11 +124,7 @@ function AddModal(props) {
 					>
 						<Icon name="close" size={30} />
 					</TouchableHighlight>
-					{error && (
-						<View style={styles.error}>
-							<Text>You must add friends to split the expense with!</Text>
-						</View>
-					)}
+
 					{props.mode === "event" && (
 						<EventModal
 							form={form}
@@ -149,27 +138,16 @@ function AddModal(props) {
 							form={form}
 							setForm={setForm}
 							handleSubmit={handleSubmit}
-							title={"Create A New To Do Item"}
+							title={"Create A New To do Item"}
 						/>
 					)}
 					{props.mode === "expense" && (
 						<ExpenseModal
+							title={"Create A New Expense"}
 							form={form}
 							setForm={setForm}
+							tripUsers={tripUsers}
 							handleSubmit={handleSubmit}
-							setInvited={setInvited}
-							invited={invited}
-							setFriendVisibility={props.setFriendVisibility}
-							addFriendsVisible={props.addFriendsVisible}
-							title={"Create A New Expense"}
-						/>
-					)}
-					{props.addFriendsVisible && (
-						<AddFriendsModal
-							setInvited={setInvited}
-							setFriendVisibility={setFriendVisibility}
-							addFriendsVisible={addFriendsVisible}
-							friends={friends}
 						/>
 					)}
 				</ImageBackground>

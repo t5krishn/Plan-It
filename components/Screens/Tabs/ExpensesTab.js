@@ -69,15 +69,16 @@ function ExpensesTab(props) {
 					</View>
 				</View>
 			</View>
-			<ScrollView style={styles.lower}>
+			<ScrollView contentContainerStyle={styles.lower}>
 				<ExpenseCards
 					items={props.expenses}
 					onPress={onPress}
-					friends={props.tripUsers}
+					userId={props.selectedUser}
+					tripUsers={props.tripUsers}
 				/>
 				<View style={{ height: 100 }} />
 			</ScrollView>
-			{edit && (
+			{/* {edit && (
 				<EditModal
 					isVisible={edit}
 					onClose={() => setEdit(false)}
@@ -85,7 +86,7 @@ function ExpensesTab(props) {
 					form={form}
 					setForm={setForm}
 				/>
-			)}
+			)} */}
 			<AddBtn
 				navigation={props.navigation}
 				tripId={props.selectedTrip}

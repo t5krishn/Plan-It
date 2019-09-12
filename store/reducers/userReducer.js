@@ -29,7 +29,10 @@ import {
 	CONFIRM_FRIEND_INVITE,
 	ERROR_FRIEND_INVITE,
 	RECEIVE_TRIP_INFO_UPDATE,
-	RECEIVE_TRIP_DELETE
+	RECEIVE_TRIP_DELETE,
+	REQUEST_UPDATE_TRANSACTION,
+	RECEIVE_UPDATE_TRANSACTION,
+	ERROR_UPDATE_TRANSACTION
 } from "../actions/userAction";
 
 function selectedUser(state = {}, action) {
@@ -54,13 +57,13 @@ function userData(
 	switch (action.type) {
 		case RECEIVED_NEW_USER_TRIP:
 			return Object.assign({}, state, {
-				isFetchingUser: true,
+				isFetchingUser: false,
 				user_trips: [{ ...action.trip }, ...state.user_trips]
 			});
 		case RECEIVE_TRIP_INFO_UPDATE:
 		case RECEIVE_TRIP_DELETE:
 			return Object.assign({}, state, {
-				isFetchingUser: true,
+				isFetchingUser: false,
 				user_trips: [...action.trips]
 			});
 		case REQUEST_NEW_USER_TRIP:
@@ -205,6 +208,28 @@ function friendInvite(
 	}
 }
 
+function transactionUpdate(
+	state = {
+		isUserUpdated: false,
+		user_expenses: []
+	},
+	action
+) {
+	switch (action.type) {
+		case REQUEST_UPDATE_TRANSACTION:
+		case ERROR_UPDATE_TRANSACTION:
+			return Object.assign({}, state, {
+				isUserUpdated: action.isUserUpdated
+			});
+		case RECEIVE_UPDATE_TRANSACTION:
+			return Object.assign({}, state, {
+				user_expenses: [...action.user_expenses]
+			});
+		default:
+			return state;
+	}
+}
+
 function gettingUserData(state = {}, action) {
 	switch (action.type) {
 		case RECEIVE_USER_DATA:
@@ -264,6 +289,12 @@ function gettingUserData(state = {}, action) {
 					[action.user_id]: userData(state[action.user_id], action)
 				}
 			);
+		case REQUEST_UPDATE_TRANSACTION:
+		case RECEIVE_UPDATE_TRANSACTION:
+		case ERROR_UPDATE_TRANSACTION:
+			return Object.assign({}, state, {
+				[action.user_id]: transactionUpdate(state[action.user_id], action)
+			});
 		default:
 			return state;
 	}

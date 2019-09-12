@@ -13,23 +13,33 @@ export default function EventCards({ items, onPress }) {
 						style={styles.cards}
 						onPress={() => onPress(e)}
 					>
-						<View style={styles.info}>
-							<View>
+						<View
+							style={{
+								flex: 1,
+								flexDirection: "column",
+								justifyContent: "space-around",
+								margin: "2%"
+							}}
+						>
+							<View style={styles.info}>
 								<Text style={styles.title}>{e.name}</Text>
+								<Text style={{ fontSize: 10 }}>{e.address}</Text>
+								<Text>{e.description}</Text>
 							</View>
-							<Text style={{ fontSize: 10 }}>{e.address}</Text>
-							<Text>{e.description}</Text>
-						</View>
-						<View style={styles.dates}>
-							<View style={styles.dates}>
-								<Text style={styles.time}>{formatTime(e.starts_on)}</Text>
-								<Text style={styles.date}>
+							<View
+								style={{
+									flex: 1,
+									flexDirection: "row",
+									width: "100%"
+								}}
+							>
+								<Text style={styles.time}>
 									{dateConvertFormat(e.starts_on)}
 								</Text>
-							</View>
-							<View style={styles.dates}>
-								<Text style={styles.time}>{formatTime(e.ends_on)}</Text>
-								<Text style={styles.date}>{dateConvertFormat(e.ends_on)}</Text>
+								<Text style={styles.date}>{formatTime(e.starts_on)} </Text>
+								<Text> - </Text>
+								<Text style={styles.time}>{dateConvertFormat(e.ends_on)}</Text>
+								<Text style={styles.date}>{formatTime(e.ends_on)} </Text>
 							</View>
 						</View>
 					</TouchableOpacity>
@@ -60,28 +70,22 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexDirection: "row",
 		backgroundColor: "white",
-		marginTop: "2%",
-		marginBottom: "2%"
-	},
-	dates: {
-		flex: 1,
-		width: "100%",
-		alignItems: "center"
+		marginBottom: "5%",
+		paddingBottom: "2%"
 	},
 	info: {
-		flex: 4,
-		width: "100%",
-		marginTop: "2%",
-		marginLeft: "5%"
+		flex: 2,
+		width: "100%"
 	},
 	time: {
+		fontSize: 15,
 		fontFamily: "Avenir",
-		fontSize: 18,
 		color: "black"
 	},
 	title: {
 		fontFamily: "Avenir",
 		fontSize: 18,
 		color: "black"
-	}
+	},
+	date: { fontSize: 12, fontFamily: "Avenir", color: "black" }
 });
