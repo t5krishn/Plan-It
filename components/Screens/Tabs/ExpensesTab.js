@@ -5,6 +5,7 @@ import ExpenseCards from "./ExpenseCards";
 import AddBtn from "../../Buttons/Addbtn";
 import EditModal from "./editModal";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import { connect } from "react-redux";
 
@@ -25,6 +26,8 @@ function ExpensesTab(props) {
 		setEdit(true);
 	};
 
+	const trip = props.trip;
+
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
@@ -44,9 +47,27 @@ function ExpensesTab(props) {
 				/>
 			)}
 			<View style={styles.upper}>
-				<Text>San Diego Trip!</Text>
-				<Text>{props.expenses.length} Expenses</Text>
-				<Text>You owe $800 total</Text>
+				<View style={styles.title}>
+					<Text style={[styles.title, styles.text]}>{trip.name}</Text>
+					<View style={styles.tripInfoContainer}>
+						<View style={styles.iconContainer}>
+							<Icon name="map-pin" size={20} style={styles.icon} />
+							<Icon name="user" size={20} style={styles.icon} />
+							<Icon name="calendar-o" size={18} style={styles.icon} />
+						</View>
+						<View style={styles.tripinfo}>
+							<Text style={[styles.upperText, styles.text]}>
+								{trip.location}
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.tripUsers.length} people going
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.expenses.length} total events
+							</Text>
+						</View>
+					</View>
+				</View>
 			</View>
 			<ScrollView style={styles.lower}>
 				<ExpenseCards
@@ -76,19 +97,39 @@ function ExpensesTab(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: "column",
-		width: Dimensions.get("screen").width,
-		height: Dimensions.get("screen").height
+		flex: 1
 	},
 	upper: {
-		flex: 0.5,
-		backgroundColor: "purple",
-		justifyContent: "center",
+		flex: 0.3,
+		width: "100%",
+		alignItems: "center",
+		paddingTop: "20%"
+	},
+	tripInfoContainer: {
+		flexDirection: "row",
+		height: "70%"
+	},
+	iconContainer: {
+		height: "100%",
+		justifyContent: "space-between",
 		alignItems: "center"
 	},
+	tripinfo: {
+		height: "100%",
+		justifyContent: "space-between",
+		paddingLeft: "5%"
+	},
+	title: {
+		fontSize: 20,
+		fontFamily: "Avenir"
+	},
+	text: {
+		fontFamily: "Avenir"
+	},
 	lower: {
-		flex: 2,
-		backgroundColor: "blue"
+		flex: 6,
+		width: "100%",
+		alignItems: "center"
 	}
 });
 

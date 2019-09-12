@@ -30,7 +30,6 @@ function TodoTab(props) {
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
-
 			{!props.isFetchingTrip && (
 				<TripSettingsBtn
 					tripUsers={props.tripUsers.filter(user => {

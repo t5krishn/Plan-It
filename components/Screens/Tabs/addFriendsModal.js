@@ -69,7 +69,7 @@ function AddFriendsModal(props) {
 												textStyle={{
 													fontFamily: "Avenir",
 													fontSize: 16,
-													color: "white"
+													color: "black"
 												}}
 												key={friend.id}
 												title={friend.first_name + " " + friend.last_name}
@@ -79,17 +79,16 @@ function AddFriendsModal(props) {
 												}}
 												containerStyle={{
 													borderRadius: 0,
-													backgroundColor: "black",
+													backgroundColor: "white",
 													width: "100%",
 													marginLeft: 0,
-													height: 45
+													height: 45,
+													borderColor: "white"
 												}}
 											/>
 										);
 									})}
 								</View>
-							</View>
-							<View style={styles.buttonView}>
 								<TouchableOpacity
 									style={styles.button}
 									onPress={() => handleSubmit()}
@@ -114,17 +113,19 @@ function AddFriendsModal(props) {
 
 const styles = StyleSheet.create({
 	mainContainer: {
+		flex: 1,
 		width: "100%",
-		height: Dimensions.get("screen").height,
-		justifyContent: "center",
-		alignContent: "center"
+		height: "100%",
+		marginTop: "10%",
+		alignContent: "center",
+		justifyContent: "center"
 	},
 	modalContainer: {
-		zIndex: 9,
-		height: "100%",
+		zIndex: 100,
 		alignItems: "center",
+		marginTop: "10%",
 		width: "100%",
-		marginTop: "10%"
+		height: "100%"
 	},
 	close: {
 		position: "absolute",
@@ -133,18 +134,21 @@ const styles = StyleSheet.create({
 		zIndex: 300
 	},
 	checkBox: {
-		width: "90%"
+		width: "100%"
 	},
 	friendsContainer: {
 		flex: 1,
-		width: "100%",
-		height: "100%",
-		alignItems: "center"
+		width: "90%",
+		height: "50%",
+		alignItems: "center",
+		backgroundColor: "white"
 	},
 	button: {
 		borderColor: "black",
 		height: 40,
 		width: "100%",
+		alignItems: "center",
+		justifyContent: "center",
 		backgroundColor: "black"
 	},
 	text: { fontFamily: "Avenir", fontSize: 16 },
