@@ -5,30 +5,28 @@ export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
 	return (
 		<View style={styles.mainContainer}>
 			{items.map((e, i) => {
-				console.log(e);
 				return (
 					<View key={e.id} style={styles.cards}>
 						<View style={{ margin: "5%" }}>
 							<View style={styles.expenseInfo}>
 								<Text style={styles.title}>{e.name}</Text>
 								<Text style={{ fontSize: 10 }}>{e.expense_date}</Text>
-								{userId === parseInt(e.lender).id ? (
+								{userId == e.lender_id ? (
 									<Text style={styles.text}>
-										You lent ${e.amount_in_cents * 100} dollars
+										You lent ${e.amount_in_cents / 100} dollars
 									</Text>
 								) : (
 									<Text style={styles.text}>
-										{tripUsers.filter(u => u.id === e.lender)[0].first_name}{" "}
-										lent ${e.amount_in_cents * 100} dollars
+										You owe lent ${e.amount_in_cents / 100} dollars
 									</Text>
 								)}
 							</View>
 							<View style={styles.userInfo}>
-								{userId === parseInt(e.lender).id ? (
+								{userId == e.lender_id ? (
 									<Text>You are owed by {e.borrowers.length} people</Text>
 								) : (
 									<Text>
-										You owe ${(e.amount_in_cents * 100) / e.borrowers.length}{" "}
+										You owe ${e.amount_in_cents / 100 / e.borrowers.length}{" "}
 										dollars
 									</Text>
 								)}
@@ -58,8 +56,8 @@ const styles = StyleSheet.create({
 		width: "90%",
 		justifyContent: "center",
 		backgroundColor: "white",
-		marginBottom: "5%",
-		paddingBottom: "2%"
+		marginBottom: "2%",
+		paddingTop: "2%"
 	},
 	title: {
 		fontFamily: "Avenir",
