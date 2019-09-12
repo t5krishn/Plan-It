@@ -1,22 +1,44 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Dimensions } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import AddBtn from "../../Buttons/Addbtn";
 import ExpensesCards from "./ExpensesCards";
+import test from "../../../test";
 
 import { connect } from "react-redux";
+import { updateTransaction } from "../../../store/actions/userAction";
 
 function MyExpensesScreen(props) {
+  const handleUpdate = transactionId => {
+    props.dispatch(updateTransaction(props.selectedUser, transactionId));
+  };
+
   return (
-    <View>
-      <MenuBtn navigation={props.navigation} />
-      <View style={styles.container}>
-        <Text>ExpensesScreen</Text>
-      </View>
-      <ScrollView>
-        <ExpensesCards items={props.user_expenses} />
-      </ScrollView>
-    </View>
+    <ImageBackground
+    source={require("../../../assets/plant1.jpg")}
+    style={{ width: "100%", height: "100%" }}
+  >
+        <View
+            style={{
+              position: "absolute",
+              backgroundColor: "white",
+              opacity: 0.5,
+              width: "100%",
+              height: Dimensions.get("screen").height
+            }}
+          />
+        <MenuBtn navigation={props.navigation} />
+        <View style={styles.container}>
+          <Text style={styles.title}>Expenses</Text>
+        </View>
+        <ScrollView>
+          <ExpensesCards
+            items={/* test */ props.user_expenses}
+            onUpdate={handleUpdate}
+            user={props.selectedUser}
+          />
+        </ScrollView>
+      </ImageBackground>
   );
 }
 
@@ -29,6 +51,10 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     width: 100
+  },
+  title: {
+    fontFamily: "Avenir-Light",
+    fontSize: 25
   }
 });
 

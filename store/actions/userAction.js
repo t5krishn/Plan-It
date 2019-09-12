@@ -52,6 +52,7 @@ export const RECEIVED_NEW_USER_TRIP = "RECEIVED_NEW_USER_TRIP";
 function receivedNewUserTrip(user_id, trip) {
 	return {
 		type: RECEIVED_NEW_USER_TRIP,
+		isUserUpdated : true,
 		trip,
 		user_id
 	};

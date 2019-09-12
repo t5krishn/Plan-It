@@ -55,11 +55,13 @@ function userData(
 	switch (action.type) {
 		case RECEIVED_NEW_USER_TRIP:
 			return Object.assign({}, state, {
+				isFetchingUser: false,
 				user_trips: [{ ...action.trip }, ...state.user_trips]
 			});
 		case RECEIVE_TRIP_INFO_UPDATE:
 		case RECEIVE_TRIP_DELETE:
 			return Object.assign({}, state, {
+				isFetchingUser : false,
 				user_trips: [ ...action.trips ]
 			});
 		case REQUEST_NEW_USER_TRIP:

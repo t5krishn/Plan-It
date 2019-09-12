@@ -14,6 +14,12 @@ import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
 
 function AddFriendsModal(props) {
+
+	// const initialState = {}
+	// props.friends.forEach(friend => {
+	// 	initialState[friend.id] = (props.invited[friend.id])? true : false
+	// });
+
 	const [state, setState] = useState({});
 
 	const handlePress = id => {
