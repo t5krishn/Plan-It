@@ -107,20 +107,20 @@ function RegisterForm(props) {
   };
 
   return (
-    <KeyboardShift>
-      <ImageBackground
-        source={require("../../assets/plant1.jpg")}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            opacity: 0.5,
-            backgroundColor: "#FFF"
-          }}
-        />
+    <ImageBackground
+      source={require("../../assets/plant1.jpg")}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <View
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          opacity: 0.5,
+          backgroundColor: "#FFF"
+        }}
+      />
+      <KeyboardShift>
         <BackBtn onPress={() => props.navigation.navigate("Welcome")} />
         <View style={styles.topContainer}>
           <Text style={styles.title}>Sign Up</Text>
@@ -198,8 +198,8 @@ function RegisterForm(props) {
             </TouchableOpacity>
           </View>
         </View>
-      </ImageBackground>
-    </KeyboardShift>
+      </KeyboardShift>
+    </ImageBackground>
   );
 }
 

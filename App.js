@@ -1,17 +1,11 @@
 import React, { useEffect } from "react";
 import {
-  createSwitchNavigator,
-  createAppContainer,
-  createDrawerNavigator,
-  createBottomTabNavigator,
-  createStackNavigator} from "react-navigation";
-import {
-  StyleSheet,
-  Text,
-  Button,
-  TextInput,
-  AsyncStorage
-} from "react-native";
+	createSwitchNavigator,
+	createAppContainer,
+	createDrawerNavigator,
+	createBottomTabNavigator,
+	createStackNavigator
+} from "react-navigation";
 
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
@@ -56,92 +50,95 @@ import CustomDrawerComponent from "./CustomDrawerComponent";
 */
 
 export default function App({ navigation }) {
-	
-	firebase.initializeApp(firebaseConfig);
+	try{
+    firebase.initializeApp(firebaseConfig);
+  } catch(err) {
+    console.log(err);
+  }
 
-  return (
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<AppContainer />
+		</Provider>
+	);
 }
 
 const TabNavigator = createBottomTabNavigator({
-  TripEvents: {
-    screen: EventsTab
-  },
-  TripTodo: {
-    screen: TodoTab
-  },
-  TripExpenses: {
-    screen: ExpensesTab
-  }
+	TripEvents: {
+		screen: EventsTab
+	},
+	TripTodo: {
+		screen: TodoTab
+	},
+	TripExpenses: {
+		screen: ExpensesTab
+	}
 });
 
 const StackNavigator = createStackNavigator(
-  {
-    Dashboard: {
-      screen: Dashboard
-    },
-    TabNavigator: {
-      screen: TabNavigator
-    },
-    NewTrip: {
-      screen: NewTrip
-    }
-  },
-  {
-    headerMode: "none",
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
+	{
+		Dashboard: {
+			screen: Dashboard
+		},
+		TabNavigator: {
+			screen: TabNavigator
+		},
+		NewTrip: {
+			screen: NewTrip
+		}
+	},
+	{
+		headerMode: "none",
+		navigationOptions: {
+			headerVisible: false
+		}
+	}
 );
 
 const FriendsStack = createStackNavigator(
-  {
-    FriendsList: {
-      screen: MyFriends
-    },
-    FindFriend: {
-      screen: FindFriend
-    }
-  },
-  {
-    headerMode: "none",
-    navigationOptions: {
-      headerVisible: false
-    }
-  }
+	{
+		FriendsList: {
+			screen: MyFriends
+		},
+		FindFriend: {
+			screen: FindFriend
+		}
+	},
+	{
+		headerMode: "none",
+		navigationOptions: {
+			headerVisible: false
+		}
+	}
 );
 
 const AppDrawerNavigator = createDrawerNavigator(
-  {
-    Dashboard: {
-      screen: StackNavigator
-    },
-    Expenses: {
-      screen: MyExpenses
-    },
-    Friends: {
-      screen: FriendsStack
-    },
-    Settings: {
-      screen: MySettings
-    }
-  },
-  {
-    hideStatusBar: true,
-    contentComponent: CustomDrawerComponent
-  }
+	{
+		Dashboard: {
+			screen: StackNavigator
+		},
+		Expenses: {
+			screen: MyExpenses
+		},
+		Friends: {
+			screen: FriendsStack
+		},
+		Settings: {
+			screen: MySettings
+		}
+	},
+	{
+		hideStatusBar: true,
+		contentComponent: CustomDrawerComponent
+	}
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
-  LoadAuth: { screen: LoadAuth },
-  Welcome: { screen: Welcome },
-  Login: { screen: Login },
-  Dashboard: { screen: AppDrawerNavigator },
-  Signup: { screen: Signup }
+	LoadAuth: { screen: LoadAuth },
+	Welcome: { screen: Welcome },
+	Login: { screen: Login },
+	Dashboard: { screen: AppDrawerNavigator },
+	Signup: { screen: Signup }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);

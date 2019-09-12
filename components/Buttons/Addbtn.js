@@ -44,7 +44,7 @@ const actions = [
 		name: "event",
 		position: 1,
 		textBackground: "none",
-		textColor: "white"
+		textColor: "black"
 	},
 	{
 		text: "Add To do",
@@ -52,7 +52,7 @@ const actions = [
 		name: "to_do",
 		position: 2,
 		textBackground: "none",
-		textColor: "white"
+		textColor: "black"
 	},
 	{
 		text: "Add Expense",
@@ -60,7 +60,7 @@ const actions = [
 		name: "expense",
 		position: 3,
 		textBackground: "none",
-		textColor: "white"
+		textColor: "black"
 	}
 ];
 

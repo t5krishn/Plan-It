@@ -51,8 +51,8 @@ export default function PasswordForm(props) {
 			<Button
 				title="Update"
 				onPress={handleSubmit}
-				buttonStyle={{backgroundColor: "black"}}
-				/>
+				buttonStyle={{ backgroundColor: "black" }}
+			/>
 		</View>
 	);
 }
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 	},
 	TextInput: {
 		borderColor: "black",
-		borderWidth: 1,
+		borderBottomWidth: 1,
 		width: "80%",
 		padding: 10,
 		marginBottom: 10,

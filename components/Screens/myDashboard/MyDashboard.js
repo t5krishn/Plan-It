@@ -35,7 +35,7 @@ function Dashboard(props) {
 			<View style={styles.bottomContainer}>
 				<TouchableOpacity
 					style={{
-						height: 50,
+						height: 40,
 						backgroundColor: "black",
 						alignItems: "center",
 						justifyContent: "center",
@@ -58,16 +58,20 @@ function Dashboard(props) {
 					style={styles.tripsScrollContainer}
 					contentContainerStyle={styles.tripsContent}
 				>
-					{!props.isFetchingUser &&
-					<TripsList onPress={onPressTripHandler} trips={props.user_trips} />}
-					{props.isFetchingUser && 
-					<View>
-						<Image 
-						source={require('../../../assets/loading.gif')} 
-						style={styles.loading}/>
-						<Text style={styles.loadingText}>Your data is being loaded...</Text>
-					</View>
-						}
+					{!props.isFetchingUser && (
+						<TripsList onPress={onPressTripHandler} trips={props.user_trips} />
+					)}
+					{props.isFetchingUser && (
+						<View>
+							<Image
+								source={require("../../../assets/loading.gif")}
+								style={styles.loading}
+							/>
+							<Text style={styles.loadingText}>
+								Your data is being loaded...
+							</Text>
+						</View>
+					)}
 				</ScrollView>
 			</View>
 		</View>

@@ -8,7 +8,8 @@ import {
 	StyleSheet,
 	View,
 	Dimensions,
-	ScrollView
+	ScrollView,
+	ImageBackground
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { connect } from "react-redux";
@@ -17,7 +18,9 @@ import AddFriendsModal from "../Screens/Tabs/addFriendsModal";
 import BackBtn from "../Buttons/Backbtn";
 import getIds from "../../helpers/getIds";
 
-function RegisterForm(props) {
+const width = Dimensions.get("screen").width;
+
+function NewTrip(props) {
 	const [addFriendsVisible, setFriendVisibility] = useState(false);
 	const [isDateTimePickerVisible, setDateTimeVisibility] = useState({
 		start: false,
@@ -59,199 +62,246 @@ function RegisterForm(props) {
 	};
 
 	return (
-		<KeyboardAvoidingView style={styles.container} behaviour="padding" enabled>
-			<BackBtn onPress={() => props.navigation.navigate("Dashboard")} />
-			<View style={styles.title}>
-				<Text style={styles.titleText}>Create a new trip</Text>
-			</View>
-			<View style={styles.inputContainer}>
-				<View style={styles.textInputContainer}>
-					<Text style={styles.inputTitle}>Name:</Text>
-					<TextInput
-						style={styles.textInput}
-						value={state.firstName}
-						onChangeText={text => setState({ ...state, name: text })}
-					/>
-				</View>
-				<View style={styles.textInputContainer}>
-					<Text style={styles.inputTitle}>Location:</Text>
-					<TextInput
-						style={styles.textInput}
-						onChangeText={text => setState({ ...state, location: text })}
-					/>
-				</View>
-				<View style={styles.textInputContainer}>
-					<Text style={styles.inputTitle}>Description:</Text>
-					<TextInput
-						style={styles.textInput}
-						onChangeText={text => setState({ ...state, description: text })}
-					/>
-				</View>
-				<View style={styles.datePickerContainer}>
-					{!state.starts_on ? (
-						<View style={styles.datePicker}>
-							<TouchableOpacity
-								style={styles.datePickerButton}
-								onPress={() =>
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										start: true
-									})
-								}
-							>
-								<Text style={styles.datePickerButtonText}>Starts on</Text>
-							</TouchableOpacity>
-							<DateTimePicker
-								customCancelButtonIOS={
-									<View style={styles.dateButton}>
-										<Text style={styles.dateText}>Cancel</Text>
-									</View>
-								}
-								customConfirmButtonIOS={
-									<View style={styles.dateButton}>
-										<Text style={styles.dateText}>Confirm</Text>
-									</View>
-								}
-								datePickerContainerStyleIOS={{ borderRadius: 0 }}
-								titleIOS={"Pick a start date"}
-								isVisible={isDateTimePickerVisible.start}
-								onConfirm={date => handleDatePicked(date, "startDate")}
-								onCancel={() =>
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										start: false
-									})
-								}
-							/>
-						</View>
-					) : (
-						<View style={styles.datePicker}>
-							<TouchableOpacity
-								style={styles.datePickerButton}
-								onPress={() => {
-									setState({ ...state, starts_on: "" });
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										start: true
-									});
-								}}
-							>
-								<Text style={styles.datePickerButtonText}>
-									{state.starts_on.toISOString().split("T")[0]}
-								</Text>
-							</TouchableOpacity>
-						</View>
-					)}
-
-					{!state.ends_on ? (
-						<View style={styles.datePicker}>
-							<TouchableOpacity
-								style={styles.datePickerButton}
-								onPress={() =>
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										end: true
-									})
-								}
-							>
-								<Text style={styles.datePickerButtonText}>End date</Text>
-							</TouchableOpacity>
-							<DateTimePicker
-								customCancelButtonIOS={
-									<View style={styles.dateButton}>
-										<Text style={styles.dateText}>Cancel</Text>
-									</View>
-								}
-								customConfirmButtonIOS={
-									<View style={styles.dateButton}>
-										<Text style={styles.dateText}>Confirm</Text>
-									</View>
-								}
-								datePickerContainerStyleIOS={{ borderRadius: 0 }}
-								titleIOS={"Pick an end date"}
-								isVisible={isDateTimePickerVisible.end}
-								onConfirm={date => handleDatePicked(date, "endDate")}
-								onCancel={() =>
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										end: false
-									})
-								}
-							/>
-						</View>
-					) : (
-						<View style={styles.datePicker}>
-							<TouchableOpacity
-								style={styles.datePickerButton}
-								onPress={() => {
-									setState({ ...state, ends_on: "" });
-									setDateTimeVisibility({
-										...isDateTimePickerVisible,
-										end: true
-									});
-								}}
-							>
-								<Text style={styles.datePickerButtonText}>
-									{state.ends_on.toISOString().split("T")[0]}
-								</Text>
-							</TouchableOpacity>
-						</View>
-					)}
-				</View>
-
-				{invited.length ? (
-					<View style={styles.friendsList}>
-						<Text>Friends invited:</Text>
-						<ScrollView>
-							{invited.map(friend => {
-								return (
-									<Text>
-										{friend.first_name} {friend.last_name} (@{friend.username})
-									</Text>
-								);
-							})}
-						</ScrollView>
-					</View>
-				) : (
-					<View />
-				)}
-
-				{invited.length ? (
-					<TouchableOpacity
-						style={styles.button}
-						onPress={() => setFriendVisibility(true)}
-					>
-						<Text style={styles.datePickerButtonText}>Edit Friends</Text>
-					</TouchableOpacity>
-				) : (
-					<TouchableOpacity
-						style={[styles.button, { backgroundColor: "pink" }]}
-						onPress={() => setFriendVisibility(true)}
-					>
-						<Text style={styles.buttonText}>Invite Friends</Text>
-					</TouchableOpacity>
-				)}
-
-				<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-					<Text style={styles.buttonText}>Submit</Text>
-				</TouchableOpacity>
-			</View>
-
-			<AddFriendsModal
-				setInvited={setInvited}
-				setFriendVisibility={setFriendVisibility}
-				addFriendsVisible={addFriendsVisible}
-				friends={props.user_friends}
+		<ImageBackground
+			source={require("../../assets/plant1.jpg")}
+			style={{
+				width: "100%",
+				height: "100%",
+				justifyContent: "center",
+				alignItems: "center"
+			}}
+		>
+			<View
+				style={{
+					position: "absolute",
+					height: "100%",
+					width: "100%",
+					opacity: 0.5,
+					backgroundColor: "#FFF"
+				}}
 			/>
-		</KeyboardAvoidingView>
+			<KeyboardAvoidingView
+				style={styles.container}
+				behaviour="padding"
+				enabled
+			>
+				<BackBtn onPress={() => props.navigation.navigate("Dashboard")} />
+				<View style={styles.title}>
+					<Text style={styles.titleText}>Create a new trip</Text>
+				</View>
+				<View style={styles.inputContainer}>
+					<View style={styles.textInputContainer}>
+						<Text style={styles.inputTitle}>Name:</Text>
+						<TextInput
+							style={styles.textInput}
+							value={state.firstName}
+							onChangeText={text => setState({ ...state, name: text })}
+						/>
+					</View>
+					<View style={styles.textInputContainer}>
+						<Text style={styles.inputTitle}>Location:</Text>
+						<TextInput
+							style={styles.textInput}
+							onChangeText={text => setState({ ...state, location: text })}
+						/>
+					</View>
+					<View style={styles.textInputContainer}>
+						<Text style={styles.inputTitle}>Description:</Text>
+						<TextInput
+							style={styles.textInput}
+							onChangeText={text => setState({ ...state, description: text })}
+						/>
+					</View>
+					<View style={styles.datePickerContainer}>
+						{!state.starts_on ? (
+							<View style={styles.datePicker}>
+								<TouchableOpacity
+									style={styles.datePickerButton}
+									onPress={() =>
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											start: true
+										})
+									}
+								>
+									<Text style={styles.datePickerButtonText}>Starts on</Text>
+								</TouchableOpacity>
+								<DateTimePicker
+									customCancelButtonIOS={
+										<View style={styles.dateButton}>
+											<Text style={styles.dateText}>Cancel</Text>
+										</View>
+									}
+									customConfirmButtonIOS={
+										<View style={styles.dateButton}>
+											<Text style={styles.dateText}>Confirm</Text>
+										</View>
+									}
+									datePickerContainerStyleIOS={{ borderRadius: 0 }}
+									titleIOS={"Pick a start date"}
+									isVisible={isDateTimePickerVisible.start}
+									onConfirm={date => handleDatePicked(date, "startDate")}
+									onCancel={() =>
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											start: false
+										})
+									}
+								/>
+							</View>
+						) : (
+							<View style={styles.datePicker}>
+								<TouchableOpacity
+									style={styles.datePickerButton}
+									onPress={() => {
+										setState({ ...state, starts_on: "" });
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											start: true
+										});
+									}}
+								>
+									<Text style={styles.datePickerButtonText}>
+										{state.starts_on.toISOString().split("T")[0]}
+									</Text>
+								</TouchableOpacity>
+							</View>
+						)}
+
+						{!state.ends_on ? (
+							<View style={styles.datePicker}>
+								<TouchableOpacity
+									style={styles.datePickerButton}
+									onPress={() =>
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											end: true
+										})
+									}
+								>
+									<Text style={styles.datePickerButtonText}>End date</Text>
+								</TouchableOpacity>
+								<DateTimePicker
+									customCancelButtonIOS={
+										<View style={styles.dateButton}>
+											<Text style={styles.dateText}>Cancel</Text>
+										</View>
+									}
+									customConfirmButtonIOS={
+										<View style={styles.dateButton}>
+											<Text style={styles.dateText}>Confirm</Text>
+										</View>
+									}
+									datePickerContainerStyleIOS={{ borderRadius: 0 }}
+									titleIOS={"Pick an end date"}
+									isVisible={isDateTimePickerVisible.end}
+									onConfirm={date => handleDatePicked(date, "endDate")}
+									onCancel={() =>
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											end: false
+										})
+									}
+								/>
+							</View>
+						) : (
+							<View style={styles.datePicker}>
+								<TouchableOpacity
+									style={styles.datePickerButton}
+									onPress={() => {
+										setState({ ...state, ends_on: "" });
+										setDateTimeVisibility({
+											...isDateTimePickerVisible,
+											end: true
+										});
+									}}
+								>
+									<Text style={styles.datePickerButtonText}>
+										{state.ends_on.toISOString().split("T")[0]}
+									</Text>
+								</TouchableOpacity>
+							</View>
+						)}
+					</View>
+
+					{invited.length ? (
+						<View style={styles.friendsList}>
+							<Text
+								style={[
+									styles.inputTitle,
+									{
+										marginLeft: "35%",
+										fontFamily: "Avenir-MediumOblique",
+										paddingTop: "2%"
+									}
+								]}
+							>
+								{invited.length} Friends invited:
+							</Text>
+							<ScrollView showsVerticalScrollIndicator={true}>
+								{invited.map((friend, i) => {
+									return (
+										<Text
+											style={[
+												styles.text,
+												{ paddingLeft: "10%", paddingRight: "10%" }
+											]}
+											key={i}
+										>
+											{friend.first_name} {friend.last_name} (@{friend.username}
+											)
+										</Text>
+									);
+								})}
+							</ScrollView>
+						</View>
+					) : (
+						<View />
+					)}
+
+					{invited.length ? (
+						<TouchableOpacity
+							style={styles.button}
+							onPress={() => setFriendVisibility(true)}
+						>
+							<Text style={styles.datePickerButtonText}>Edit Friends</Text>
+						</TouchableOpacity>
+					) : (
+						<TouchableOpacity
+							style={styles.button}
+							onPress={() => setFriendVisibility(true)}
+						>
+							<Text style={styles.buttonText}>Invite Friends</Text>
+						</TouchableOpacity>
+					)}
+
+					<TouchableOpacity
+						style={[styles.button]}
+						onPress={() => handleSubmit()}
+					>
+						<Text style={styles.buttonText}>Submit</Text>
+					</TouchableOpacity>
+				</View>
+
+				<AddFriendsModal
+					setInvited={setInvited}
+					setFriendVisibility={setFriendVisibility}
+					addFriendsVisible={addFriendsVisible}
+					friends={props.user_friends}
+				/>
+			</KeyboardAvoidingView>
+		</ImageBackground>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#FFF",
-		paddingTop: 80
+		paddingTop: 80,
+		width: "95%"
+	},
+	text: {
+		fontFamily: "Avenir"
 	},
 	title: {
 		paddingLeft: 20
@@ -265,33 +315,33 @@ const styles = StyleSheet.create({
 		fontSize: 15
 	},
 	inputContainer: {
-		marginTop: "10%",
-		padding: 20,
+		paddingLeft: "5%",
+		paddingRight: "5%",
 		alignItems: "center"
 	},
 	textInput: {
-		height: 40,
+		height: width / 10,
 		borderColor: "#000",
 		borderBottomWidth: 1,
 		width: "100%"
 	},
 	button: {
-		marginTop: 15,
-		backgroundColor: "black",
+		marginTop: "5%",
 		justifyContent: "center",
 		alignItems: "center",
+		backgroundColor: "black",
 		width: "100%",
-		height: 50
+		height: width / 9
 	},
 	buttonText: {
 		color: "white",
 		fontSize: 15
 	},
 	friendsList: {
-		margin: 20,
-		backgroundColor: "yellow",
+		marginTop: "4%",
+		backgroundColor: "#72AA98",
 		width: "100%",
-		height: "30%"
+		height: "25%"
 	},
 	textInputContainer: {
 		width: "100%",
@@ -299,7 +349,8 @@ const styles = StyleSheet.create({
 	},
 	dateButton: {
 		backgroundColor: "black",
-		alignItems: "center"
+		alignItems: "center",
+		marginTop: "2%"
 	},
 	dateText: {
 		color: "white",
@@ -312,7 +363,7 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		paddingTop: 2,
-		height: 50
+		height: width / 9
 	},
 	datePickerButtonText: {
 		fontSize: 15,
@@ -322,7 +373,7 @@ const styles = StyleSheet.create({
 	datePickerButton: {
 		flex: 1,
 		backgroundColor: "black",
-		width: 180,
+		width: width / 2.4,
 		alignItems: "center",
 		justifyContent: "center"
 	}
@@ -367,4 +418,4 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(RegisterForm);
+export default connect(mapStateToProps)(NewTrip);

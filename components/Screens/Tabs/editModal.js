@@ -4,6 +4,7 @@ import {
 	View,
 	Text,
 	TouchableHighlight,
+	ImageBackground,
 	TouchableOpacity,
 	Dimensions,
 	TextInput,
@@ -71,17 +72,6 @@ const editModal = function(props) {
 				);
 				props.onClose();
 				break;
-			case "toDos":
-				props.dispatch(
-					deleteTripItem(
-						props.selectedUser,
-						props.selectedTrip,
-						props.mode,
-						props.form.id
-					)
-				);
-				props.onClose();
-				break;
 			case "expenses":
 				if (invited.length > 0) {
 					props.dispatch(
@@ -108,18 +98,25 @@ const editModal = function(props) {
 			}}
 		>
 			<Modal animationType="slide" transparent={true} visible={props.isVisible}>
-				<View
+				<ImageBackground
+					source={require("../../../assets/plant2.jpg")}
 					style={{
-						borderRadius: 20,
-						marginTop: 100,
-						paddingTop: 50,
-						zIndex: 9,
-						backgroundColor: "gray",
-						width: Dimensions.get("screen").width,
+						flex: 1,
+						marginTop: "5%",
+						width: "100%",
 						height: Dimensions.get("screen").height,
 						alignItems: "center"
 					}}
 				>
+					<View
+						style={{
+							position: "absolute",
+							backgroundColor: "white",
+							opacity: 0.5,
+							width: "100%",
+							height: Dimensions.get("screen").height
+						}}
+					/>
 					<TouchableHighlight
 						style={styles.close}
 						onPress={() => {
@@ -172,7 +169,7 @@ const editModal = function(props) {
 							addFriendsVisible={addFriendsVisible}
 						/>
 					)}
-				</View>
+				</ImageBackground>
 			</Modal>
 		</View>
 	);
@@ -195,7 +192,7 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		borderColor: "black",
-		borderWidth: 2,
+		borderBottomWidth: 2,
 		width: 50,
 		height: 20
 	}

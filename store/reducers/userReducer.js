@@ -35,7 +35,6 @@ import {
 	ERROR_UPDATE_TRANSACTION
 } from "../actions/userAction";
 
-
 function selectedUser(state = {}, action) {
 	switch (action.type) {
 		case SELECT_USER:
@@ -64,8 +63,8 @@ function userData(
 		case RECEIVE_TRIP_INFO_UPDATE:
 		case RECEIVE_TRIP_DELETE:
 			return Object.assign({}, state, {
-				isFetchingUser : false,
-				user_trips: [ ...action.trips ]
+				isFetchingUser: false,
+				user_trips: [...action.trips]
 			});
 		case REQUEST_NEW_USER_TRIP:
 		case REQUEST_USER_DATA:
@@ -184,38 +183,38 @@ function deleteAccount(
 }
 
 function friendInvite(
-  state = {
-    isUserUpdated: false,
-    user_friends: []
-  },
-  action
+	state = {
+		isUserUpdated: false,
+		user_friends: []
+	},
+	action
 ) {
-  switch (action.type) {
-	case REQUEST_ACCEPT_INVITE:
-	case ERROR_ACCEPT_INVITE:	
-	case REQUEST_DECLINE_INVITE:
-	case ERROR_DECLINE_INVITE:
-	case REQUEST_FRIEND_INVITE:
-	case ERROR_FRIEND_INVITE:
-		return Object.assign({}, state, {
-			isUserUpdated: action.isUserUpdated
-		});
-	case CONFIRM_DECLINE_INVITE:
-	case CONFIRM_ACCEPT_INVITE:
-	case CONFIRM_FRIEND_INVITE:
-		return Object.assign({}, state, {
-			user_friends: [...action.friends]
-		});
-  }
+	switch (action.type) {
+		case REQUEST_ACCEPT_INVITE:
+		case ERROR_ACCEPT_INVITE:
+		case REQUEST_DECLINE_INVITE:
+		case ERROR_DECLINE_INVITE:
+		case REQUEST_FRIEND_INVITE:
+		case ERROR_FRIEND_INVITE:
+			return Object.assign({}, state, {
+				isUserUpdated: action.isUserUpdated
+			});
+		case CONFIRM_DECLINE_INVITE:
+		case CONFIRM_ACCEPT_INVITE:
+		case CONFIRM_FRIEND_INVITE:
+			return Object.assign({}, state, {
+				user_friends: [...action.friends]
+			});
+	}
 }
 
 function transactionUpdate(
 	state = {
-	  isUserUpdated: false,
-	  user_expenses: []
+		isUserUpdated: false,
+		user_expenses: []
 	},
 	action
-  ) {
+) {
 	switch (action.type) {
 		case REQUEST_UPDATE_TRANSACTION:
 		case ERROR_UPDATE_TRANSACTION:
@@ -284,9 +283,12 @@ function gettingUserData(state = {}, action) {
 				[action.user_id]: friendInvite(state[action.user_id], action)
 			});
 		case RECEIVE_TRIP_DELETE:
-			return Object.assign({}, {
-				[action.user_id]: userData(state[action.user_id], action)
-			});
+			return Object.assign(
+				{},
+				{
+					[action.user_id]: userData(state[action.user_id], action)
+				}
+			);
 		case REQUEST_UPDATE_TRANSACTION:
 		case RECEIVE_UPDATE_TRANSACTION:
 		case ERROR_UPDATE_TRANSACTION:

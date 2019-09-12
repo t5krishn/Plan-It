@@ -7,47 +7,47 @@ import * as firebase from "firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function ProfilePicForm(props) {
-  const [profilePicInput, setProfilePic] = useState("");
+	const [profilePicInput, setProfilePic] = useState("");
 
-  const [isUploading, setIsUploading] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 
-  const uploadImage = async (uri, imageName) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
+	const uploadImage = async (uri, imageName) => {
+		const response = await fetch(uri);
+		const blob = await response.blob();
 
-    let ref = firebase
-      .storage()
-      .ref()
-      .child(`test/${imageName}`);
-    return ref.put(blob);
-  };
+		let ref = firebase
+			.storage()
+			.ref()
+			.child(`test/${imageName}`);
+		return ref.put(blob);
+	};
 
-  const randStr = () =>
-    Math.random()
-      .toString(36)
-      .replace(/[^a-z]+/g, "")
-      .substr(0, 5);
+	const randStr = () =>
+		Math.random()
+			.toString(36)
+			.replace(/[^a-z]+/g, "")
+			.substr(0, 5);
 
-  const handlePress = async () => {
-    getPermissionAsync();
-    let result = await ImagePicker.launchImageLibraryAsync();
+	const handlePress = async () => {
+		getPermissionAsync();
+		let result = await ImagePicker.launchImageLibraryAsync();
 
-    if (!result.cancelled) {
-      setIsUploading(true);
-      uploadImage(result.uri, randStr())
-        .then(response => {
-          response.ref.getDownloadURL().then(downloadURL => {
-            setProfilePic(downloadURL);
-            setIsUploading(false);
-          });
-        })
-        .catch(error => {
-          Alert.alert("There was an error with uploading your profile picture");
+		if (!result.cancelled) {
+			setIsUploading(true);
+			uploadImage(result.uri, randStr())
+				.then(response => {
+					response.ref.getDownloadURL().then(downloadURL => {
+						setProfilePic(downloadURL);
+						setIsUploading(false);
+					});
+				})
+				.catch(error => {
+					Alert.alert("There was an error with uploading your profile picture");
 					console.log("Image upload error >> ", error);
 					setIsUploading(false);
-        });
-    }
-  };
+				});
+		}
+	};
 
   return (
     <View style={styles.formContainer}>
@@ -61,7 +61,7 @@ export default function ProfilePicForm(props) {
 					<Text>Upload Complete</Text>
 					<Button
 						title="Save"
-						buttonStyle={{backgroundColor: "black"}}
+						buttonStyle={{ backgroundColor: "black" }}
 						onPress={() => {
 							props.onSubmit(props.user_id, profilePicInput);
 							setProfilePic("");
@@ -69,34 +69,36 @@ export default function ProfilePicForm(props) {
 					/>
 				</View>
 			) : null}
-			{isUploading && 
-			<View>
-				<Text>Uploading</Text>
-			<Image 
-				source={require('../../../../assets/loading.gif')} 
-				style={styles.loading}/>
-				</View>}
-    </View>
-  );
+			{isUploading && (
+				<View>
+					<Text>Uploading</Text>
+					<Image
+						source={require("../../../../assets/loading.gif")}
+						style={styles.loading}
+					/>
+				</View>
+			)}
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  formContainer: {
-    width: "100%",
-    padding: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  TextInput: {
-    borderColor: "black",
-    borderWidth: 1,
-    width: "80%",
-    padding: 10,
-    marginBottom: 10
-  },
-  userNameFormTitle: {
-    fontSize: 18
+	formContainer: {
+		width: "100%",
+		padding: 10,
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	TextInput: {
+		borderColor: "black",
+		borderBottomWidth: 1,
+		width: "80%",
+		padding: 10,
+		marginBottom: 10
+	},
+	userNameFormTitle: {
+		fontSize: 18
 	},
 	imageUploadBtn: {
 		padding: 10,
@@ -106,7 +108,8 @@ const styles = StyleSheet.create({
 		fontFamily: "Avenir-Light",
 		fontSize: 18,
 		color: "white"
-	}, loading: {
+	},
+	loading: {
 		alignSelf: "center",
 		marginTop: 50
 	}

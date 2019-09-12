@@ -8,7 +8,6 @@ import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 import CalendarMonth from "../myDashboard/CalendarMonth";
 import { connect } from "react-redux";
 import EditModal from "./editModal";
-import getCurrentTrip from "../../../helpers/getCurrentTrip";
 
 //event update form should look like this { id:eventId, name, address, start_on, ends_on, description }
 
@@ -21,7 +20,7 @@ function EventsTab(props) {
 		setEdit(true);
 	};
 
-	const trip = getCurrentTrip(props.user_trips, props.selectedTrip);
+	const trip = props.trip;
 
 	return (
 		<View style={styles.container}>
@@ -57,7 +56,7 @@ function EventsTab(props) {
 								{props.tripUsers.length} people going
 							</Text>
 							<Text style={[styles.upperText, styles.text]}>
-								{props.events.length} Events Total
+								{props.events.length} total events
 							</Text>
 						</View>
 					</View>
@@ -95,13 +94,9 @@ const styles = StyleSheet.create({
 	},
 	upper: {
 		flex: 0.3,
-		backgroundColor: "#FFFFFF",
 		width: "100%",
 		alignItems: "center",
 		paddingTop: "20%"
-	},
-	upperText: {
-		fontSize: 16
 	},
 	tripInfoContainer: {
 		flexDirection: "row",
@@ -118,15 +113,14 @@ const styles = StyleSheet.create({
 		paddingLeft: "5%"
 	},
 	title: {
-		fontSize: 25
+		fontSize: 20
 	},
 	text: {
 		fontFamily: "Avenir"
 	},
 	lower: {
-		flex: 3,
+		flex: 6,
 		width: "100%",
-		backgroundColor: "#FFF",
 		alignItems: "center"
 	}
 });

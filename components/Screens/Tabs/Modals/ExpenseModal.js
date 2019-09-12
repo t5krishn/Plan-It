@@ -7,10 +7,14 @@ import {
   Dimensions,
   TextInput,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from "react-native";
+import DateTimePicker from "react-native-modal-datetime-picker";
+
 import { CheckBox } from "react-native-elements";
 // import getFriends from "../../../../helpers/getFriends";
+const width = Dimensions.get("screen").width;
 
 export default function ExpenseModal(props) {
   const {
@@ -23,6 +27,8 @@ export default function ExpenseModal(props) {
   const tripUsers = {};
   form.users = form.users || [];
 
+  const [isDateTimePickerVisible, setDateTimeVisibility] = useState(false);
+
   propsTripUsers &&
     propsTripUsers.forEach(e => {
       tripUsers[e.id] = false;
@@ -32,19 +38,46 @@ export default function ExpenseModal(props) {
   return (
     <View style={styles.content}>
       <Text style={styles.title}>{title}</Text>
-      <Text>Name:</Text>
+      <Text style={[styles.textTitles, styles.text]}>Name:</Text>
       <TextInput
         style={styles.textInput}
         value={form && form.name ? form.name : ""}
         onChangeText={text => setForm({ ...form, name: text })}
       />
-      <Text>Expense date:</Text>
-      <TextInput
-        style={styles.textInput}
-        value={form && form.expense_date ? form.expense_date : ""}
-        onChangeText={text => setForm({ ...form, expense_date: text })}
-      />
-      <Text>Amount:</Text>
+
+      <View style={styles.datePickerContainer}>
+        <View style={styles.datePicker}>
+          <Text style={[styles.textTitles, styles.text]}>Expense date:</Text>
+          <TouchableOpacity
+            style={[styles.datePickerButton, {height: 40}]}
+            onPress={() => setDateTimeVisibility(true)}
+          >
+            <Text style={styles.datePickerButtonText}>Pick the date</Text>
+          </TouchableOpacity>
+          <DateTimePicker
+            customCancelButtonIOS={
+              <View style={styles.dateButton}>
+                <Text style={styles.dateText}>Cancel</Text>
+              </View>
+            }
+            customConfirmButtonIOS={
+              <View style={styles.dateButton}>
+                <Text style={styles.dateText}>Confirm</Text>
+              </View>
+            }
+            datePickerContainerStyleIOS={{ borderRadius: 0 }}
+            titleIOS={"Pick an expense date"}
+            isVisible={isDateTimePickerVisible}
+            onConfirm={date => {
+              setForm({ ...form, expense_date: date });
+              setDateTimeVisibility(false);
+            }}
+            onCancel={() => setDateTimeVisibility(false)}
+          />
+        </View>
+      </View>
+
+      <Text style={[styles.textTitles, styles.text]}>Amount:</Text>
       <TextInput
         style={styles.textInput}
         value={form && form.amount_in_cents}
@@ -57,6 +90,20 @@ export default function ExpenseModal(props) {
             {propsTripUsers.map(usr => {
               return (
                 <CheckBox
+                  textStyle={{
+                    fontFamily: "Avenir",
+                    fontSize: 16,
+                    fontWeight: "normal",
+                    color: "black"
+                  }}
+                  containerStyle={{
+                    borderRadius: 0,
+                    backgroundColor: "white",
+                    width: "100%",
+                    marginLeft: 0,
+                    height: 45,
+                    borderColor: "white"
+                  }}
                   key={usr.id}
                   title={usr.first_name + " " + usr.last_name}
                   checked={checkedTripUsers[usr.id]}
@@ -93,6 +140,7 @@ export default function ExpenseModal(props) {
 
       <TouchableHighlight style={styles.submit}>
         <Text
+          style={{ color: "white" }}
           onPress={() => {
             handleSubmit("expense");
           }}
@@ -103,12 +151,14 @@ export default function ExpenseModal(props) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  mainContainer: {
-    marginTop: 22,
-    alignItems: "center",
-    width: "100%"
+  textTitles: {
+    fontSize: 15,
+    width: "100%",
+    marginTop: "5%"
+  },
+  text: {
+    fontFamily: "Avenir-BookOblique"
   },
   close: {
     position: "absolute",
@@ -116,21 +166,27 @@ const styles = StyleSheet.create({
     top: 20
   },
   content: {
-    width: "85%"
+    width: "90%",
+    alignItems: "center"
   },
   textInput: {
-    width: 200,
+    width: "100%",
     height: 40,
     borderColor: "#000",
-    borderWidth: 1
+    borderBottomWidth: 1,
+    marginBottom: "2%"
   },
   title: {
-    fontSize: 20
+    fontSize: 24,
+    paddingBottom: "10%",
+    paddingRight: "10%"
   },
   submit: {
-    marginTop: 10,
-    borderWidth: 2,
-    borderColor: "black"
+    width: "100%",
+    height: width / 8,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black"
   },
   friendsList: {
     backgroundColor: "yellow",
@@ -144,10 +200,42 @@ const styles = StyleSheet.create({
     // height: 200
   },
   friendsContainer: {
-    // flex: 1,
-    backgroundColor: "yellow",
-    width: "90%%",
-    // alignItems: "center",
-    height: 200
+    width: "100%",
+    height: 200,
+    marginBottom: "5%",
+    marginTop: "5%"
+  },
+  datePickerButton: {
+    flex: 1,
+    backgroundColor: "red",
+	width: "100%",
+	height: width / 8,
+	alignItems: "center",
+    justifyContent: "center",
+    padding: 10
+  },
+  dateButton: {
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "2%"
+  },
+  dateText: {
+    color: "white",
+    fontFamily: "Avenir",
+    height: "100%",
+    fontSize: 20
+  },
+  datePickerContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 2,
+    height: width / 9
+  },
+  datePickerButtonText: {
+    fontSize: 15,
+    fontFamily: "Avenir",
+    color: "black"
   }
 });

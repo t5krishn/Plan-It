@@ -9,7 +9,8 @@ import {
   AsyncStorage,
   ScrollView,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  Alert
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import UsernameForm from "./SettingForms/UsernameForm";
@@ -38,27 +39,31 @@ function SettingsScreen(props) {
 
   const onUpdateUsername = (user, newUsername) => {
     props.dispatch(changeUsername(user, newUsername));
+    Alert.alert("Updated username sucessfully!");
     // Initiate the modal response or error
   };
 
   const onUpdateEmail = (user, newEmail) => {
     props.dispatch(changeEmail(user, newEmail));
+    Alert.alert("Updated email sucessfully!");
     // Initiate the modal response or error
   };
 
   const onUpdatePassword = (user, password) => {
     props.dispatch(changePassword(user, password));
+    Alert.alert("Updated password sucessfully!");
     // Initiate the modal response or error
   };
 
   const onUpdateProfilePicture = (user, profilePicture) => {
     props.dispatch(changeProfilePic(user, profilePicture));
+    Alert.alert("Updated profile picture sucessfully!");
     // Initiate the modal response or error
   };
 
   const onDeleteAccount = user => {
-	props.dispatch(deleteAccount(user));
-	props.navigation.navigate("Sign")
+    props.dispatch(deleteAccount(user));
+    props.navigation.navigate("Login");
     // handleLogout();
   };
 
@@ -132,7 +137,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
     // backgroundColor: "skyblue"
   },
   upperTab: {
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   scrollContent: {
-    paddingBottom: 10,
+    paddingBottom: 10
     // backgroundColor: "yellow"
   },
   logoutButton: {
@@ -163,15 +168,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "40%"
   },
-  logoutBtnTxt : {
-	  color: "white",
-	  fontFamily: "Avenir-Light",
-	  fontSize: 20
+  logoutBtnTxt: {
+    color: "white",
+    fontFamily: "Avenir-Light",
+    fontSize: 20
   },
-  title:{
-	  fontFamily: "Avenir-Light",
-	  fontSize: 25,
-	  marginTop: 20
+  title: {
+    fontFamily: "Avenir-Light",
+    fontSize: 25,
+    marginTop: 20
   }
 });
 

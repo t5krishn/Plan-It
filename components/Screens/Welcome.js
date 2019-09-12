@@ -50,10 +50,11 @@ export default function Welcome(props) {
 					>
 						<Text style={styles.buttonText}>Sign In</Text>
 					</TouchableOpacity>
-					<TouchableOpacity onPress={() => props.navigation.navigate("Signup")}>
-						<Text style={{ fontFamily: "Avenir", color: "#000", fontSize: 20 }}>
-							Create Account
-						</Text>
+					<TouchableOpacity
+						style={[styles.button, { marginTop: "3%" }]}
+						onPress={() => props.navigation.navigate("Signup")}
+					>
+						<Text style={styles.buttonText}>Create Account</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -88,8 +89,7 @@ const styles = StyleSheet.create({
 		width: "80%",
 		height: height / 18,
 		alignItems: "center",
-		justifyContent: "center",
-		padding: "5%"
+		justifyContent: "center"
 	},
 	buttonText: {
 		color: "#FFF",

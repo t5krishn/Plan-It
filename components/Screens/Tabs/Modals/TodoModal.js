@@ -1,76 +1,82 @@
 import React, { useState, useEffect } from "react";
 import {
-	Modal,
 	View,
 	Text,
-	TouchableHighlight,
+	TouchableOpacity,
 	Dimensions,
 	TextInput,
-	StyleSheet,
-	ScrollView,
-	AlertIOS
+	StyleSheet
 } from "react-native";
 
-export default function EventModal(props) {
+const width = Dimensions.get("screen").width;
+
+export default function TodoModal(props) {
 	return (
-		<View style={styles.content}>
-			<Text style={styles.title}>{props.title}</Text>
-			<View>
+		<View style={styles.mainContainer}>
+			<Text style={[styles.title, styles.text]}>{props.title}</Text>
+			<View style={{ marginTop: "30%" }}>
+				<Text style={[styles.textTitles, styles.text]}>To do:</Text>
 				<TextInput
 					style={styles.textInput}
 					value={props.form.content ? props.form.content : ""}
 					onChangeText={text => props.setForm({ ...props.form, content: text })}
 				/>
 			</View>
-			{props.onDelete && (
-				<TouchableHighlight
-					style={styles.button}
-					onPress={() => props.onDelete(props.form.id)}
-				>
-					<Text>Delete</Text>
-				</TouchableHighlight>
-			)}
-			<TouchableHighlight style={styles.submit}>
-				<Text onPress={() => props.handleSubmit("to_do")}>Submit</Text>
-			</TouchableHighlight>
+			<TouchableOpacity
+				style={styles.submit}
+				onPress={() => props.handleSubmit("to_do")}
+			>
+				<Text style={styles.buttonText}>Submit</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
 	mainContainer: {
-		marginTop: 22,
-		alignItems: "center",
-		width: "100%"
+		flex: 1,
+		width: "90%",
+		marginTop: "10%",
+		alignContent: "center"
+	},
+	textTitles: {
+		fontSize: 15,
+		width: "100%",
+		marginTop: "5%"
+	},
+	text: {
+		fontFamily: "Avenir"
 	},
 	close: {
 		position: "absolute",
 		right: 20,
 		top: 20
 	},
-	content: {
-		width: "85%"
-	},
 	textInput: {
-		width: 200,
+		width: "100%",
 		height: 40,
 		borderColor: "#000",
-		borderWidth: 1
+		borderBottomWidth: 1,
+		marginBottom: "2%"
 	},
 	title: {
-		fontSize: 20
+		fontSize: 24,
+		paddingBottom: "10%"
 	},
 	submit: {
-		marginTop: 10,
-		borderWidth: 2,
-		borderColor: "black"
+		width: "100%",
+		height: width / 8,
+		alignItems: "center",
+		justifyContent: "center",
+		backgroundColor: "black"
 	},
 	error: {
 		backgroundColor: "red",
 		padding: 10
 	},
-	friendsList: {
-		backgroundColor: "yellow",
-		height: "30%"
+	buttonText: {
+		fontSize: 15,
+		fontFamily: "Avenir",
+		color: "white"
 	}
 });

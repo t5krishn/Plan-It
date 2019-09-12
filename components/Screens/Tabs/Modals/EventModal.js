@@ -3,7 +3,6 @@ import {
 	Modal,
 	View,
 	Text,
-	TouchableHighlight,
 	TouchableOpacity,
 	Dimensions,
 	TextInput,
@@ -12,8 +11,7 @@ import {
 	AlertIOS
 } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
-import getCurrentTrip from "../../../../helpers/dateCovertFormat";
-import { stringify } from "qs";
+import { formatDate, formatTime } from "../../../../helpers/formatDateTime";
 const width = Dimensions.get("screen").width;
 
 export default function EventModal(props) {
@@ -22,26 +20,6 @@ export default function EventModal(props) {
 		start: false,
 		end: false
 	});
-
-	const formatDate = date => {
-		return new Date(date)
-			.toLocaleDateString("en-GB", {
-				day: "numeric",
-				month: "short",
-				year: "numeric"
-			})
-			.replace(/ /g, ", ");
-	};
-
-	const formatTime = date => {
-		return (
-			new Date(date).getHours() +
-			":" +
-			(new Date(date).getMinutes().length !== 1
-				? new Date(date).getMinutes()
-				: "0" + new Date(date).getMinutes())
-		);
-	};
 
 	const handleDatePicked = (date, mode) => {
 		if (mode === "startDate") {
@@ -194,20 +172,21 @@ export default function EventModal(props) {
 				/>
 			</View>
 			<View style={styles.button}>
-				<TouchableHighlight
+				<TouchableOpacity
 					style={[styles.submit, styles.datePickerButtonText]}
+					onPress={() => handleSubmit("event")}
 				>
-					<Text onPress={() => handleSubmit("event")}>
+					<Text style={styles.datePickerButtonText}>
 						{props.onDelete ? "Update" : "Submit"}
 					</Text>
-				</TouchableHighlight>
+				</TouchableOpacity>
 				{props.onDelete && (
-					<TouchableHighlight
-						style={[styles.button, styles.datePickerButtonText]}
+					<TouchableOpacity
+						style={styles.button}
 						onPress={() => props.onDelete(form.id)}
 					>
 						<Text style={styles.datePickerButtonText}>Delete</Text>
-					</TouchableHighlight>
+					</TouchableOpacity>
 				)}
 			</View>
 		</View>
@@ -218,7 +197,9 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		width: "90%",
-		marginTop: "10%"
+		marginTop: "10%",
+		alignContent: "center",
+		justifyContent: "center"
 	},
 	textTitles: {
 		fontSize: 15,
@@ -239,10 +220,10 @@ const styles = StyleSheet.create({
 	},
 	submit: {
 		width: "100%",
-		height: 40,
+		height: width / 8,
 		alignItems: "center",
 		justifyContent: "center",
-		backgroundColor: "blue"
+		backgroundColor: "black"
 	},
 	text: {
 		fontFamily: "Avenir"
@@ -256,11 +237,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 		alignItems: "center",
 		width: "100%",
+		height: "100%",
 		justifyContent: "center"
 	},
 	dateText: {
 		fontFamily: "Avenir",
-		height: "100%",
 		fontSize: 15,
 		color: "white"
 	},
@@ -280,6 +261,10 @@ const styles = StyleSheet.create({
 		width: "100%",
 		alignItems: "center",
 		justifyContent: "center",
-		height: width / 10
+		height: width / 8
+	},
+	datePicker: {
+		alignItems: "center",
+		justifyContent: "center"
 	}
 });
