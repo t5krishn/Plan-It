@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
-  Animated,
-  Dimensions,
-  Keyboard,
-  StyleSheet,
-  TextInput,
-  UIManager
+	Animated,
+	Dimensions,
+	Keyboard,
+	StyleSheet,
+	TextInput,
+	UIManager
 } from "react-native";
 
 const { State: TextInputState } = TextInput;
 
 export default function KeyboardShift(props) {
-  
-  const [ shift, setShift ] = useState(new Animated.Value(0))
-  
+	const [shift, setShift] = useState(new Animated.Value(0));
+
 	const handleKeyboardDidShow = event => {
 		const { height: windowHeight } = Dimensions.get("window");
 		const keyboardHeight = event.endCoordinates.height;
@@ -23,13 +22,14 @@ export default function KeyboardShift(props) {
 			(originX, originY, width, height, pageX, pageY) => {
 				const fieldHeight = height;
 				const fieldTop = pageY;
-				const gap = windowHeight - keyboardHeight - (fieldTop + fieldHeight*3);
+				const gap =
+					windowHeight - keyboardHeight - (fieldTop + fieldHeight * 3);
 				if (gap >= 0) {
 					return;
 				}
 				Animated.timing(shift, {
 					toValue: gap,
-					duration: 50,
+					duration: 200,
 					useNativeDriver: true
 				}).start();
 			}
@@ -43,7 +43,7 @@ export default function KeyboardShift(props) {
 			useNativeDriver: true
 		}).start();
 	};
-	
+
 	const keyboardDidShowSub = Keyboard.addListener(
 		"keyboardDidShow",
 		handleKeyboardDidShow
@@ -52,7 +52,7 @@ export default function KeyboardShift(props) {
 		"keyboardDidHide",
 		handleKeyboardDidHide
 	);
-    
+
 	const { children } = props;
 	// const { shift } = this.state;
 
@@ -66,11 +66,11 @@ export default function KeyboardShift(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    height: "100%",
-    left: 0,
-    position: "absolute",
-    top: 0,
-    width: "100%"
-  }
+	container: {
+		height: "100%",
+		left: 0,
+		position: "absolute",
+		top: 0,
+		width: "100%"
+	}
 });

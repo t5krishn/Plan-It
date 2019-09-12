@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
 	slogan: {
 		marginTop: height / 20,
 		fontFamily: "Avenir",
-		fontSize: 22
+		fontSize: 20
 	},
 	title: {
 		fontFamily: "Avenir-Light",
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: "#FFF",
 		fontFamily: "Avenir",
-		fontSize: 20
+		fontSize: 18
 	},
 	opacity: {
 		position: "absolute",

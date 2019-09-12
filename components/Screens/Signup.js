@@ -120,83 +120,85 @@ function RegisterForm(props) {
 					backgroundColor: "#FFF"
 				}}
 			/>
-			<BackBtn onPress={() => props.navigation.navigate("Welcome")} />
-			<View style={styles.topContainer}>
-				<Text style={styles.title}>Sign Up</Text>
-			</View>
-			<View style={styles.container}>
-				<View style={styles.inputContainer}>
-					<View style={styles.input}>
-						<Text style={styles.text}>First Name:</Text>
-						<TextInput
-							autoCorrect={false}
-							autoCapitalize={"none"}
-							style={styles.textInput}
-							onChangeText={text => setState({ ...state, first_name: text })}
-						/>
-					</View>
-					<View style={styles.input}>
-						<Text style={styles.text}>Last Name:</Text>
-						<TextInput
-							autoCorrect={false}
-							autoCapitalize={"none"}
-							style={styles.textInput}
-							onChangeText={text => setState({ ...state, last_name: text })}
-						/>
-					</View>
-					<View style={styles.input}>
-						<Text style={styles.text}>Username:</Text>
-						<TextInput
-							autoCorrect={false}
-							autoCapitalize={"none"}
-							style={styles.textInput}
-							onChangeText={text => setState({ ...state, username: text })}
-						/>
-					</View>
-					<View style={styles.input}>
-						<Text style={styles.text}>Email:</Text>
-						<TextInput
-							autoCorrect={false}
-							autoCapitalize={"none"}
-							style={styles.textInput}
-							onChangeText={text => setState({ ...state, email: text })}
-							keyboardType="email-address"
-						/>
-					</View>
-					<View style={styles.input}>
-						<Text style={styles.text}>Password:</Text>
-						<TextInput
-							autoCorrect={false}
-							autoCapitalize={"none"}
-							style={styles.textInput}
-							onChangeText={text => setState({ ...state, password: text })}
-							keyboardType="email-address"
-						/>
-					</View>
-					<TouchableOpacity
-						style={styles.profilePicBtn}
-						onPress={handlePress}
-						disabled={isUploading}
-					>
-						<Text style={styles.profilePicBtnText}>
-							Select a profile picture from your device
-						</Text>
-					</TouchableOpacity>
-					{isUploading && <Text>Uploading your image, please wait...</Text>}
-					{state.profile_picture ? (
-						<Image
-							source={{ uri: state.profile_picture }}
-							// style={{ width: 50, height: 50 }}
-						/>
-					) : null}
-					<TouchableOpacity
-						style={styles.button}
-						onPress={() => handleSubmit()}
-					>
-						<Text style={styles.buttonText}>Sign up</Text>
-					</TouchableOpacity>
+			<KeyboardShift>
+				<BackBtn onPress={() => props.navigation.navigate("Welcome")} />
+				<View style={styles.topContainer}>
+					<Text style={styles.title}>Sign Up</Text>
 				</View>
-			</View>
+				<View style={styles.container}>
+					<View style={styles.inputContainer}>
+						<View style={styles.input}>
+							<Text style={styles.text}>First Name:</Text>
+							<TextInput
+								autoCorrect={false}
+								autoCapitalize={"none"}
+								style={styles.textInput}
+								onChangeText={text => setState({ ...state, first_name: text })}
+							/>
+						</View>
+						<View style={styles.input}>
+							<Text style={styles.text}>Last Name:</Text>
+							<TextInput
+								autoCorrect={false}
+								autoCapitalize={"none"}
+								style={styles.textInput}
+								onChangeText={text => setState({ ...state, last_name: text })}
+							/>
+						</View>
+						<View style={styles.input}>
+							<Text style={styles.text}>Username:</Text>
+							<TextInput
+								autoCorrect={false}
+								autoCapitalize={"none"}
+								style={styles.textInput}
+								onChangeText={text => setState({ ...state, username: text })}
+							/>
+						</View>
+						<View style={styles.input}>
+							<Text style={styles.text}>Email:</Text>
+							<TextInput
+								autoCorrect={false}
+								autoCapitalize={"none"}
+								style={styles.textInput}
+								onChangeText={text => setState({ ...state, email: text })}
+								keyboardType="email-address"
+							/>
+						</View>
+						<View style={styles.input}>
+							<Text style={styles.text}>Password:</Text>
+							<TextInput
+								autoCorrect={false}
+								autoCapitalize={"none"}
+								style={styles.textInput}
+								onChangeText={text => setState({ ...state, password: text })}
+								keyboardType="email-address"
+							/>
+						</View>
+						<TouchableOpacity
+							style={styles.button}
+							onPress={handlePress}
+							disabled={isUploading}
+						>
+							<Text style={styles.profilePicBtnText}>
+								Select a profile picture from your device
+							</Text>
+						</TouchableOpacity>
+						{isUploading && <Text>Uploading your image, please wait...</Text>}
+						{state.profile_picture ? (
+							<Image
+								source={{ uri: state.profile_picture }}
+								// style={{ width: 50, height: 50 }}
+							/>
+						) : null}
+						<TouchableOpacity
+							style={styles.button}
+							onPress={() => handleSubmit()}
+						>
+							<Text style={styles.buttonText}>Sign up</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</KeyboardShift>
 		</ImageBackground>
 	);
 }
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		width: "100%",
-		height: 40,
+		height: "10%",
 		marginTop: "10%"
 	},
 	buttonText: {
