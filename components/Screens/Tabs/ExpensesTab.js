@@ -41,9 +41,7 @@ function ExpensesTab(props) {
 					trip={props.trip}
 					dispatch={props.dispatch}
 					navigation={props.navigation}
-					friends={props.tripUsers.map(
-						f => f.id !== parseInt(props.selectedUser)
-					)}
+					friends={props.user_friends}
 				/>
 			)}
 			<View style={styles.upper}>

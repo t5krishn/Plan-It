@@ -350,13 +350,14 @@ const styles = StyleSheet.create({
 	dateButton: {
 		backgroundColor: "black",
 		alignItems: "center",
-		marginTop: "2%"
+		width: "100%",
+		height: "100%",
+		justifyContent: "center"
 	},
 	dateText: {
-		color: "white",
 		fontFamily: "Avenir",
-		height: "100%",
-		fontSize: 15
+		fontSize: 15,
+		color: "white"
 	},
 	datePickerContainer: {
 		width: "100%",
