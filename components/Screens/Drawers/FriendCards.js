@@ -34,11 +34,19 @@ export default function FriendCard({ isFetching, items, onAccept, onDecline }) {
 	return (
 		<View style={styles.container}>
 			{items.map((friend, i) => (
-				<View key={i}>
+				<View key={i} style={styles.friendContainer}>
+					{!friend.is_accepted && friend.type === "followee" && (
+						<Text style={{ color: "blue" }}>Friend Request Pending</Text>
+					)}
 					{!friend.is_accepted && friend.type === "follower" && (
 						<Text style={styles.newRequestText}>New Friend Request!</Text>
 					)}
-					<View style={styles.friendCard}>
+					<View
+						style={[
+							styles.friendCard,
+							friend.is_accepted ? { height: 90 } : { height: 120 }
+						]}
+					>
 						<View style={styles.upperContainer}>
 							<Image
 								source={{
@@ -55,53 +63,49 @@ export default function FriendCard({ isFetching, items, onAccept, onDecline }) {
 								<Text style={[styles.friendInfoText, styles.username]}>
 									@{friend.username}
 								</Text>
-								<Text style={[styles.friendInfoTex, styles.email]}>
-									{friend.email}
-								</Text>
 							</View>
 						</View>
-						{/* {!friend.is_accepted && friend.type === "follower" && (
-            <View style={styles.friendRequestContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  onAccept(friend.friend_id);
-                }}
-              >
-                <Image
-                  style={styles.friendRequestButtons}
-                  source={require("../../../assets/accept.png")}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  onDecline(friend.friend_id);
-                }}
-              >
-                <Image
-                  style={styles.friendRequestButtons}
-                  source={require("../../../assets/cancel.png")}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
 
-          {!friend.is_accepted && friend.type === "followee" && (
-            <View style={styles.friendRequestContainer}>
-              <Text>Friend Request Pending</Text>
-            </View>
-          )}
-
-       
-          <TouchableOpacity
-            style={styles.friendDelete}
-            onPress={()=> onHandlePress(friend)}
-          >
-            <Text style={styles.friendDeleteText}>Remove friend</Text>
-          </TouchableOpacity> */}
-					</View>
-
-					<View style={styles.bottomContainer}>
-						<Text>Hello</Text>
+						{!friend.is_accepted && (
+							<View style={styles.bottomContainer}>
+								{/**friend.is_accepted show either accept or decline */}
+								{!friend.is_accepted && friend.type === "follower" && (
+									<View style={styles.friendRequestContainer}>
+										<TouchableOpacity
+											style={styles.buttomContainerbutton}
+											onPress={() => {
+												onAccept(friend.friend_id);
+											}}
+										>
+											<Text style={styles.buttomText}>Confirm</Text>
+										</TouchableOpacity>
+										<TouchableOpacity
+											style={[styles.buttomContainerbutton, styles.decline]}
+											onPress={() => {
+												onDecline(friend.friend_id);
+											}}
+										>
+											<Text style={styles.buttomText}>Decline</Text>
+										</TouchableOpacity>
+									</View>
+								)}
+								{!friend.is_accepted && friend.type === "followee" && (
+									<View style={styles.friendRequestContainer}>
+										<TouchableOpacity
+											style={[
+												styles.buttomContainerbutton,
+												{ backgroundColor: "blue" }
+											]}
+											onPress={() => onHandlePress(friend)}
+										>
+											<Text style={styles.buttomText}>
+												Delete Friend Request
+											</Text>
+										</TouchableOpacity>
+									</View>
+								)}
+							</View>
+						)}
 					</View>
 				</View>
 			))}
@@ -111,24 +115,35 @@ export default function FriendCard({ isFetching, items, onAccept, onDecline }) {
 
 const styles = StyleSheet.create({
 	container: {
-		// marginTop: "2%"
+		flex: 1,
+		width: "100%",
+		height: 120
 	},
+	friendContainer: { padding: "2%", alignItems: "center" },
 	upperContainer: {
 		flexDirection: "row",
 		flex: 3
-		// height:
 	},
 	bottomContainer: {
 		flexDirection: "row",
-		flex: 1
+		flex: 1,
+		backgroundColor: "green"
 	},
+	buttomContainerbutton: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	buttomText: {
+		fontFamily: "Avenir",
+		fontSize: 16,
+		color: "white"
+	},
+	decline: { backgroundColor: "red" },
 	friendCard: {
-		flex: 4,
 		flexDirection: "column",
 		backgroundColor: "white",
-		width: 330,
-		height: 100,
-		margin: 10,
+		width: 350,
 		padding: 5,
 		shadowColor: "#000",
 		shadowOffset: {
@@ -139,39 +154,36 @@ const styles = StyleSheet.create({
 		shadowRadius: 3.84
 	},
 	friendInfo: {
-		flex: 1,
-		overflow: "hidden",
-		backgroundColor: "yellow"
+		overflow: "hidden"
 	},
 	friendText: {
 		flex: 3,
 		padding: 10,
 		flexDirection: "column",
-		backgroundColor: "blue"
+		height: 80
 	},
 	friendInfoText: {
 		fontFamily: "Avenir-Light",
 		flexWrap: "wrap"
 	},
 	name: {
-		fontSize: 25
+		fontSize: 20
 	},
 	username: {
-		fontSize: 18
+		fontSize: 15
 	},
 	email: {
-		fontSize: 18
+		fontSize: 15
 	},
 	friendRequestContainer: {
 		flex: 1,
-		justifyContent: "space-around",
-		alignItems: "center"
+		flexDirection: "row",
+		justifyContent: "space-between"
 	},
 	newRequestText: {
 		color: "red",
 		fontFamily: "Avenir-Medium",
 		fontSize: 15,
-		fontWeight: "bold",
 		paddingLeft: 10
 	},
 	friendDelete: {
