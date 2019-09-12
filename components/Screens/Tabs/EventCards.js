@@ -26,7 +26,9 @@ export default function EventCards({ items, onPress }) {
 							</View>
 						</View>
 						<View style={styles.info}>
-							<Text>Name: {e.name}</Text>
+							<View>
+								<Text style={styles.title}>Name: {e.name}</Text>
+							</View>
 							<Text>Location: {e.address}</Text>
 							<Text>Description: {e.description}</Text>
 						</View>
@@ -43,10 +45,9 @@ export default function EventCards({ items, onPress }) {
 
 const styles = StyleSheet.create({
 	containerStyle: {
-		backgroundColor: "gray",
+		backgroundColor: "white",
 		alignItems: "center",
-		width: "95%",
-		marginLeft: "2.5%",
+		width: "90%",
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
@@ -56,19 +57,27 @@ const styles = StyleSheet.create({
 		shadowRadius: 3.84
 	},
 	cards: {
-		backgroundColor: "blue",
-		margin: 10,
 		height: 100,
-		width: "100%",
-		flexDirection: "row"
+		width: "90%",
+		flexDirection: "row",
+		margin: "2%"
 	},
 	dates: {
-		flex: 1
+		flex: 1,
+		justifyContent: "center"
 	},
 	info: {
-		flex: 4
+		flex: 4,
+		justifyContent: "center"
 	},
 	date: {
-		fontSize: 18
+		fontFamily: "Avenir",
+		fontSize: 18,
+		color: "black"
+	},
+	title: {
+		fontFamily: "Avenir",
+		fontSize: 18,
+		color: "black"
 	}
 });

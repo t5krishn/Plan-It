@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
 		flex: 0.3,
 		width: "100%",
 		alignItems: "center",
-		paddingTop: "20%"
+		paddingTop: "20%",
+		backgroundColor: "blue"
 	},
 	upperText: {
 		fontSize: 16
