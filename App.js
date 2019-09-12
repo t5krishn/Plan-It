@@ -131,6 +131,7 @@ const AppDrawerNavigator = createDrawerNavigator(
     }
   },
   {
+    hideStatusBar: true,
     contentComponent: CustomDrawerComponent
   }
 );
