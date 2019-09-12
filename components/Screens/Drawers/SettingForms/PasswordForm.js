@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, TextInput, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import { Button } from "react-native-elements";
 
 export default function PasswordForm(props) {
-	const [curPWInput, onCurPWChange] = useState("**************");
-	const [newPWInput, onNewPWChange] = useState("**************");
-	const [confirmPWInput, onConfirmPWChange] = useState("**************");
+	const [curPWInput, onCurPWChange] = useState("");
+	const [newPWInput, onNewPWChange] = useState("");
+	const [confirmPWInput, onConfirmPWChange] = useState("");
 
 	const handleSubmit = () => {
 		if (newPWInput === confirmPWInput) {
@@ -20,7 +21,7 @@ export default function PasswordForm(props) {
 	return (
 		<View style={styles.formContainer}>
 			<Text style={styles.userNameFormTitle}> Update Password </Text>
-			<Text>Current Password</Text>
+			<Text style={styles.formTitles}>Current Password</Text>
 			<TextInput
 				secureTextEntry={true}
 				autoCapitalize="none"
@@ -29,7 +30,7 @@ export default function PasswordForm(props) {
 				value={curPWInput}
 				clearTextOnFocus={true}
 			/>
-			<Text>New Password</Text>
+			<Text style={styles.formTitles}>New Password</Text>
 			<TextInput
 				secureTextEntry={true}
 				autoCapitalize="none"
@@ -38,7 +39,7 @@ export default function PasswordForm(props) {
 				value={newPWInput}
 				clearTextOnFocus={true}
 			/>
-			<Text>Confirm New Password</Text>
+			<Text style={styles.formTitles}>Confirm New Password</Text>
 			<TextInput
 				secureTextEntry={true}
 				autoCapitalize="none"
@@ -47,7 +48,11 @@ export default function PasswordForm(props) {
 				value={confirmPWInput}
 				clearTextOnFocus={true}
 			/>
-			<Button title="Update" onPress={handleSubmit} />
+			<Button
+				title="Update"
+				onPress={handleSubmit}
+				buttonStyle={{backgroundColor: "black"}}
+				/>
 		</View>
 	);
 }
@@ -65,9 +70,15 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		width: "80%",
 		padding: 10,
-		marginBottom: 10
+		marginBottom: 10,
+		backgroundColor: "#FFFFFFBF"
 	},
 	userNameFormTitle: {
 		fontSize: 18
+	},
+	formTitles: {
+		fontFamily: "Avenir-Medium",
+		fontSize: 15,
+		fontWeight: "bold"
 	}
 });

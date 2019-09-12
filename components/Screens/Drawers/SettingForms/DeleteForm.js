@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { Button } from "react-native-elements";
 
 export default function DeleteForm(props) {
   const handleSubmit = () => {
@@ -23,13 +24,23 @@ export default function DeleteForm(props) {
     <View style={styles.formContainer}>
       <Text style={styles.userNameFormTitle}> Delete account </Text>
 
-      <Button title="Delete" onPress={handleSubmit} />
+      <Button
+        title="Delete"
+        // titleStyle={{
+        //   color:"black",
+        //   textShadowColor:"white",
+        //   textShadowRadius:5
+        // }}
+        buttonStyle={{backgroundColor: "red"}}
+        onPress={handleSubmit} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   formContainer: {
+    marginTop: 20,
+    marginBottom: 100,
     width: "100%",
     padding: 10,
     flexDirection: "column",

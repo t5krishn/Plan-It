@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, ScrollView, ImageBackground, Dimensions } from 
 import MenuBtn from "../../Buttons/Menubtn";
 import AddBtn from "../../Buttons/Addbtn";
 import ExpensesCards from "./ExpensesCards";
-import test from "../../../test";
 
 import { connect } from "react-redux";
 import { updateTransaction } from "../../../store/actions/userAction";
@@ -33,7 +32,7 @@ function MyExpensesScreen(props) {
         </View>
         <ScrollView>
           <ExpensesCards
-            items={/* test */ props.user_expenses}
+            items={props.user_expenses}
             onUpdate={handleUpdate}
             user={props.selectedUser}
           />

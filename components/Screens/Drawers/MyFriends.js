@@ -1,77 +1,114 @@
 import React, { useEffect, useState } from "react";
 import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	ScrollView,
-	Dimensions
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+  ImageBackground
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import FriendsList from "./FriendsList";
+import FriendCards from "./FriendCards";
 
 import { connect } from "react-redux";
 import { acceptInvite, declineInvite } from "../../../store/actions/userAction";
 
 function FriendsScreen(props) {
-	const onAccept = friendId => {
-		props.dispatch(acceptInvite(props.selectedUser, friendId));
-	};
-	const onDecline = friendId => {
-		props.dispatch(declineInvite(props.selectedUser, friendId));
-	};
+  const onAccept = friendId => {
+    props.dispatch(acceptInvite(props.selectedUser, friendId));
+  };
+  const onDecline = friendId => {
+    props.dispatch(declineInvite(props.selectedUser, friendId));
+  };
 
-	return (
-		<View style={styles.container}>
-			<MenuBtn navigation={props.navigation} />
-			<View style={styles.container}>
-				<Text>FriendsScreen</Text>
-				<TouchableOpacity
-					onPress={() => props.navigation.navigate("FindFriend")}
-				>
-					<Text>Find friends</Text>
-				</TouchableOpacity>
-			</View>
-			<View style={styles.friendsListContainer}>
-				<FriendsList
-					items={props.user_friends}
-					selectedUser={props.selectedUser}
-					onAccept={onAccept}
-					onDecline={onDecline}
-					isFetching={props.isFetchingUser}
-				/>
-			</View>
-		</View>
-	);
+  return (
+    <ImageBackground
+      source={require("../../../assets/plant1.jpg")}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <View
+        style={{
+          position: "absolute",
+          backgroundColor: "white",
+          opacity: 0.5,
+          width: "100%",
+          height: Dimensions.get("screen").height
+        }}
+      />
+      <View style={styles.container}>
+        <MenuBtn navigation={props.navigation} />
+        <View style={styles.innerContainer}>
+          <Text style={styles.title}>Friends</Text>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("FindFriend")}
+            style={styles.findFriendBtn}
+          >
+            <Text style={styles.findFriendBtnTxt}>Find friends</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView>
+          <FriendCards
+            items={props.user_friends}
+            selectedUser={props.selectedUser}
+            onAccept={onAccept}
+            onDecline={onDecline}
+            isFetching={props.isFetchingUser}
+          />
+        </ScrollView>
+      </View>
+    </ImageBackground>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		height: Dimensions.get("screen").height,
-		paddingTop: 40
-	},
-	friendsListContainer: {
-		flex: 4,
-		width: "100%",
-		alignItems: "center"
-	}
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: Dimensions.get("screen").height,
+	paddingTop: 40,
+	marginTop: 10
+  },
+  innerContainer: {
+	  marginTop: 150
+  },
+  friendsListContainer: {
+    flex: 4,
+    width: "100%",
+    alignItems: "center"
+  },
+  title: {
+    fontFamily: "Avenir-Light",
+	fontSize: 25,
+	textAlign: "center"
+	// marginTop: "10%"
+  },
+  findFriendBtn: {
+    backgroundColor: "black",
+    width: "90%",
+	padding: "5%",
+	marginBottom: 2
+  },
+  findFriendBtnTxt: {
+    color: "#FFFFFF",
+    fontFamily: "Avenir",
+    fontSize: 15
+  }
 });
 
 function mapStateToProps(state) {
-	const { selectedUser, gettingUserData } = state;
-	const { isFetchingUser, user_friends } = gettingUserData[selectedUser] || {
-		isFetchingUser: true,
-		user_friends: []
-	};
+  const { selectedUser, gettingUserData } = state;
+  const { isFetchingUser, user_friends } = gettingUserData[selectedUser] || {
+    isFetchingUser: true,
+    user_friends: []
+  };
 
-	return {
-		selectedUser,
-		isFetchingUser,
-		user_friends
-	};
+  return {
+    selectedUser,
+    isFetchingUser,
+    user_friends
+  };
 }
 
 export default connect(mapStateToProps)(FriendsScreen);
