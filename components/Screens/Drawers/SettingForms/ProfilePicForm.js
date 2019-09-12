@@ -52,13 +52,6 @@ export default function ProfilePicForm(props) {
   return (
     <View style={styles.formContainer}>
       <Text style={styles.userNameFormTitle}> Update Profile Picture </Text>
-      {/* <TextInput
-				autoCapitalize="none"
-				onChangeText={text => onChangeProfilePic(text)}
-				style={styles.TextInput}
-				value={profilePicInput}
-				clearTextOnFocus={true}
-			/> */}
       {!isUploading && !profilePicInput && 
 			<TouchableOpacity style={styles.imageUploadBtn} onPress={handlePress}>
 				<Text style={styles.imgBtnText}>Select a profile picture from your device</Text>

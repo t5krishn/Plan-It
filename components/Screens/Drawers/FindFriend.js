@@ -65,7 +65,6 @@ function FindFriend({ navigation, selectedUser, userFriendIDs, dispatch }) {
 					onChangeText={query => {
 						changeSearchQuery(query);
 					}}
-					clearTextOnFocus={true}
 				/>
 			</View>
 

@@ -57,7 +57,8 @@ function SettingsScreen(props) {
   };
 
   const onDeleteAccount = user => {
-    props.dispatch(deleteAccount(user));
+	props.dispatch(deleteAccount(user));
+	props.navigation.navigate("Sign")
     // handleLogout();
   };
 

@@ -14,6 +14,7 @@ export default function EmailForm(props) {
 				style={styles.TextInput}
 				value={emailInput}
 				clearTextOnFocus={true}
+				keyboardType="email-address"
 			/>
 			<Button
 				title="Update"

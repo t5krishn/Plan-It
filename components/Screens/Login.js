@@ -82,9 +82,11 @@ function LoginScreen(props) {
 						/>
 						<TextInput
 							autoCapitalize="none"
+							autoCorrect={false}
 							style={styles.TextInput}
 							onChangeText={text => setState({ ...state, email: text })}
 							placeholder={"Email"}
+							keyboardType="email-address"
 						/>
 					</View>
 					<View style={styles.input}>
@@ -99,6 +101,7 @@ function LoginScreen(props) {
 							style={styles.TextInput}
 							onChangeText={text => setState({ ...state, password: text })}
 							placeholder={"Password"}
+							secureTextEntry={true}
 						/>
 					</View>
 					<View style={styles.buttonContainer}>

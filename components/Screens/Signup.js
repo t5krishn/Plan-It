@@ -94,8 +94,7 @@ function RegisterForm(props) {
       setIsUploading(true);
       uploadImage(result.uri, state.username || randStr())
         .then(response => {
-          response.ref.getDownloadURL()
-          .then(downloadURL => {
+          response.ref.getDownloadURL().then(downloadURL => {
             setState({ ...state, profile_picture: downloadURL });
             setIsUploading(false);
           });
@@ -108,93 +107,99 @@ function RegisterForm(props) {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/plant1.jpg")}
-      style={{ width: "100%", height: "100%" }}
-    >
-      <View
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          opacity: 0.5,
-          backgroundColor: "#FFF"
-        }}
-      />
-      <BackBtn onPress={() => props.navigation.navigate("Welcome")} />
-      <View style={styles.topContainer}>
-        <Text style={styles.title}>Sign Up</Text>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <View style={styles.input}>
-            <Text style={styles.text}>First Name:</Text>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize={"none"}
-              style={styles.textInput}
-              onChangeText={text => setState({ ...state, first_name: text })}
-            />
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.text}>Last Name:</Text>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize={"none"}
-              style={styles.textInput}
-              onChangeText={text => setState({ ...state, last_name: text })}
-            />
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.text}>Username:</Text>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize={"none"}
-              style={styles.textInput}
-              onChangeText={text => setState({ ...state, username: text })}
-            />
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.text}>Email:</Text>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize={"none"}
-              style={styles.textInput}
-              onChangeText={text => setState({ ...state, email: text })}
-              keyboardType="email-address"
-            />
-          </View>
-          <View style={styles.input}>
-            <Text style={styles.text}>Password:</Text>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize={"none"}
-              style={styles.textInput}
-              onChangeText={text => setState({ ...state, password: text })}
-              keyboardType="email-address"
-            />
-          </View>
-          <TouchableOpacity style={styles.profilePicBtn} onPress={handlePress} disabled={isUploading}>
-            <Text style={styles.profilePicBtnText}>
-              Select a profile picture from your device
-            </Text>
-          </TouchableOpacity>
-          {isUploading && <Text>Uploading your image, please wait...</Text>}
-          {state.profile_picture ? (
-            <Image
-              source={{ uri: state.profile_picture }}
-              // style={{ width: 50, height: 50 }}
-            />
-          ) : null}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleSubmit()}
-          >
-            <Text style={styles.buttonText}>Sign up</Text>
-          </TouchableOpacity>
+    <KeyboardShift>
+      <ImageBackground
+        source={require("../../assets/plant1.jpg")}
+        style={{ width: "100%", height: "100%" }}
+      >
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+            opacity: 0.5,
+            backgroundColor: "#FFF"
+          }}
+        />
+        <BackBtn onPress={() => props.navigation.navigate("Welcome")} />
+        <View style={styles.topContainer}>
+          <Text style={styles.title}>Sign Up</Text>
         </View>
-      </View>
-    </ImageBackground>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <View style={styles.input}>
+              <Text style={styles.text}>First Name:</Text>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize={"none"}
+                style={styles.textInput}
+                onChangeText={text => setState({ ...state, first_name: text })}
+              />
+            </View>
+            <View style={styles.input}>
+              <Text style={styles.text}>Last Name:</Text>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize={"none"}
+                style={styles.textInput}
+                onChangeText={text => setState({ ...state, last_name: text })}
+              />
+            </View>
+            <View style={styles.input}>
+              <Text style={styles.text}>Username:</Text>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize={"none"}
+                style={styles.textInput}
+                onChangeText={text => setState({ ...state, username: text })}
+              />
+            </View>
+            <View style={styles.input}>
+              <Text style={styles.text}>Email:</Text>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize={"none"}
+                style={styles.textInput}
+                onChangeText={text => setState({ ...state, email: text })}
+                keyboardType="email-address"
+              />
+            </View>
+            <View style={styles.input}>
+              <Text style={styles.text}>Password:</Text>
+              <TextInput
+                autoCorrect={false}
+                autoCapitalize={"none"}
+                style={styles.textInput}
+                onChangeText={text => setState({ ...state, password: text })}
+                secureTextEntry={true}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.profilePicBtn}
+              onPress={handlePress}
+              disabled={isUploading}
+            >
+              <Text style={styles.profilePicBtnText}>
+                Select a profile picture from your device
+              </Text>
+            </TouchableOpacity>
+            {isUploading && <Text>Uploading your image, please wait...</Text>}
+            {state.profile_picture ? (
+              <Image
+                source={{ uri: state.profile_picture }}
+                // style={{ width: 50, height: 50 }}
+              />
+            ) : null}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleSubmit()}
+            >
+              <Text style={styles.buttonText}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </KeyboardShift>
   );
 }
 

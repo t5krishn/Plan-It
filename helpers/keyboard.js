@@ -29,7 +29,7 @@ export default function KeyboardShift(props) {
 				}
 				Animated.timing(shift, {
 					toValue: gap,
-					duration: 50,
+					duration: 200,
 					useNativeDriver: true
 				}).start();
 			}
