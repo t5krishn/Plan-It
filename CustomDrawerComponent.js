@@ -1,6 +1,6 @@
 import React from "react";
 import { DrawerItems } from "react-navigation";
-import { View, Image, SafeAreaView } from "react-native";
+import { View, Image, SafeAreaView, Text } from "react-native";
 import { connect } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 const CustomDrawerComponent = props => {
@@ -23,6 +23,13 @@ const CustomDrawerComponent = props => {
       <ScrollView>
         <DrawerItems {...props} />
       </ScrollView>
+      
+      <View style={{marginTop:400, padding:10, flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+        <Text style={{fontFamily: "Avenir-Light", fontSize: 40, padding:10}}>Plan It</Text>
+        <Image 
+          source={require("./assets/logoTransparent.png")}
+          style={{width: 40, height:40, padding:10}}/>
+      </View>
     </SafeAreaView>
   );
 };

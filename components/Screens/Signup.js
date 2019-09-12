@@ -33,9 +33,9 @@ function RegisterForm(props) {
 
 	const [isUploading, setIsUploading] = useState(false);
 
-	useEffect(() => {
-		console.log(state);
-	}, [state]);
+	// useEffect(() => {
+	//   console.log(state);
+	// }, [state]);
 	const login = async function(id) {
 		await AsyncStorage.setItem("isLoggedIn", JSON.stringify(id));
 		props.navigation.navigate("Dashboard");
@@ -101,6 +101,7 @@ function RegisterForm(props) {
 				})
 				.catch(error => {
 					Alert.alert("There was an error with uploading your profile picture");
+					console.log("Image upload error >> ", error);
 				});
 		}
 	};
@@ -172,7 +173,11 @@ function RegisterForm(props) {
 							keyboardType="email-address"
 						/>
 					</View>
-					<TouchableOpacity style={styles.profilePicBtn} onPress={handlePress}>
+					<TouchableOpacity
+						style={styles.profilePicBtn}
+						onPress={handlePress}
+						disabled={isUploading}
+					>
 						<Text style={styles.profilePicBtnText}>
 							Select a profile picture from your device
 						</Text>

@@ -6,13 +6,6 @@ import {
 	createBottomTabNavigator,
 	createStackNavigator
 } from "react-navigation";
-import {
-	StyleSheet,
-	Text,
-	Button,
-	TextInput,
-	AsyncStorage
-} from "react-native";
 
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
@@ -131,6 +124,7 @@ const AppDrawerNavigator = createDrawerNavigator(
 		}
 	},
 	{
+		hideStatusBar: true,
 		contentComponent: CustomDrawerComponent
 	}
 );

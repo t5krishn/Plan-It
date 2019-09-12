@@ -7,7 +7,7 @@ import {
 	StyleSheet,
 	ScrollView
 } from "react-native";
-import FriendCard from "./FriendCard";
+import FriendCard from "./FriendCards";
 export default function FriendsList({
 	items,
 	onAccept,

@@ -39,7 +39,7 @@ function MyExpensesScreen(props) {
 			</View>
 			<ScrollView>
 				<ExpensesCards
-					items={/* test */ props.user_expenses}
+					items={props.user_expenses}
 					onUpdate={handleUpdate}
 					user={props.selectedUser}
 				/>
