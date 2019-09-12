@@ -5,7 +5,7 @@ import TodoCards from "./TodoCards";
 import AddBtn from "../../Buttons/Addbtn";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import { CheckBox } from "react-native-elements";
 import EditModal from "./editModal";
 import { connect } from "react-redux";
 

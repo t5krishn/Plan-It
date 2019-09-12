@@ -3,7 +3,6 @@ import {
 	Modal,
 	View,
 	Text,
-	TouchableHighlight,
 	TouchableOpacity,
 	Dimensions,
 	StyleSheet,
@@ -51,43 +50,61 @@ function AddFriendsModal(props) {
 							height: Dimensions.get("screen").height
 						}}
 					/>
-					<TouchableHighlight
+					<TouchableOpacity
 						style={styles.close}
 						onPress={() => {
 							props.setFriendVisibility(false);
 						}}
 					>
 						<Icon name="close" size={30} />
-					</TouchableHighlight>
+					</TouchableOpacity>
 					<Text style={styles.title}>Friends:</Text>
 					{props.friends.length > 0 ? (
-						<View style={styles.friendsContainer}>
-							<View style={styles.checkBox}>
-								{props.friends.map(friend => {
-									return (
-										<CheckBox
-											key={friend.id}
-											title={friend.first_name + " " + friend.last_name}
-											checked={state[friend.id]}
-											onPress={() => {
-												handlePress(friend.id);
-											}}
-										/>
-									);
-								})}
+						<View style={{ flex: 1, width: "100%", alignItems: "center" }}>
+							<View style={styles.friendsContainer}>
+								<View style={styles.checkBox}>
+									{props.friends.map(friend => {
+										return (
+											<CheckBox
+												textStyle={{
+													fontFamily: "Avenir",
+													fontSize: 16,
+													color: "white"
+												}}
+												key={friend.id}
+												title={friend.first_name + " " + friend.last_name}
+												checked={state[friend.id]}
+												onPress={() => {
+													handlePress(friend.id);
+												}}
+												containerStyle={{
+													borderRadius: 0,
+													backgroundColor: "black",
+													width: "100%",
+													marginLeft: 0,
+													height: 45
+												}}
+											/>
+										);
+									})}
+								</View>
 							</View>
-							<TouchableOpacity
-								style={styles.button}
-								onPress={() => handleSubmit()}
-							>
-								<Text>Submit</Text>
-							</TouchableOpacity>
+							<View style={styles.buttonView}>
+								<TouchableOpacity
+									style={styles.button}
+									onPress={() => handleSubmit()}
+								>
+									<Text style={[styles.text, { color: "white" }]}>Submit</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					) : (
-						<Text>
-							You have no friends added to this trip! Press on trip settings to
-							invite friends!
-						</Text>
+						<View style={{ marginTop: "30%" }}>
+							<Text style={styles.text}>
+								You have no friends added to this trip! Press on trip settings
+								to invite friends!
+							</Text>
+						</View>
 					)}
 				</ImageBackground>
 			</Modal>
@@ -116,23 +133,31 @@ const styles = StyleSheet.create({
 		zIndex: 300
 	},
 	checkBox: {
-		width: "100%"
+		width: "90%"
 	},
 	friendsContainer: {
 		flex: 1,
-		backgroundColor: "yellow",
-		width: "90%",
+		width: "100%",
+		height: "100%",
 		alignItems: "center"
 	},
 	button: {
 		borderColor: "black",
-		borderWidth: 2,
-		width: 50,
-		height: 20
+		height: 40,
+		width: "100%",
+		backgroundColor: "black"
 	},
+	text: { fontFamily: "Avenir", fontSize: 16 },
 	title: {
 		fontSize: 24,
-		paddingBottom: "10%"
+		paddingBottom: "5%",
+		paddingTop: "10%",
+		fontFamily: "Avenir"
+	},
+	buttonView: {
+		flex: 1,
+		width: "90%",
+		alignItems: "center"
 	}
 });
 

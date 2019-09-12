@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { CheckBox } from "react-native-elements";
 
 export default function EventCards({ items, onPress }) {
 	return items.length > 0 ? (
@@ -13,6 +14,28 @@ export default function EventCards({ items, onPress }) {
 							<Text>Created at: {e.created_at}</Text>
 							<Text>Updated at: {e.updated_at}</Text>
 						</View>
+						{/* <CheckBox
+							checkedIcon="dot-circle-o"
+							uncheckedIcon="circle-o"
+							textStyle={{
+								fontFamily: "Avenir",
+								fontSize: 16,
+								color: "white"
+							}}
+							key={friend.id}
+							title={friend.first_name + " " + friend.last_name}
+							checked={state[friend.id]}
+							onPress={() => {
+								handlePress(friend.id);
+							}}
+							containerStyle={{
+								borderRadius: 0,
+								backgroundColor: "black",
+								width: "100%",
+								marginLeft: 0,
+								height: 45
+							}}
+						/> */}
 					</TouchableOpacity>
 				);
 			})}
