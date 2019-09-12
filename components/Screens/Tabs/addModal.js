@@ -149,7 +149,7 @@ function AddModal(props) {
 							form={form}
 							setForm={setForm}
 							handleSubmit={handleSubmit}
-							title={"Create A New To do Item"}
+							title={"Create A New To Do Item"}
 						/>
 					)}
 					{props.mode === "expense" && (
@@ -161,6 +161,7 @@ function AddModal(props) {
 							invited={invited}
 							setFriendVisibility={props.setFriendVisibility}
 							addFriendsVisible={props.addFriendsVisible}
+							title={"Create A New Expense"}
 						/>
 					)}
 					{props.addFriendsVisible && (

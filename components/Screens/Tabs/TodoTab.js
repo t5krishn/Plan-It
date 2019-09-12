@@ -4,6 +4,7 @@ import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
 import AddBtn from "../../Buttons/Addbtn";
 import TripSettingsBtn from "../../Buttons/TripSettingsbtn";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import EditModal from "./editModal";
 import { connect } from "react-redux";
@@ -17,10 +18,12 @@ function TodoTab(props) {
 		setEdit(true);
 	};
 
+	const trip = props.trip;
+
 	return (
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
-			
+
 			{!props.isFetchingTrip && (
 				<TripSettingsBtn
 					tripUsers={props.tripUsers.filter(user => {
@@ -34,9 +37,27 @@ function TodoTab(props) {
 				/>
 			)}
 			<View style={styles.upper}>
-				<Text>TodoTab: </Text>
-				<Text>{props.toDos.length} To do items</Text>
-				<Text>8 Completed</Text>
+				<View>
+					<Text style={[styles.title, styles.text]}>{trip.name}</Text>
+					<View style={styles.tripInfoContainer}>
+						<View style={styles.iconContainer}>
+							<Icon name="map-pin" size={20} style={styles.icon} />
+							<Icon name="user" size={20} style={styles.icon} />
+							<Icon name="calendar-o" size={18} style={styles.icon} />
+						</View>
+						<View style={styles.tripinfo}>
+							<Text style={[styles.upperText, styles.text]}>
+								{trip.location}
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.tripUsers.length} people going
+							</Text>
+							<Text style={[styles.upperText, styles.text]}>
+								{props.toDos.length} to do items
+							</Text>
+						</View>
+					</View>
+				</View>
 			</View>
 			<ScrollView style={styles.lower}>
 				<TodoCards items={props.toDos} onPress={onPress} />
@@ -62,18 +83,37 @@ function TodoTab(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: "column",
-		width: Dimensions.get("screen").width,
-		height: Dimensions.get("screen").height
+		flex: 1
 	},
 	upper: {
-		flex: 0.5,
-		backgroundColor: "purple",
+		flex: 0.3,
+		width: "100%",
+		alignItems: "center",
 		justifyContent: "center",
+		paddingTop: "20%"
+	},
+	tripInfoContainer: {
+		flexDirection: "row",
+		height: "70%"
+	},
+	iconContainer: {
+		height: "100%",
+		justifyContent: "space-between",
 		alignItems: "center"
 	},
+	tripinfo: {
+		height: "100%",
+		justifyContent: "space-between",
+		paddingLeft: "5%"
+	},
+	title: {
+		fontSize: 20
+	},
+	text: {
+		fontFamily: "Avenir"
+	},
 	lower: {
-		flex: 2,
+		flex: 6,
 		backgroundColor: "blue"
 	}
 });
@@ -85,14 +125,18 @@ function mapStateToProps(state) {
 		selectedUser,
 		gettingUserData
 	} = state;
-	const { toDos, isFetchingTrip, tripUsers } = gettingTripData[selectedTrip] || {
+	const { toDos, isFetchingTrip, tripUsers } = gettingTripData[
+		selectedTrip
+	] || {
 		toDos: [],
 		tripUsers: []
 	};
-	const  { user_friends } = gettingUserData[selectedUser] || {
+	const { user_friends } = gettingUserData[selectedUser] || {
 		user_friends: []
 	};
-	const trip = gettingUserData[selectedUser].user_trips.find(e=> e.id===selectedTrip)
+	const trip = gettingUserData[selectedUser].user_trips.find(
+		e => e.id === selectedTrip
+	);
 	return {
 		selectedUser,
 		selectedTrip,
