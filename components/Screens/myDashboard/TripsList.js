@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import TripItem from "./TripItem";
 
-const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+const colors = ["lightblue", "limegreen", "cyan","red", "orange", "yellow", "lightgrey"];
 
 export default function TripsList({ onPress, trips = [] }) {
 	if (trips.length > 0) {

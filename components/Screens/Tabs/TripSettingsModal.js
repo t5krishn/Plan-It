@@ -40,7 +40,7 @@ function TripSettingsModal(props) {
 	const friends = {};
 	props.friends &&
 		props.friends.forEach(e => {
-			if (!tripUsers[e.id]) {
+			if (!tripUsers[e.id] && e.is_accepted) {
 				friends[e.id] = false;
 			}
 		});
