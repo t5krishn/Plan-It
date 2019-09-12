@@ -192,7 +192,7 @@ function TripSettingsModal(props) {
 							style={styles.button}
 						>
 							<Text style={styles.buttonText}>
-								Ends on: {new Date(updateInfo.starts_on).toDateString()}
+								Ends on: {new Date(updateInfo.ends_on).toDateString()}
 							</Text>
 						</TouchableOpacity>
 						<DateTimePicker

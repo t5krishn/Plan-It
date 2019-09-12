@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ScrollView, ImageBackground } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
 import TodoCards from "./TodoCards";
 import AddBtn from "../../Buttons/Addbtn";
@@ -28,6 +28,19 @@ function TodoTab(props) {
 	const trip = props.trip;
 
 	return (
+		<ImageBackground
+		source={require("../../../assets/plant2.jpg")}
+		style={{ width: "100%", height: "100%" }}
+	  >
+		<View
+		  style={{
+			position: "absolute",
+			backgroundColor: "white",
+			opacity: 0.5,
+			width: "100%",
+			height: Dimensions.get("screen").height
+		  }}
+		/>
 		<View style={styles.container}>
 			<MenuBtn navigation={props.navigation} />
 			{!props.isFetchingTrip && (
@@ -88,6 +101,7 @@ function TodoTab(props) {
 				navigation={props.navigation}
 			/>
 		</View>
+		</ImageBackground>
 	);
 }
 
