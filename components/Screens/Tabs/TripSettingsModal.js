@@ -40,7 +40,7 @@ function TripSettingsModal(props) {
 	const friends = {};
 	props.friends &&
 		props.friends.forEach(e => {
-			if (!tripUsers[e.id]) {
+			if (!tripUsers[e.id] && e.is_accepted) {
 				friends[e.id] = false;
 			}
 		});
@@ -192,7 +192,7 @@ function TripSettingsModal(props) {
 							style={styles.button}
 						>
 							<Text style={styles.buttonText}>
-								Ends on: {new Date(updateInfo.starts_on).toDateString()}
+								Ends on: {new Date(updateInfo.ends_on).toDateString()}
 							</Text>
 						</TouchableOpacity>
 						<DateTimePicker
