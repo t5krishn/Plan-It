@@ -1,61 +1,177 @@
 import { combineReducers } from "redux";
 
 import {
-  SELECT_TRIP,
-  REQUEST_TRIP_DATA,
-  RECEIVE_TRIP_DATA
+	SELECT_TRIP,
+	REQUEST_TRIP_DATA,
+	RECEIVE_TRIP_DATA,
+	REQUEST_NEW_EVENT,
+	RECEIVE_NEW_EVENT,
+	REQUEST_NEW_TODO,
+	RECEIVE_NEW_TODO,
+	REQUEST_NEW_EXPENSE,
+	RECEIVE_NEW_EXPENSE,
+	RECEIVE_TRIP_UPDATE,
+	REQUEST_TRIP_UPDATE,
+	REQUEST_TRIP_ITEM_DELETE,
+	RECEIVE_TRIP_ITEM_DELETE
 } from "../actions/tripActions";
 
+import {
+	REQUEST_TRIP_INFO_UPDATE,
+	RECEIVE_TRIP_INFO_FOR_TRIP,
+	REQUEST_TRIP_DELETE,
+	RECEIVE_TRIP_DELETE_FOR_TRIP
+} from "../actions/userAction";
+
 function selectedTrip(state = {}, action) {
-  switch (action.type) {
-    case SELECT_TRIP:
-      return action.current_trip;
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case SELECT_TRIP:
+			return action.current_trip;
+		default:
+			return state;
+	}
 }
 
 function tripData(
-    state = {
-      isFetching: false,
-      events: [],
-      toDos: [],
-      expenses: []
-    },
-    action
-  ) {
-  switch (action.type) {
-    case REQUEST_TRIP_DATA:
-      return Object.assign({}, state, {
-        isFetching: true
-      });
-    case RECEIVE_TRIP_DATA:
-      return Object.assign({}, state, {
-        isFetching: false,
-        events: action.events,
-        toDos: action.toDos,
-        expenses: action.expenses
-      });
-    default:
-      return state;
-  }
+	state = {
+		isFetchingTrip: false,
+		events: [],
+		toDos: [],
+		expenses: [],
+		tripUsers: []
+	},
+	action
+) {
+	switch (action.type) {
+		case RECEIVE_NEW_EVENT:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				events: [action.event, ...state.events]
+			});
+		case RECEIVE_NEW_TODO:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				toDos: [action.todo, ...state.toDos]
+			});
+		case RECEIVE_NEW_EXPENSE:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				expenses: [
+					{
+						...action.expense,
+						borrowers: action.borrowers,
+						lender: action.lender
+					},
+					...state.expenses
+				]
+			});
+		case REQUEST_NEW_EVENT:
+		case REQUEST_NEW_TODO:
+		case REQUEST_NEW_EXPENSE:
+		case REQUEST_TRIP_DATA:
+			return Object.assign({}, state, {
+				isFetchingTrip: true
+			});
+		case RECEIVE_TRIP_DATA:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				events: action.events,
+				toDos: action.toDos,
+				expenses: action.expenses.map(e => {
+					return { ...e.expense, borrowers: e.borrowers, lender: e.lender };
+				}),
+				tripUsers: action.tripUsers
+			});
+		default:
+			return state;
+	}
+}
+
+function updateTrip(
+	state = {
+		isFetchingTrip: false,
+		events: [],
+		toDos: [],
+		expenses: []
+	},
+	action
+) {
+	switch (action.type) {
+		case REQUEST_TRIP_UPDATE:
+		case REQUEST_TRIP_ITEM_DELETE:
+		case REQUEST_TRIP_INFO_UPDATE:
+		case REQUEST_TRIP_DELETE:
+			return Object.assign({}, state, {
+				isFetchingTrip: true
+			});
+		case RECEIVE_TRIP_INFO_FOR_TRIP:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				tripUsers: [...action.users]
+			});
+		case RECEIVE_TRIP_DELETE_FOR_TRIP:
+			return Object.assign({}, state, {
+				isFetchingTrip: false
+			});
+		case RECEIVE_TRIP_UPDATE:
+			if (action.updateType === "expenses") {
+				return Object.assign({}, state, {
+					isFetchingTrip: false,
+					expenses: [
+						{
+							...action.data.expense,
+							borrowers: action.data.borrowers,
+							lender: action.data.lender
+						},
+						...state.expenses.filter(d => d.id !== action.data.expense.id)
+					]
+				});
+			} else {
+				return Object.assign({}, state, {
+					isFetchingTrip: false,
+					[action.updateType]: [
+						action.data,
+						...state[action.updateType].filter(d => d.id !== action.data.id)
+					]
+				});
+			}
+		case RECEIVE_TRIP_ITEM_DELETE:
+			return Object.assign({}, state, {
+				isFetchingTrip: false,
+				[action.updateType]: [...action.data]
+			});
+		default:
+			return state;
+	}
 }
 
 function gettingTripData(state = {}, action) {
-  switch (action.type) {
-    case RECEIVE_TRIP_DATA:
-    case REQUEST_TRIP_DATA:
-      return Object.assign({}, state, {
-        [action.current_trip]: tripData(state[action.current_trip], action)
-      });
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case REQUEST_NEW_EVENT:
+		case RECEIVE_NEW_EVENT:
+		case REQUEST_TRIP_DATA:
+		case RECEIVE_TRIP_DATA:
+		case REQUEST_NEW_TODO:
+		case RECEIVE_NEW_TODO:
+		case REQUEST_NEW_EXPENSE:
+		case RECEIVE_NEW_EXPENSE:
+			return Object.assign({}, state, {
+				[action.current_trip]: tripData(state[action.current_trip], action)
+			});
+		case REQUEST_TRIP_UPDATE:
+		case RECEIVE_TRIP_UPDATE:
+		case REQUEST_TRIP_ITEM_DELETE:
+		case RECEIVE_TRIP_ITEM_DELETE:
+		case REQUEST_TRIP_INFO_UPDATE:
+		case RECEIVE_TRIP_INFO_FOR_TRIP:
+		case REQUEST_TRIP_DELETE:
+		case RECEIVE_TRIP_DELETE_FOR_TRIP:
+			return Object.assign({}, state, {
+				[action.current_trip]: updateTrip(state[action.current_trip], action)
+			});
+		default:
+			return state;
+	}
 }
 
-const tripReducer = combineReducers({
-  gettingTripData,
-  selectedTrip
-});
-
-export default tripReducer;
+export { gettingTripData, selectedTrip };

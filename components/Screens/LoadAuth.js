@@ -6,13 +6,19 @@ import {
 	Alert,
 	AsyncStorage
 } from "react-native";
-import MenuBtn from "../Buttons/Menubtn";
+import { connect } from "react-redux";
+import { selectUser, fetchUserData } from "../../store/actions/userAction";
 
-export default function LoginScreen({ navigation }) {
+function LoadAuthScreen(props) {
 	const loadData = async () => {
 		const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-		console.log("isloggedin", isLoggedIn);
-		navigation.navigate(isLoggedIn === "1" ? "Dashboard" : "Login");
+		if (isLoggedIn) {
+			props.dispatch(selectUser(isLoggedIn));
+			props.dispatch(fetchUserData(isLoggedIn));
+			props.navigation.navigate("Dashboard");
+		} else {
+			props.navigation.navigate("Welcome");
+		}
 	};
 
 	loadData();
@@ -32,3 +38,5 @@ const styles = StyleSheet.create({
 		backgroundColor: "gray"
 	}
 });
+
+export default connect()(LoadAuthScreen);

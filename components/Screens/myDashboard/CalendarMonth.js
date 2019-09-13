@@ -1,35 +1,29 @@
 import React from "react";
-import { Calendar, CalendarList } from "react-native-calendars";
+import { CalendarList } from "react-native-calendars";
+import markedDates from "../../../helpers/markedDate";
 
 export default function CalendarMonth(props) {
+	const dates = function(tripsArr) {
+		let datesObj = {};
+		for (let trip of tripsArr) {
+			datesObj = { ...datesObj, ...trip.markedDates };
+		}
+		return datesObj;
+	};
+
 	return (
 		<CalendarList
-			markedDates={{
-				"2019-09-20": { textColor: "green" },
-				"2019-09-22": { startingDay: true, color: "green" },
-				"2019-09-23": {
-					selected: true,
-					endingDay: true,
-					color: "green"
-				},
-				"2019-09-04": {
-					disabled: true,
-					startingDay: true,
-					color: "green",
-					endingDay: true
-				}
-			}}
+			markedDates={dates(markedDates(props.trips))}
 			markingType={"period"}
-			onVisibleMonthsChange={months => {
-				console.log("now these months are visible", months);
-			}}
+			onVisibleMonthsChange={months => {}}
 			pastScrollRange={50}
 			futureScrollRange={50}
 			scrollEnabled={true}
 			showScrollIndicator={true}
-			style={{
-				borderWidth: 1,
-				borderColor: "gray"
+			theme={{
+				textDayFontFamily: "Avenir",
+				textMonthFontFamily: "Avenir",
+				textDayHeaderFontFamily: "Avenir"
 			}}
 		/>
 	);

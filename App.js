@@ -1,28 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
 	createSwitchNavigator,
 	createAppContainer,
 	createDrawerNavigator,
 	createBottomTabNavigator,
-	createStackNavigator,
-	DrawerItems
+	createStackNavigator
 } from "react-navigation";
-import {
-	StyleSheet,
-	View,
-	Image,
-	Text,
-	Button,
-	TextInput,
-	SafeAreaView,
-	AsyncStorage
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 
 const store = configureStore();
+
+// Firebase for image storing
+import * as firebase from "firebase";
+import firebaseConfig from "./firebaseConfig";
 
 // IMPORT COMPONENTS
 import Login from "./components/Screens/Login";
@@ -37,6 +29,8 @@ import MySettings from "./components/Screens/Drawers/MySettings";
 import NewTrip from "./components/Screens/NewTrip";
 import FindFriend from "./components/Screens/Drawers/FindFriend";
 import LoadAuth from "./components/Screens/LoadAuth";
+import Welcome from "./components/Screens/Welcome";
+import CustomDrawerComponent from "./CustomDrawerComponent";
 
 /*
   NAVIGATION:
@@ -55,7 +49,13 @@ import LoadAuth from "./components/Screens/LoadAuth";
             -Tab 3: Expenses
 */
 
-export default function App() {
+export default function App({ navigation }) {
+	try{
+    firebase.initializeApp(firebaseConfig);
+  } catch(err) {
+    console.log(err);
+  }
+
 	return (
 		<Provider store={store}>
 			<AppContainer />
@@ -95,27 +95,6 @@ const StackNavigator = createStackNavigator(
 	}
 );
 
-const CustomDrawerComponent = props => (
-	<SafeAreaView>
-		<View
-			style={{
-				height: 150,
-				backgroundColor: "black",
-				justifyContent: "center",
-				alignItems: "center"
-			}}
-		>
-			<Image
-				source={require("./assets/icon.png")}
-				style={{ height: 120, width: 120 }}
-			/>
-		</View>
-		<ScrollView>
-			<DrawerItems {...props} />
-		</ScrollView>
-	</SafeAreaView>
-);
-
 const FriendsStack = createStackNavigator(
 	{
 		FriendsList: {
@@ -149,28 +128,17 @@ const AppDrawerNavigator = createDrawerNavigator(
 		}
 	},
 	{
+		hideStatusBar: true,
 		contentComponent: CustomDrawerComponent
 	}
 );
 
 const AppSwitchNavigator = createSwitchNavigator({
 	LoadAuth: { screen: LoadAuth },
+	Welcome: { screen: Welcome },
 	Login: { screen: Login },
 	Dashboard: { screen: AppDrawerNavigator },
 	Signup: { screen: Signup }
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator);
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center"
-	},
-	TextInput: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 100
-	}
-});

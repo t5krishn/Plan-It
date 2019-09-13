@@ -4,54 +4,115 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	ScrollView
+	ScrollView,
+	Dimensions,
+	ImageBackground
 } from "react-native";
 import MenuBtn from "../../Buttons/Menubtn";
-import FriendsCards from "../Drawers/FriendsCards";
+import FriendCards from "./FriendCards";
 
-export default function FriendsScreen({ navigation }) {
-	const [friends, setFriends] = useState([]);
+import { connect } from "react-redux";
+import { acceptInvite, declineInvite } from "../../../store/actions/userAction";
 
-	useEffect(() => {
-		const request = new Request("http://localhost:3000/user/1/friend", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json"
-			}
-		});
-		fetch(request)
-			.then(response => {
-				return response.json();
-			})
-			.then(json => {
-				setFriends(json);
-			});
-	}, []);
+function FriendsScreen(props) {
+	const onAccept = friendId => {
+		props.dispatch(acceptInvite(props.selectedUser, friendId));
+	};
+	const onDecline = friendId => {
+		props.dispatch(declineInvite(props.selectedUser, friendId));
+	};
 
 	return (
-		<View>
-			<MenuBtn navigation={navigation} />
+		<ImageBackground
+			source={require("../../../assets/plant1.jpg")}
+			style={{ width: "100%", height: "100%" }}
+		>
+			<View
+				style={{
+					position: "absolute",
+					backgroundColor: "white",
+					opacity: 0.5,
+					width: "100%",
+					height: Dimensions.get("screen").height
+				}}
+			/>
 			<View style={styles.container}>
-				<Text>FriendsScreen</Text>
-				<TouchableOpacity onPress={() => navigation.navigate("FindFriend")}>
-					<Text>Find friends</Text>
-				</TouchableOpacity>
+				<MenuBtn navigation={props.navigation} />
+				<View style={styles.innerContainer}>
+					<Text style={styles.title}>Friends</Text>
+					<TouchableOpacity
+						onPress={() => props.navigation.navigate("FindFriend")}
+						style={styles.findFriendBtn}
+					>
+						<Text style={styles.findFriendBtnTxt}>Find friends</Text>
+					</TouchableOpacity>
+				</View>
+				<ScrollView contentContainerStyle={styles.friendsList}>
+					<FriendCards
+						items={props.user_friends}
+						selectedUser={props.selectedUser}
+						onAccept={onAccept}
+						onDecline={onDecline}
+						isFetching={props.isFetchingUser}
+					/>
+				</ScrollView>
 			</View>
-			<ScrollView>
-				<FriendsCards items={friends} />
-			</ScrollView>
-		</View>
+		</ImageBackground>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		marginTop: 200,
+		flex: 1,
+		alignItems: "center",
+		height: Dimensions.get("screen").height
+	},
+	innerContainer: {
+		marginTop: 100,
+		width: "85%",
 		alignItems: "center"
 	},
-	TextInput: {
-		borderColor: "black",
-		borderWidth: 1,
-		width: 100
+	friendsListContainer: {
+		flex: 4,
+		width: "100%",
+		alignItems: "center"
+	},
+	title: {
+		fontFamily: "Avenir-Light",
+		fontSize: 25,
+		textAlign: "center"
+		// marginTop: "10%"
+	},
+	findFriendBtn: {
+		backgroundColor: "black",
+		width: "100%",
+		height: 40,
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	findFriendBtnTxt: {
+		color: "#FFFFFF",
+		fontFamily: "Avenir",
+		fontSize: 15
+	},
+	friendsList: {
+		height: "95%",
+		width: "100%"
 	}
 });
+
+function mapStateToProps(state) {
+	const { selectedUser, gettingUserData } = state;
+	const { isFetchingUser, user_friends } = gettingUserData[selectedUser] || {
+		isFetchingUser: true,
+		user_friends: []
+	};
+
+	return {
+		selectedUser,
+		isFetchingUser,
+		user_friends
+	};
+}
+
+export default connect(mapStateToProps)(FriendsScreen);
