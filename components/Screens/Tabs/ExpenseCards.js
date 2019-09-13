@@ -17,12 +17,12 @@ export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
 									</Text>
 								) : (
 									<Text style={styles.text}>
-										You owe lent ${e.amount_in_cents / 100} dollars
+										User {e.lender} lent ${e.amount_in_cents / 100} dollars
 									</Text>
 								)}
 							</View>
 							<View style={styles.userInfo}>
-								{userId == e.lender_id ? (
+								{userId == e.lender ? (
 									<Text>You are owed by {e.borrowers.length} people</Text>
 								) : (
 									<Text>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		backgroundColor: "white",
 		marginBottom: "2%",
-		paddingTop: "2%"
+		paddingBottom: "2%"
 	},
 	title: {
 		fontFamily: "Avenir",
