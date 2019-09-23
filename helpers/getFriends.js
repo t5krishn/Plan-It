@@ -10,7 +10,5 @@ export default function getFriends(userArray, userIds) {
 			}
 		}
 	}
-
-	console.log("I FUCKING HATE MYSELF", users);
 	return users;
 }
