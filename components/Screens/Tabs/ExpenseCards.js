@@ -11,7 +11,7 @@ export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
 							<View style={styles.expenseInfo}>
 								<Text style={styles.title}>{e.name}</Text>
 								<Text style={{ fontSize: 10 }}>{e.expense_date}</Text>
-								{userId == e.lender_id ? (
+								{parseInt(userId) == e.lender ? (
 									<Text style={styles.text}>
 										You lent ${e.amount_in_cents / 100} dollars
 									</Text>
@@ -22,7 +22,7 @@ export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
 								)}
 							</View>
 							<View style={styles.userInfo}>
-								{userId == e.lender ? (
+								{parseInt(userId) === e.lender ? (
 									<Text>You are owed by {e.borrowers.length} people</Text>
 								) : (
 									<Text>
