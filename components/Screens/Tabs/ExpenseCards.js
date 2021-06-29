@@ -1,7 +1,16 @@
 import React from "react";
 import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
+// import { getUserById } from "../../../helpers/getUserById";
 
 export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
+	const getNameById = function(users, id) {
+		for (let user of users) {
+			if (user.id === id) {
+				return user.first_name;
+			}
+		}
+	};
+
 	return (
 		<View style={styles.mainContainer}>
 			{items.map((e, i) => {
@@ -11,18 +20,19 @@ export default function ExpenseCards({ items, onPress, userId, tripUsers }) {
 							<View style={styles.expenseInfo}>
 								<Text style={styles.title}>{e.name}</Text>
 								<Text style={{ fontSize: 10 }}>{e.expense_date}</Text>
-								{userId == e.lender_id ? (
+								{parseInt(userId) == e.lender ? (
 									<Text style={styles.text}>
 										You lent ${e.amount_in_cents / 100} dollars
 									</Text>
 								) : (
 									<Text style={styles.text}>
-										User {e.lender} lent ${e.amount_in_cents / 100} dollars
+										{getNameById(tripUsers, e.lender)} lent $
+										{e.amount_in_cents / 100} dollars
 									</Text>
 								)}
 							</View>
 							<View style={styles.userInfo}>
-								{userId == e.lender ? (
+								{parseInt(userId) === e.lender ? (
 									<Text>You are owed by {e.borrowers.length} people</Text>
 								) : (
 									<Text>
